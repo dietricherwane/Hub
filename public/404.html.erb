@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+
+<head>
+<meta charset="utf-8">
+<title>PayMoney</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width">
+  <link rel="icon" href="<%= asset_path 'favicon.ico' %>" />
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tags %>
+
+<!-- IE Fix for HTML5 Tags -->
+<!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+</head>
+
+<body id = "blue">
+<!-- THEMES PANEL -->
+
+
+<!-- HEADER -->
+<div id="header">
+  <div class="row">
+    <div class="three columns"> <%= link_to "", root_path, id: "logo", title: "PayMoney" %> </div>
+
+    <!-- NAVIGATION -->
+    <div class="nine columns">
+      <%= render "shared/main_menu" %>
+    </div>
+    <!-- END NAVIGATION -->
+    <div class="shadow-down"></div>
+  </div>
+</div>
+<!--END HEADER -->
+
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title">Erreur 404</p>
+      <ul class="breadcrumbs">
+        <li><a href="<%= root_path %>">Accueil</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="container main_content">
+  <div class="row">
+    <div class="twelve columns">
+      <h1 class="error" style = "text-align: center;"> 404 </h1>
+    </div>
+    <div class="twelve columns">
+      <h2 class="error-subtitle"> Oops! La page que vous recherchez n'existe pas :( </h2>
+      <p>
+        <a href = "javascript:history.go(-1);"><h4 style = "text-align: center; font-weight: bold;">Revenir en arrière</h4></a>
+      </p>
+    </div>
+    <div class="four columns search-align">
+      <div class="row collapse top_search">
+        <div class="eleven mobile-three columns">
+          <input type="text" placeholder="Enter search terms" />
+        </div>
+        <div class="one mobile-one columns"> <a href="#" class="button search"></a> </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render "layouts/footer" %>
+
+</body>
+</html>

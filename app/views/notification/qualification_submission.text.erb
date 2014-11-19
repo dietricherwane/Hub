@@ -1,0 +1,25 @@
+
+Bonjour, M. <%= "#{@user.lastname} #{@user.firstname}" %>
+
+A soumis une demande de qualification de ecommerce le <%= @ecommerce.created_at.strftime("%d-%m-%Y") + " à " + @ecommerce.created_at.strftime("%Hh %Mmn") %>
+
+Informations personnelles
+--------------------------------------------------
+Nom: <%= @user.firstname %>
+Prénoms: <%= @user.lastname %>
+Adresse: <%= @user.address %>
+Téléphone fixe: <%= @user.phone_number %>
+Téléphone mobile: <%= @user.mobile_number %>
+Email: <%= @user.email %>
+
+Informations bancaires
+--------------------------------------------------
+Banque: <%= @bank.name %>
+RIB: <%= @ecommerce.rib %>
+
+Informations liées au site web
+--------------------------------------------------
+URL: <%= @ecommerce.url %>
+Description: <%= simple_format(@ecommerce.description) %>
+
+Cordialement.

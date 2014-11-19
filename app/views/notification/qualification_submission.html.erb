@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h2>Bonjour, <%= "#{@user.lastname} #{@user.firstname}" %></h2>
+    <p>
+      A soumis une demande de qualification de ecommerce le <%= @ecommerce.created_at.strftime("%d-%m-%Y") + " à " + @ecommerce.created_at.strftime("%Hh %Mmn") %>
+    </p>
+
+    <h3>Informations personnelles</h3>
+    <p>
+      <b>Nom:</b> <%= @user.firstname %><br />
+      <b>Prénoms:</b> <%= @user.lastname %><br />
+      <b>Adresse:</b> <%= @user.address %><br />
+      <b>Téléphone fixe:</b> <%= @user.phone_number %><br />
+      <b>Téléphone mobile:</b> <%= @user.mobile_number %><br />
+      <b>Email:</b> <%= @user.email %><br />
+    </p>
+
+    <h3>Informations bancaires</h3>
+    <p>
+      <b>Banque:</b> <%= @bank.name %><br />
+      <b>RIB:</b> <%= @ecommerce.rib %><br />
+    </p>
+
+    <h3>Informations liées au site web</h3>
+    <p>
+      <b>URL:</b> <%= @ecommerce.url %><br />
+      <b>Description:</b> <%= simple_format(@ecommerce.description) %><br />
+    </p>
+
+    <p>Cordialement.</p>
+  </body>
+</html>

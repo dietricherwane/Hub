@@ -1,0 +1,105 @@
+<!-- Nav bars -->
+<!-- Merchants nav bar -->
+<% if (current_user.merchant? rescue false) %>
+  <nav class="top-bar">
+    <ul>
+      <!-- RESPONSIVE NAVIGATION -->
+      <li class="name">
+        <h1><a href="#"> Veuillez choisir une page </a></h1>
+      </li>
+      <li class="toggle-topbar"><a href="#"></a></li>
+      <!-- END RESPONSIVE NAVIGATION -->
+    </ul>
+    <section>
+      <ul class="right">
+        <li>
+          <a class="<%= @buy_active %>" href="index-2.html">Achetez</a>
+        </li>
+        <li>
+          <a class="<%= @sell_active %>" href="#">Vendez</a>
+        </li>
+        <li>
+          <%= link_to "Ecommerce", (current_user.has_ecommerce ? merchant_edit_ecommerce_path : merchant_ecommerce_path), class: @ecommerce_active %>
+        </li>
+        <li>
+          <a class="<%= @help_active %>" href="#">Aide & support</a>
+        </li>
+        <li>
+          <%= link_to "Déconnexion", destroy_user_session_path, :method => :delete %>
+        </li>
+      </ul>
+    </section>
+  </nav>
+<% end %>
+<!-- End merchants nav bar -->
+<!-- Admins nav bar -->
+<% if (current_user.admin? rescue false) %>
+  <nav class="top-bar">
+    <ul>
+      <!-- RESPONSIVE NAVIGATION -->
+      <li class="name">
+        <h1><a href="#"> Veuillez choisir une page </a></h1>
+      </li>
+      <li class="toggle-topbar"><a href="#"></a></li>
+      <!-- END RESPONSIVE NAVIGATION -->
+    </ul>
+    <section>
+      <ul class="right">
+        <li>
+          <a class="<%= @buy_active %>" href="index-2.html">Achetez</a>
+        </li>
+        <li>
+          <a class="<%= @sell_active %>" href="#">Vendez</a>
+        </li>
+        <li class = "has-dropdown">
+          <%= link_to "Ecommerces", "#", class: @ecommerce_active %>
+          <ul class = "dropdown">
+            <li class = "title back js-generated">
+              <h5>
+                <%= link_to "Ecommerces", "#" %>
+              </h5>
+            </li>
+            <li>
+              <%= link_to "En attente de qualification", ecommerces_waiting_qualification_path %>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a class="<%= @help_active %>" href="#">Aide & support</a>
+        </li>
+        <li>
+          <%= link_to "Déconnexion", destroy_user_session_path, :method => :delete %>
+        </li>
+      </ul>
+    </section>
+  </nav>
+<% end %>
+<!-- End admins nav bar -->
+<!-- Unregistered nav bar -->
+<% if current_user.blank? %>
+  <nav class="top-bar">
+    <ul>
+      <!-- RESPONSIVE NAVIGATION -->
+      <li class="name">
+        <h1><a href="#"> Veuillez choisir une page </a></h1>
+      </li>
+      <li class="toggle-topbar"><a href="#"></a></li>
+      <!-- END RESPONSIVE NAVIGATION -->
+    </ul>
+    <section>
+      <ul class="right">
+        <li>
+          <a class="<%= @buy_active %>" href="index-2.html">Achetez</a>
+        </li>
+        <li>
+          <a class="<%= @sell_active %>" href="#">Vendez</a>
+        </li>
+        <li>
+          <a class="<%= @help_active %>" href="#">Aide & support</a>
+        </li>
+      </ul>
+    </section>
+  </nav>
+<% end %>
+<!-- End Unregistered nav bar -->
+<!-- End nav bars -->

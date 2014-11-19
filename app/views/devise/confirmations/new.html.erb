@@ -1,0 +1,36 @@
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title">Renvoyer l'email de confirmation</p>
+      <ul class="breadcrumbs">
+        <li><a href="<%= root_path %>">Accueil</a></li>
+        <li><a href="<%= select_sign_in_profile_path %>">Sélection du profil de connexion</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="container main_content">
+  <div class="row">
+    <div class="twelve columns">
+      <%= devise_error_messages! %>
+      <div id = "login_box">
+        <h1>Entrez l'email</h1>
+        <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f| %>
+
+          <div class="form-group">
+            <%= f.email_field :email, :autofocus => true, class: "form-control", placeholder: "Veuillez entrer votre email" %>
+          </div>
+
+          <div  class="form-group">
+            <%= f.submit "Valider", class: "button" %>
+          </div>
+        <% end %>
+
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>

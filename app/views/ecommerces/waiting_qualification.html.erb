@@ -1,0 +1,33 @@
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title">Ecommerces en attente de qualification</p>
+      <ul class="breadcrumbs">
+        <li><a><%= render "shared/display_user_name" %></a></li>
+        <li><a href="<%= root_path %>">Accueil</a></li>
+        <li><a href="<%= select_sign_up_profile_path %>">Sélection du profil d'inscription</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="container main_content">
+  <div class="row">
+    <div class="twelve columns">
+      <% unless @ecommerces.empty? %>
+        <div id = "toggle-style-2">
+          <% @ecommerces.each do |ecommerce| %>
+            <% @ecommerce = ecommerce %>
+            <div class = "tgg-item">
+              <%= render "waiting_qualification", locals: {ecommerce: @ecommerce} %>
+            </div>
+          <% end %>
+        </div>
+
+        <%= paginate @ecommerces, :params => {:controller => :ecommerces, :action => :waiting_qualification} %>
+      <% end %>
+    </div>
+  </div>
+</div>

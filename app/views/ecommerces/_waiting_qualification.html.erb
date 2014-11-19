@@ -1,0 +1,68 @@
+<%= link_to content_tag(:span, "<b>[ #{@ecommerce.name} -- #{@ecommerce.url}]</b> #{Ecommerce.human_attribute_name("created_at")}: #{@ecommerce.created_at.strftime("%d-%m-%Y")} à #{@ecommerce.created_at.strftime("%Hh %Mmn")}".html_safe), "#", class: "tgg-trigger" %>
+
+<div class = "toggle_container" style = "display: none; overflow: hidden;">
+  <div class="sidebar six columns">
+    <h2 class = "sb_header">Informations liées au site</h2>
+    <p>
+      <%= image_tag @ecommerce.logo.url(:thumb) rescue nil %>
+    </p>
+    <p>
+      <%= link_to "", "#", id: "qualify_icon", title: "Qualifier le Ecommerce" %>
+      <%= link_to "", "#", id: "wallet_icon", title: "Modifier la liste des wallets associés" %>
+    </p>
+    <br /> <br /> <br /> <br />
+    <p>
+      <b><%= Ecommerce.human_attribute_name("name") %>:</b><br /> <%= @ecommerce.name %>
+    </p>
+    <p>
+      <b><%= Ecommerce.human_attribute_name("url") %>:</b><br /> <%= @ecommerce.url %>
+    </p>
+    <p>
+      <b><%= Ecommerce.human_attribute_name("description") %>:</b>
+      <div class = "quoteBox2">
+        <div class = "quote-text2">
+          <%= simple_format(@ecommerce.description) %>
+        </div>
+      </div>
+    </p>
+    <div class = "divider3"></div>
+    <p>
+      <b><%= Ecommerce.human_attribute_name("bank_id") %>:</b><br /> <%= @ecommerce.bank.name rescue "" %>
+    </p>
+    <p>
+      <b><%= Ecommerce.human_attribute_name("rib") %>:</b><br /> <%= @ecommerce.rib %>
+    </p>
+    <div class = "divider3"></div>
+    <p>
+      <b><%= Ecommerce.human_attribute_name("created_at") %>:</b><br /> <%= @ecommerce.created_at.strftime("%d-%m-%Y") %> à <%= @ecommerce.created_at.strftime("%Hh %Mmn") %>
+    </p>
+  </div>
+  <div class="sidebar six columns">
+    <h2 class = "sb_header">Informations personnelles</h2>
+    <% @user = @ecommerce.user %>
+    <p>
+      <b><%= User.human_attribute_name("firstname") %>:</b><br /> <%= @user.firstname %>
+    </p>
+    <p>
+      <b><%= User.human_attribute_name("lastname") %>:</b><br /> <%= @user.lastname %>
+    </p>
+    <p>
+      <b><%= User.human_attribute_name("country_id") %>:</b><br /> <%= @user.country.name rescue "" %>
+    </p>
+    <p>
+      <b><%= User.human_attribute_name("phone_number") %>:</b><br /> <%= @user.phone_number %>
+    </p>
+    <p>
+      <b><%= User.human_attribute_name("mobile_number") %>:</b><br /> <%= @user.mobile_number %>
+    </p>
+    <p>
+      <b><%= User.human_attribute_name("address") %>:</b><br /> <%= @user.address %>
+    </p>
+    <p>
+      <b><%= User.human_attribute_name("email") %>:</b><br /> <%= @user.email %>
+    </p>
+    <p>
+      <b><%= User.human_attribute_name("created_at") %>:</b><br /> <%= @user.created_at.strftime("%d-%m-%Y") %> à <%= @user.created_at.strftime("%Hh %Mmn") %>
+    </p>
+  </div>
+</div>

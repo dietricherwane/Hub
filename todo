@@ -1,0 +1,3 @@
+Change the logo size for full responsiveness for max-width: 971px
+
+Line 2444 in styles.css.erb

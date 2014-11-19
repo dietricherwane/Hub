@@ -1,0 +1,44 @@
+<h2 class = "sb_header">Fiche de qualification</h2>
+
+<% if @ecommerce_template.qualified.nil? %>
+<p style = "text-align: center; font-weight: bold; color: red;">
+  Votre demande de qualification est en cours de validation. <br />Une notification par email vous sera envoyée lorsquelle sera validée.
+</p>
+<% end %>
+<p>
+  <%= image_tag @ecommerce_template.logo.url(:thumb) rescue nil %>
+</p>
+<p>
+  <b><%= Ecommerce.human_attribute_name("name") %>:</b><br /> <%= @ecommerce_template.name %>
+</p>
+<p>
+  <b><%= Ecommerce.human_attribute_name("url") %>:</b><br /> <%= @ecommerce_template.url %>
+</p>
+<p>
+  <b><%= Ecommerce.human_attribute_name("description") %>:</b>
+  <div class = "quoteBox2">
+    <div class = "quote-text2">
+      <%= simple_format(@ecommerce_template.description) %>
+    </div>
+  </div>
+</p>
+<p>
+  <b><%= Ecommerce.human_attribute_name("pdt_url") %>:</b><br /> <%= @ecommerce_template.pdt_url %>
+</p>
+<p>
+  <b><%= Ecommerce.human_attribute_name("ipn_url") %>:</b><br /> <%= @ecommerce_template.ipn_url %>
+</p>
+<p>
+  <b><%= Ecommerce.human_attribute_name("order_already_paid_url") %>:</b><br /> <%= @ecommerce_template.order_already_paid_url %>
+</p>
+<div class = "divider3"></div>
+<p>
+  <b><%= Ecommerce.human_attribute_name("bank_id") %>:</b><br /> <%= @ecommerce_template.bank.name rescue "" %>
+</p>
+<p>
+  <b><%= Ecommerce.human_attribute_name("rib") %>:</b><br /> <%= @ecommerce_template.rib %>
+</p>
+<div class = "divider3"></div>
+<p>
+  <b><%= Ecommerce.human_attribute_name("created_at") %>:</b><br /> <%= @ecommerce_template.created_at.strftime("%d-%m-%Y") %> à <%= @ecommerce_template.created_at.strftime("%Hh %Mmn") %>
+</p>

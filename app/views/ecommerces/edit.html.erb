@@ -1,0 +1,84 @@
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title">Editez les informations de votre Ecommerce</p>
+      <ul class="breadcrumbs">
+        <li><a><%= render "shared/display_user_name" %></a></li>
+        <li><a href="<%= root_path %>">Accueil</a></li>
+        <li><a href="<%= select_sign_up_profile_path %>">Sélection du profil d'inscription</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="container main_content">
+  <div class="row">
+    <div class="six columns">
+
+      <h1>Formulaire</h1>
+      <%= flash_messages! %>
+      <%= form_for(@ecommerce, url: merchant_update_ecommerce_path, html: { :multipart => true }, method: :post) do |f| %>
+        <%= hidden_field_tag :id, @ecommerce.id %>
+        <div class="form-group">
+          <%= f.label :logo %>
+          <%= f.file_field :logo, class: "form-control", placeholder: "Veuillez choisir un logo" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :name %>
+          <%= f.text_field :name, autofocus: true, class: "form-control", placeholder: "Veuillez entrer le nom du Ecommerce" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :url %>
+          <%= f.text_field :url, class: "form-control", placeholder: "Veuillez entrer l'url du Ecommerce", value: "www.monsite.com", disabled: true %>
+        </div>
+        <div class="form-group">
+          <%= f.label :description %>
+          <%= f.text_area :description, class: "form-control", placeholder: "Description des activités du Ecommerce" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :pdt_url %>
+          <%= f.text_field :pdt_url, class: "form-control", placeholder: "L'url de transfert des données de paiement" %>
+          <span data-tooltip aria-haspopup="true" class="has-tip" title="Le client sera redirigé vers cet URL après qu'il aie effectué<br /> son achat (Requête GET)">
+            Informations
+          </span>
+        </div>
+        <div class="form-group">
+          <%= f.label :ipn_url %>
+          <%= f.text_field :ipn_url, class: "form-control", placeholder: "L'url de notification instantanée de paiement" %>
+          <span data-tooltip aria-haspopup="true" class="has-tip" title="Une notification transparente pour le client sera envoyée<br /> à cet URL après qu'il aie effectué son achat (Requête POST)">
+            Informations
+          </span>
+        </div>
+        <div class="form-group">
+          <%= f.label :order_already_paid_url %>
+          <%= f.text_field :order_already_paid_url, class: "form-control", placeholder: "L'url de retour des transactions déjà payées" %>
+          <span data-tooltip aria-haspopup="true" class="has-tip" title="URL vers lequel rediriger le client si l'aricle qu'il souhaite acheter<br /> a déjà été payé (Requête GET)">
+            Informations
+          </span>
+        </div>
+        <div class = "form-group">
+          <%= f.label :bank_id %>
+          <%= f.collection_select :bank_id, @banks, :id, :name, options ={prompt: "Veuillez choisir votre banque"}, html_options = {class: "form-control", disabled: true} %>
+        </div>
+        <div class="form-group">
+          <%= f.label :rib %>
+          <%= f.text_field :rib, class: "form-control", placeholder: "Veuillez entrer le RIB", disabled: true %>
+        </div>
+
+        <div  class="form-group">
+          <%= f.submit "Valider", class: "button" %>
+        </div>
+      <% end %>
+
+    </div>
+
+    <div class="sidebar six columns">
+<!-- END FORM INSTRUCTIONS -->
+      <%= render "ecommerce", locals: {ecommerce_template: @ecommerce_template} %>
+<!-- END FORM INSTRUCTIONS -->
+
+    </div>
+  </div>
+</div>

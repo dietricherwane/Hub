@@ -1,0 +1,74 @@
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title">Créez un compte marchand</p>
+      <ul class="breadcrumbs">
+        <li><a href="<%= root_path %>">Accueil</a></li>
+        <li><a href="<%= select_sign_up_profile_path %>">Sélection du profil d'inscription</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="container main_content">
+  <div class="row">
+    <div class="six columns">
+
+
+      <h1>Enregistrez vous</h1>
+      <%= devise_error_messages! %>
+      <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <div class="form-group">
+          <%= f.label :firstname %>
+          <%= f.text_field :firstname, autofocus: true, class: "form-control", placeholder: "Veuillez entrer votre nom" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :lastname %>
+          <%= f.text_field :lastname, class: "form-control", placeholder: "Veuillez entrer votre prénom" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :country_id %><br />
+          <%= f.collection_select :country_id, @countries, :id, :name, options ={prompt: "Veuillez choisir votre pays"}, html_options = {class: "form-control"} %>
+        </div>
+        <div class="form-group">
+          <%= f.label :phone_number %>
+          <%= f.text_field :phone_number, class: "form-control", placeholder: "Veuillez entrer votre numéro de téléphone" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :mobile_number %>
+          <%= f.text_field :mobile_number, class: "form-control", placeholder: "Veuillez entrer votre numéro de mobile" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :address %>
+          <%= f.text_field :address, class: "form-control", placeholder: "Veuillez entrer votre adresse" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :email %>
+          <%= f.text_field :email, class: "form-control", placeholder: "Veuillez entrer votre email" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password %>
+          <%= f.password_field :password, class: "form-control", placeholder: "Veuillez entrer votre mot de passe" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :password_confirmation %>
+          <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Veuillez confirmer votre mot de passe" %>
+        </div>
+
+        <div  class="form-group">
+          <%= f.submit "Valider", class: "button" %>
+        </div>
+      <% end %>
+
+    </div>
+
+    <div class="six columns">
+<!-- Qualification form -->
+      <%= render "shared/qualification_form" %>
+<!-- End Qualification form -->
+
+    </div>
+  </div>
+</div>

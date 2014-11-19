@@ -1,0 +1,80 @@
+/**
+ * Farbtastic Color Picker 1.2
+ * © 2008 Steven Wittens
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ */
+.farbtastic {
+  position: absolute;
+  top:30px;
+  left:120px;
+  background:url("wheel_bg.png") no-repeat -2px 0px;
+}
+.farbtastic * {
+  position: absolute;
+}
+.farbtastic, .farbtastic .wheel {
+  
+  width: 200px;
+  height: 200px;
+}
+.farbtastic .color, .farbtastic .overlay {
+  top: 47px;
+  left: 47px;
+  width: 100px;
+  height: 101px;
+}
+.farbtastic .wheel {
+  background: url(wheel.png) no-repeat;
+  width: 195px;
+  height: 195px;
+}
+.farbtastic .overlay {
+  background: url(mask.png) no-repeat;
+}
+.farbtastic .marker {
+  width: 17px;
+  height: 17px;
+  margin: -8px 0 0 -8px;
+  overflow: hidden; 
+  background: url(marker.png) no-repeat;
+}
+
+.pick_color {
+  float:left;
+  width:120px;
+}
+#color {
+  width:100px;
+  float:left;
+  padding:8px 16px;
+  cursor:text;
+  border:none;
+}
+
+
+a.close_colorpicker {
+  display:block;
+  position:absolute;
+  top:6px;
+  left:158px;
+  width:17px;
+  height:17px;
+  background: url("close_colorpicker.png") 0px 0px;
+}
+a.close_colorpicker:hover {
+  background:url("close_colorpicker.png") 0px -17px;
+}
+

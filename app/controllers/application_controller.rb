@@ -1,0 +1,39 @@
+class ApplicationController < ActionController::Base
+  # Prevent CSRF attacks by raising an exception.
+  # For APIs, you may want to use :null_session instead.
+  protect_from_forgery with: :exception
+
+  def layout_used
+	  case (current_user.profile_shortcut rescue "")
+      when "ADMIN"
+	      "administrator"
+	    when "MER"
+	      "merchant"
+	    else
+	      "session"
+      end
+  end
+
+  # Overwriting the sign_out redirect path method
+	def after_sign_out_path_for(resource_or_scope)
+		root_path
+	end
+
+	def after_sign_in_path_for(resource_or_scope)
+	  if current_user.merchant?
+		  merchant_ecommerce_path
+		else
+		  if current_user.admin?
+		    ecommerces_waiting_qualification_path
+		  end
+		end
+	end
+
+	def sign_out_disabled_users
+    if current_user.published == false
+      sign_out(current_user)
+      flash[:notice] = "Votre compte a été désactivé. Veuillez contacter l'administrateur."
+      redirect_to new_user_session_path
+    end
+  end
+end

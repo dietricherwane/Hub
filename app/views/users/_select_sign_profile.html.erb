@@ -1,0 +1,51 @@
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title"><%= @sign_action %> vous</p>
+      <ul class="breadcrumbs">
+        <li><a href="<%= root_path %>">Accueil</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<!-- CIRCLES BLOCK -->
+<div class="container circles_block_without_margin_white">
+  <div class="row">
+    <ul class="ch-grid">
+
+      <li>
+        <div class="ch-item ch-customer">
+          <div class="ch-info-wrap">
+            <div class="ch-info">
+              <div class="ch-info-front ch-customer"></div>
+              <div class="ch-info-back">
+                <h3>Particuliers</h3>
+                <p>Faites tous vos achats avec votre seul compte 24/7 dans vos boutiques préférées<a href="#">Plus +</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="ch-item ch-merchant">
+          <div class="ch-info-wrap">
+            <div class="ch-info">
+              <div class="ch-info-front ch-merchant"></div>
+              <div class="ch-info-back">
+                <a href = "<%= @sign_url %>">
+                  <h3>Marchands</h3>
+                  <p>Une seule intégration pour bénéficier de tous les moyens de paiements connectés à PayMoney.</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</div>
+<!-- END CIRCLES BLOCK -->
