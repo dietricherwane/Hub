@@ -4,4 +4,8 @@ class HomeController < ApplicationController
   def home
 
   end
+
+  def contact
+    @contact_active = 'active'
+  end
 end

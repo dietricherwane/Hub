@@ -1,0 +1,20 @@
+Bonjour, <%= "#{@user.lastname} #{@user.firstname}" %>
+
+Votre demande de qualification du site web: <%= @ecommerce.name %> émise le <%= @ecommerce.created_at.strftime("%d-%m-%Y") + " à " + @ecommerce.created_at.strftime("%Hh %Mmn") %> a été validée.
+
+Informations liées au site
+
+Nom: <%= @ecommerce.name %>
+URL: <%= @ecommerce.url %>
+Description: <%= simple_format(@ecommerce.description) %>
+
+Informations bancaires
+
+Banque: <%= @bank.name %>
+RIB: <%= @ecommerce.rib %>
+
+Veuillez vous connecter à votre interface client pour débuter vos intégrations
+
+<a href = "http://www.pay-money.net" target = "_blank">PayMoney</a>
+
+Cordialement.

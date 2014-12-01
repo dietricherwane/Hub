@@ -13,6 +13,7 @@
     <p>
       <b>Nom:</b> <%= @user.firstname %><br />
       <b>Prénoms:</b> <%= @user.lastname %><br />
+      <b>Pays:</b> <%= @user.country.name rescue nil %><br />
       <b>Adresse:</b> <%= @user.address %><br />
       <b>Téléphone fixe:</b> <%= @user.phone_number %><br />
       <b>Téléphone mobile:</b> <%= @user.mobile_number %><br />

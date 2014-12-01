@@ -147,6 +147,9 @@ $('.acc_container').hide(); //Hide/close all containers
 //Add "active" class to first trigger, then show/open the immediate next container
 //$('.acc_trigger:first').addClass('active').next().show();
 
+// Remove every previously attached event
+$(".acc_trigger").off("click");
+
 $('.acc_trigger').click(function(e){
 	if( $(this).next().is(':hidden') ) { //If immediate next container is closed...
 		$('.acc_trigger').removeClass('active').next().slideUp(); //Remove all "active" state and slide up the immediate next container
@@ -164,6 +167,9 @@ $('.acc_trigger').click(function(e){
 ------------------------------------------------*/
 //Hide (Collapse) the toggle containers on load
 $(".toggle_container").hide();
+
+// Remove every previously attached event
+$(".tgg-trigger").off("click");
 
 //Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
 $(".tgg-trigger").click(function(){

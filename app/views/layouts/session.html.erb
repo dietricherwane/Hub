@@ -5,10 +5,10 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 
 <head>
-<meta charset="utf-8">
-<title>PayMoney</title>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<meta name="viewport" content="width=device-width">
+  <meta charset="utf-8">
+  <title>PayMoney</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width">
   <link rel="icon" href="<%= asset_path 'favicon.ico' %>" />
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
@@ -32,36 +32,18 @@
     <div class="three columns"> <%= link_to "", root_path, id: "logo", title: "PayMoney" %> </div>
 
     <!-- NAVIGATION -->
+    <% if params[:controller] == 'home' && params[:action] == 'home' %>
+      <script>
+        $('a').click(function(){
+          $('html, body').animate({
+            scrollTop: $('[name="' + $.attr(this, 'href').substr(1) + '"]').offset().top
+        }, 900);
+          return false;
+        });
+      </script>
+    <% end %>
     <div class="nine columns">
-      <nav class="top-bar">
-        <ul>
-          <!-- RESPONSIVE NAVIGATION -->
-          <li class="name">
-            <h1><a href="#"> Veuillez choisir une page </a></h1>
-          </li>
-          <li class="toggle-topbar"><a href="#"></a></li>
-          <!-- END RESPONSIVE NAVIGATION -->
-        </ul>
-        <section>
-          <ul class="right">
-            <li>
-              <a class="<%= @buy_active %>" href="index-2.html">Achetez</a>
-            </li>
-            <li>
-              <a class="<%= @sell_active %>" href="#">Vendez</a>
-            </li>
-            <li>
-              <a class="<%= @help_active %>" href="#">Aide & support</a>
-            </li>
-            <li>
-              <%= link_to "Connexion", select_sign_in_profile_path, class: @connection_active %>
-            </li>
-            <li>
-              <%= link_to "Inscription", select_sign_up_profile_path, class: @registration_active %>
-            </li>
-          </ul>
-        </section>
-      </nav>
+      <%= render "shared/main_menu" %>
     </div>
     <!-- END NAVIGATION -->
     <div class="shadow-down"></div>
@@ -72,6 +54,6 @@
 <%= yield %>
 
 <%= render "layouts/footer" %>
-
+<%= javascript_include_tag 'misc' %>
 </body>
 </html>

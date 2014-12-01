@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141118121541) do
+ActiveRecord::Schema.define(version: 20141124114901) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "available_wallets", force: true do |t|
+    t.integer  "ecommerce_id"
+    t.integer  "wallet_id"
+    t.boolean  "published"
+    t.integer  "unpublished_by"
+    t.datetime "unpublished_at"
+    t.integer  "published_by"
+    t.datetime "published_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "banks", force: true do |t|
     t.string   "name",       limit: 100
@@ -54,6 +66,18 @@ ActiveRecord::Schema.define(version: 20141118121541) do
     t.string   "ipn_url",                  limit: 150
     t.boolean  "qualification_email_sent"
     t.boolean  "created_in_back_office"
+    t.string   "operation_token",          limit: 100
+    t.string   "service_token",            limit: 100
+    t.string   "token",                    limit: 100
+    t.datetime "requalified_at"
+    t.integer  "requalified_by"
+    t.boolean  "published"
+  end
+
+  create_table "parameters", force: true do |t|
+    t.string   "back_office_url", limit: 100
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "profiles", force: true do |t|
@@ -98,5 +122,14 @@ ActiveRecord::Schema.define(version: 20141118121541) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
+
+  create_table "wallets", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "country_id"
+    t.boolean  "published"
+    t.string   "authentication_token"
+  end
 
 end

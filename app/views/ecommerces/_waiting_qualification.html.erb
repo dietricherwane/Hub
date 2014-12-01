@@ -7,8 +7,8 @@
       <%= image_tag @ecommerce.logo.url(:thumb) rescue nil %>
     </p>
     <p>
-      <%= link_to "", "#", id: "qualify_icon", title: "Qualifier le Ecommerce" %>
-      <%= link_to "", "#", id: "wallet_icon", title: "Modifier la liste des wallets associés" %>
+      <%= link_to "", qualify_ecommerce_path(@ecommerce.id), id: "qualify_icon", title: "Qualifier le Ecommerce", class: "to-disable" %>
+      <%= link_to "", ecommerce_available_wallets_path(@ecommerce.id), id: "wallet_icon", title: "Modifier la liste des wallets associés", class: "to-disable" %>
     </p>
     <br /> <br /> <br /> <br />
     <p>

@@ -1,0 +1,22 @@
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title">Liste des transactions réussies pour <%= @wallet.name %> </p>
+      <ul class="breadcrumbs">
+        <li><a><%= render "shared/display_user_name" %></a></li>
+        <li><a href="<%= root_path %>">Accueil</a></li>
+        <li><a href="javascript:history.go(-1)">Liste des wallets</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="container main_content">
+  <div class="row">
+    <div class="twelve columns">
+      <%= render 'ecommerces/shared/transactions_per_wallet', locals: {transactions: @transactions} %>
+    </div>
+  </div>
+</div>

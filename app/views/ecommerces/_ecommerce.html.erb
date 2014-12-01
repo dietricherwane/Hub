@@ -2,11 +2,23 @@
 
 <% if @ecommerce_template.qualified.nil? %>
 <p style = "text-align: center; font-weight: bold; color: red;">
-  Votre demande de qualification est en cours de validation. <br />Une notification par email vous sera envoyée lorsquelle sera validée.
+  Votre demande de qualification est en cours de validation.<br />Une notification par email vous sera envoyée lorsqu'elle sera validée.
 </p>
 <% end %>
+<% unqualifier = User.find_by_id(@ecommerce_template.unqualified_by) %>
+<% if @ecommerce_template.published == false && unqualifier.admin? %>
+<p style = "text-align: center; font-weight: bold; color: red;">
+  Votre Ecommerce a été suspendu.<br />Veuillez contacter l'Administrateur.
+</p>
+<% end %>
+<% if @ecommerce_template.published == false && unqualifier.merchant? %>
+<p style = "text-align: center; font-weight: bold; color: red;">
+  Vous avez suspendu votre ecommerce.
+</p>
+<% end %>
+
 <p>
-  <%= image_tag @ecommerce_template.logo.url(:thumb) rescue nil %>
+  <%= image_tag @ecommerce_template.logo.url(:hub) rescue nil %>
 </p>
 <p>
   <b><%= Ecommerce.human_attribute_name("name") %>:</b><br /> <%= @ecommerce_template.name %>
@@ -31,6 +43,14 @@
 <p>
   <b><%= Ecommerce.human_attribute_name("order_already_paid_url") %>:</b><br /> <%= @ecommerce_template.order_already_paid_url %>
 </p>
+<% if @ecommerce.qualified %>
+<p>
+  <b><%= Ecommerce.human_attribute_name("service_token") %>:</b><br /> <%= @ecommerce_template.service_token %>
+</p>
+<p>
+  <b><%= Ecommerce.human_attribute_name("operation_token") %>:</b><br /> <%= @ecommerce_template.operation_token %>
+</p>
+<% end %>
 <div class = "divider3"></div>
 <p>
   <b><%= Ecommerce.human_attribute_name("bank_id") %>:</b><br /> <%= @ecommerce_template.bank.name rescue "" %>
@@ -42,3 +62,20 @@
 <p>
   <b><%= Ecommerce.human_attribute_name("created_at") %>:</b><br /> <%= @ecommerce_template.created_at.strftime("%d-%m-%Y") %> à <%= @ecommerce_template.created_at.strftime("%Hh %Mmn") %>
 </p>
+<% if @ecommerce_template.qualified != nil %>
+<p>
+  <b><%= Ecommerce.human_attribute_name("qualified_at") %>:</b><br /> <%= @ecommerce_template.qualified_at.strftime("%d-%m-%Y") %> à <%= @ecommerce_template.qualified_at.strftime("%Hh %Mmn") %>
+</p>
+<% end %>
+<% if @ecommerce_template.published == false %>
+<p>
+  <b><%= Ecommerce.human_attribute_name("unqualified_at") %>:</b><br /> <%= @ecommerce_template.unqualified_at.strftime("%d-%m-%Y") %> à <%= @ecommerce_template.unqualified_at.strftime("%Hh %Mmn") %>
+</p>
+<% end %>
+<div class = "divider3"></div>
+<% if @ecommerce.qualified && @ecommerce.published %>
+  <%= link_to "Suspendre le module de paiement", merchant_disable_ecommerce_path(@ecommerce.id), style: "color: red; font-weight: bold;" %>
+<% end %>
+<% if @ecommerce.qualified == true && @ecommerce.published == false && unqualifier.merchant? %>
+  <%= link_to "Activer le module de paiement", merchant_enable_ecommerce_path(@ecommerce.id), style: "color: green; font-weight: bold;" %>
+<% end %>

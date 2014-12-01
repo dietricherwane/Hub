@@ -36,4 +36,17 @@ class ApplicationController < ActionController::Base
       redirect_to new_user_session_path
     end
   end
+
+  # Only merchants can access those functions
+  def user_is_merchant?
+    if (!current_user.merchant? rescue true)
+      render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
+    end
+  end
+
+  def user_is_admin?
+    if (!current_user.admin? rescue true)
+      render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
+    end
+  end
 end

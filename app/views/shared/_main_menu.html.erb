@@ -13,16 +13,32 @@
     <section>
       <ul class="right">
         <li>
-          <a class="<%= @buy_active %>" href="index-2.html">Achetez</a>
+          <a class="<%= @buy_active %>" href="<%= ((params[:controller] == 'home' && params[:action] == 'home') ? '' : root_path) %>#buyers">Achetez</a>
         </li>
         <li>
-          <a class="<%= @sell_active %>" href="#">Vendez</a>
+          <a class="<%= @sell_active %>" href="<%= ((params[:controller] == 'home' && params[:action] == 'home') ? '' : root_path) %>#merchants">Vendez</a>
         </li>
-        <li>
-          <%= link_to "Ecommerce", (current_user.has_ecommerce ? merchant_edit_ecommerce_path : merchant_ecommerce_path), class: @ecommerce_active %>
+        <li class = "has-dropdown">
+          <%= link_to "Ecommerces", "#", class: @ecommerce_active %>
+          <ul class = "dropdown">
+            <li class = "title back js-generated">
+              <h5>
+                <%= link_to "Ecommerce", (current_user.has_ecommerce ? merchant_edit_ecommerce_path : merchant_ecommerce_path), class: @ecommerce_active %>
+              </h5>
+            </li>
+            <li>
+              <%= link_to "Modifier les paramètres", merchant_edit_ecommerce_path %>
+            </li>
+            <li>
+              <%= link_to "Liste des transactions", merchant_wallets_per_country_path %>
+            </li>
+          </ul>
         </li>
         <li>
           <a class="<%= @help_active %>" href="#">Aide & support</a>
+        </li>
+        <li>
+          <%= link_to "Contacts", contact_path, class: @contact_active %>
         </li>
         <li>
           <%= link_to "Déconnexion", destroy_user_session_path, :method => :delete %>
@@ -46,10 +62,10 @@
     <section>
       <ul class="right">
         <li>
-          <a class="<%= @buy_active %>" href="index-2.html">Achetez</a>
+          <a class="<%= @buy_active %>" href="<%= ((params[:controller] == 'home' && params[:action] == 'home') ? '' : root_path) %>#buyers">Achetez</a>
         </li>
         <li>
-          <a class="<%= @sell_active %>" href="#">Vendez</a>
+          <a class="<%= @sell_active %>" href="<%= ((params[:controller] == 'home' && params[:action] == 'home') ? '' : root_path) %>#merchants">Vendez</a>
         </li>
         <li class = "has-dropdown">
           <%= link_to "Ecommerces", "#", class: @ecommerce_active %>
@@ -62,10 +78,22 @@
             <li>
               <%= link_to "En attente de qualification", ecommerces_waiting_qualification_path %>
             </li>
+            <li>
+              <%= link_to "Qualifiés", qualified_ecommerces_path %>
+            </li>
+            <li>
+              <%= link_to "Désactivés", disabled_ecommerces_path %>
+            </li>
+            <li>
+              <%= link_to 'Liste des transactions', transactions_list_ecommerces_path %>
+            </li>
           </ul>
         </li>
         <li>
           <a class="<%= @help_active %>" href="#">Aide & support</a>
+        </li>
+        <li>
+          <%= link_to "Contacts", contact_path, class: @contact_active %>
         </li>
         <li>
           <%= link_to "Déconnexion", destroy_user_session_path, :method => :delete %>
@@ -89,13 +117,22 @@
     <section>
       <ul class="right">
         <li>
-          <a class="<%= @buy_active %>" href="index-2.html">Achetez</a>
+          <a class="<%= @buy_active %>" href="<%= ((params[:controller] == 'home' && params[:action] == 'home') ? '' : root_path) %>#buyers">Achetez</a>
         </li>
         <li>
-          <a class="<%= @sell_active %>" href="#">Vendez</a>
+          <a class="<%= @sell_active %>" href="<%= ((params[:controller] == 'home' && params[:action] == 'home') ? '' : root_path) %>#merchants">Vendez</a>
         </li>
         <li>
           <a class="<%= @help_active %>" href="#">Aide & support</a>
+        </li>
+        <li>
+          <%= link_to "Connexion", select_sign_in_profile_path, class: @connection_active %>
+        </li>
+        <li>
+          <%= link_to "Inscription", select_sign_up_profile_path, class: @registration_active %>
+        </li>
+        <li>
+          <%= link_to "Contacts", contact_path, class: @contact_active %>
         </li>
       </ul>
     </section>

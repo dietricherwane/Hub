@@ -1,3 +1,5 @@
+<%= javascript_include_tag "ecommerces"  if Hub::Application.assets.find_asset("ecommerces.js") %>
+
 <!-- PAGE HEADER -->
 <div class="container page-header ph-bg2">
   <div class="row">
@@ -6,7 +8,7 @@
       <ul class="breadcrumbs">
         <li><a><%= render "shared/display_user_name" %></a></li>
         <li><a href="<%= root_path %>">Accueil</a></li>
-        <li><a href="<%= select_sign_up_profile_path %>">Sélection du profil d'inscription</a></li>
+        <li><a href="<%= ecommerces_waiting_qualification_path %>">Ecommerces en attente de qualification</a></li>
       </ul>
     </div>
   </div>
@@ -16,7 +18,10 @@
 <div class="container main_content">
   <div class="row">
     <div class="twelve columns">
-      <% unless @ecommerces.empty? %>
+      <%= render "shared/flash" %>
+      <% if @ecommerces.empty? %>
+        <h3>Aucune donnée à afficher</h3>
+      <% else %>
         <div id = "toggle-style-2">
           <% @ecommerces.each do |ecommerce| %>
             <% @ecommerce = ecommerce %>

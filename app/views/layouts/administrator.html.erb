@@ -21,10 +21,8 @@
 
 </head>
 
-<body id = "blue">
-<%#= yield %>
+<body id = "blue" onload="initialize()">
 <!-- THEMES PANEL -->
-
 
 <!-- HEADER -->
 <div id="header">
@@ -32,6 +30,14 @@
     <div class="three columns"> <%= link_to "", root_path, id: "logo", title: "PayMoney" %> </div>
 
     <!-- NAVIGATION -->
+    <script>
+      $('a').click(function(){
+        $('html, body').animate({
+          scrollTop: $('[name="' + $.attr(this, 'href').substr(1) + '"]').offset().top
+      }, 900);
+        return false;
+      });
+    </script>
     <div class="nine columns">
       <%= render "shared/main_menu" %>
     </div>
@@ -44,6 +50,7 @@
 <%= yield %>
 
 <%= render "layouts/footer" %>
-
+<%#= javascript_include_tag 'application' %>
+<%= javascript_include_tag 'misc' %>
 </body>
 </html>

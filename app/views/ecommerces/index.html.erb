@@ -31,7 +31,7 @@
         </div>
         <div class="form-group">
           <%= f.label :url %>
-          <%= f.text_field :url, class: "form-control", placeholder: "Veuillez entrer l'url du Ecommerce", value: "www.monsite.com" %>
+          <%= f.text_field :url, class: "form-control", placeholder: "Veuillez entrer l'url du Ecommerce", value: "www.monsite.paymoney" %>
         </div>
         <div class="form-group">
           <%= f.label :description %>
@@ -39,21 +39,21 @@
         </div>
         <div class="form-group">
           <%= f.label :pdt_url %>
-          <%= f.text_field :pdt_url, class: "form-control", placeholder: "L'url de transfert des données de paiement", value: "www.monsite.com/notification/pdt" %>
+          <%= f.text_field :pdt_url, class: "form-control", placeholder: "L'url de transfert des données de paiement", value: "www.monsite.paymoney/notification/pdt" %>
           <span data-tooltip aria-haspopup="true" class="has-tip" title="Le client sera redirigé vers cet URL après qu'il aie effectué<br /> son achat (Requête GET)">
             Informations
           </span>
         </div>
         <div class="form-group">
           <%= f.label :ipn_url %>
-          <%= f.text_field :ipn_url, class: "form-control", placeholder: "L'url de notification instantanée de paiement", value: "www.monsite.com/notification/ipn" %>
+          <%= f.text_field :ipn_url, class: "form-control", placeholder: "L'url de notification instantanée de paiement", value: "www.monsite.paymoney/notification/ipn" %>
           <span data-tooltip aria-haspopup="true" class="has-tip" title="Une notification transparente pour le client sera envoyée<br /> à cet URL après qu'il aie effectué son achat (Requête POST)">
             Informations
           </span>
         </div>
         <div class="form-group">
           <%= f.label :order_already_paid_url %>
-          <%= f.text_field :order_already_paid_url, class: "form-control", placeholder: "L'url de retour des transactions déjà payées", value: "www.monsite.com/order/already_paid" %>
+          <%= f.text_field :order_already_paid_url, class: "form-control", placeholder: "L'url de retour des transactions déjà payées", value: "www.monsite.paymoney/order/already_paid" %>
           <span data-tooltip aria-haspopup="true" class="has-tip" title="URL vers lequel rediriger le client si l'aricle qu'il souhaite acheter<br /> a déjà été payé (Requête GET)">
             Informations
           </span>

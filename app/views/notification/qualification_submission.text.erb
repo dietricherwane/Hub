@@ -7,6 +7,7 @@ Informations personnelles
 --------------------------------------------------
 Nom: <%= @user.firstname %>
 Prénoms: <%= @user.lastname %>
+Pays: <%= @user.country.name rescue nil %><br />
 Adresse: <%= @user.address %>
 Téléphone fixe: <%= @user.phone_number %>
 Téléphone mobile: <%= @user.mobile_number %>

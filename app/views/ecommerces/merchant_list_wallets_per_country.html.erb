@@ -1,0 +1,69 @@
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title">Liste des wallets par pays</p>
+      <ul class="breadcrumbs">
+        <li><a><%= render "shared/display_user_name" %></a></li>
+        <li><a href="<%= root_path %>">Accueil</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="container main_content">
+  <div class="row">
+    <div class="twelve columns">
+
+      <% unless @wallets_per_countries.blank? %>
+        <div id = "accordion-style-1">
+          <% @wallets_per_countries.each do |country| %>
+            <% country = country[1] %>
+            <div class = "acc-item">
+              <a href="#" class="acc_trigger"><b><%= country["name"] %> [<%= country["wallets"].length %>]</b></a>
+              <div class="acc_container" style="display: none; overflow: hidden;">
+                <% country["wallets"].each do |wallet| %>
+                  <div class="six columns">
+                    <%= image_tag wallet["logo"] %>
+                  </div>
+
+                  <div class="six columns">
+                    <p>
+                      <b>Nom:</b> <%= wallet["name"] %>
+                    </p>
+                    <p>
+                      <b>Devise:</b> <%= wallet["currency"] %>
+                    </p>
+                    <p>
+                      <b>Frais:</b> <%= "#{wallet["fee"]}%" %>
+                    </p>
+                    <p>
+                      <b><%= link_to "Liste des transactions réussies", merchant_successful_transactions_per_wallet_path(wallet["authentication_token"]), style: "color: blue;" %> [<%= wallet["succeed_transactions"] %>]</b>
+                    </p>
+                    <% unless wallet["failed_transactions"] == 0 %>
+                      <p>
+                        <b><%= link_to "Liste des transactions échouées", merchant_failed_transactions_per_wallet_path(wallet["authentication_token"]), style: "color: red;" %> [<%= wallet["failed_transactions"] %>]</b>
+                      </p>
+                    <% end %>
+                  </div>
+
+                  <!-- Divider -->
+                  <div class="row">
+                    <div class="twelve columns">
+                      <hr>
+                    </div>
+                  </div>
+                  <!-- End divider -->
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <%#= paginate @ecommerces, :params => {:controller => :ecommerces, :action => :waiting_qualification} %>
+      <% end %>
+
+    </div>
+  </div>
+</div>

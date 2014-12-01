@@ -1,3 +1,5 @@
 Change the logo size for full responsiveness for max-width: 971px
 
 Line 2444 in styles.css.erb
+
+Dans l'interface client, afficher la liste des raisons pouvant pousser à la désactivation d'un ecommerce

@@ -1,0 +1,75 @@
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title">Liste des Wallets disponibles pour: <%= @ecommerce.name %></p>
+      <ul class="breadcrumbs">
+        <li><a><%= render "shared/display_user_name" %></a></li>
+        <li><a href="<%= root_path %>">Accueil</a></li>
+        <% if @ecommerce.qualified_at.blank? %>
+          <li><a href="<%= ecommerces_waiting_qualification_path %>">Ecommerces en attente de qualification</a></li>
+        <% else %>
+          <li><a href="<%= qualified_ecommerces_path %>">Ecommerces qualifiés</a></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="container main_content">
+  <div class="row">
+    <div class="twelve columns">
+      <%= render "shared/flash" %>
+      <% unless @wallets_per_countries.blank? %>
+        <div id = "accordion-style-1">
+          <% @wallets_per_countries.each do |country| %>
+            <% country = country[1] %>
+            <div class = "acc-item">
+              <a href="#" class="acc_trigger"><b><%= country["name"] %> [<%= country["wallets"].length %>]</b></a>
+              <div class="acc_container" style="display: none; overflow: hidden;">
+                <% country["wallets"].each do |wallet| %>
+                  <div class="six columns">
+                    <%= image_tag wallet["logo"] %>
+                  </div>
+
+                  <div class="six columns">
+                    <% available_wallet = (Wallet.find_by_authentication_token(wallet["authentication_token"]).available_wallets.where(ecommerce_id: @ecommerce.id).first rescue nil) %>
+                    <% if available_wallet %>
+                      <p>
+                        <% if available_wallet.published %>
+                          <%= link_to "Désactiver", disable_wallet_path(available_wallet.id), style: "font-weight: bold; color: red;" %>
+                        <% else %>
+                          <%= link_to "Activer", enable_wallet_path(available_wallet.id), style: "font-weight: bold; color: green;" %>
+                        <% end %>
+                      </p>
+                    <% end %>
+                    <p>
+                      <b>Nom:</b> <%= wallet["name"] %>
+                    </p>
+                    <p>
+                      <b>Devise:</b> <%= wallet["currency"] %>
+                    </p>
+                    <p>
+                      <b>Frais:</b> <%= "#{wallet["fee"]}%" %>
+                    </p>
+                  </div>
+
+                  <!-- Divider -->
+                  <div class="row">
+                    <div class="twelve columns">
+                      <hr>
+                    </div>
+                  </div>
+                  <!-- End divider -->
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <%#= paginate @ecommerces, :params => {:controller => :ecommerces, :action => :waiting_qualification} %>
+      <% end %>
+    </div>
+  </div>
+</div>

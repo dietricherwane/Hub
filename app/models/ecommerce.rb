@@ -1,17 +1,19 @@
 class Ecommerce < ActiveRecord::Base
   # Accessible fields
-  attr_accessible :name, :url, :description, :bank_id, :rib, :pdt_url, :ipn_url, :order_already_paid_url, :qualified, :qualified_by, :qualified_at, :unqualified_by, :unqualified_at, :user_id, :logo, :qualification_email_sent, :created_in_back_office
+  attr_accessible :name, :url, :description, :bank_id, :rib, :pdt_url, :ipn_url, :order_already_paid_url, :qualified, :qualified_by, :qualified_at, :unqualified_by, :unqualified_at, :user_id, :logo, :qualification_email_sent, :created_in_back_office, :service_token, :operation_token, :token, :requalified_by, :requalified_at, :published
 
   # Scope
   default_scope {order("created_at ASC")}
 
   # Paperclip config
-  has_attached_file :logo, :styles => { :medium => "300x300>", :thumb => "160x160>" }, :default_url => "/images/:style/missing.png"
+  has_attached_file :logo, :styles => { :medium => "300x300>", :thumb => "160x160>", :hub => "200x200" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :logo, :content_type => /\Aimage\/.*\Z/
 
   # Relationships
   belongs_to :bank
   belongs_to :user
+  has_many :available_wallets
+  has_many :wallets, through: :available_wallets
 
   # Renaming attributes into more friendly text
   HUMANIZED_ATTRIBUTES = {
@@ -27,11 +29,13 @@ class Ecommerce < ActiveRecord::Base
     rib: "RIB",
     qualified: "Qualifié",
     qualified_by: "Qualifié par",
-    qualified_at: "Qualifié à",
+    qualified_at: "Qualifié le",
     unqualified_by: "Désactivé par",
-    unqualified_at: "Désactivé à",
+    unqualified_at: "Désactivé le",
     user_id: "Le propriétaire",
-    created_at: "Soumise le"
+    created_at: "Soumise le",
+    service_token: "Token du service",
+    operation_token: "Token de l'opération"
   }
 
   def self.human_attribute_name(attr, option = {})

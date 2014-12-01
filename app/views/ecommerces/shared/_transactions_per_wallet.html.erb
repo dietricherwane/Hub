@@ -1,0 +1,46 @@
+<% if @transactions.blank? %>
+  <h3>Aucune donnée à afficher</h3>
+<% else %>
+  <div id = "toggle-style-2">
+    <% @transactions.each do |transaction| %>
+      <div class = "tgg-item">
+        <%= link_to content_tag(:span, "<b>[ N°: #{transaction['transaction_id']} -- Identifiant: #{transaction['number']}]</b> <i>du #{DateTime.parse(transaction['created_at']).strftime("%d-%m-%Y")} à #{DateTime.parse(transaction['created_at']).strftime("%Hh %Mmn")}</i>".html_safe), "#", class: "tgg-trigger" %>
+
+        <div class = "toggle_container" style = "display: none; overflow: hidden;">
+          <div class="sidebar six columns">
+            <h2 class = "sb_header">Détails de la transaction</h2>
+            <p>
+              <b>Numéro de transaction</b><br />
+              <%= transaction['transaction_id'] %>
+            </p>
+            <p>
+              <b>Identifiant de transaction</b><br />
+              <%= transaction['number'] %>
+            </p>
+            <p>
+              <b>Montant de la transaction</b><br />
+              <%= transaction['full_transaction_amount'] %>
+            </p>
+            <p>
+              <b>Montant payé</b><br />
+              <%= transaction['full_paid_transaction_amount'] %>
+            </p>
+            <p>
+              <b>Montant des frais</b><br />
+              <%= transaction['full_fee'] %>
+            </p>
+            <p>
+              <b>Taux de change</b><br />
+              <%= transaction['rate'] %>
+            </p>
+            <div class = "divider3"></div>
+            <p>
+              Date du <%= DateTime.parse(transaction['created_at']).strftime("%d-%m-%Y") %> à <%= DateTime.parse(transaction['created_at']).strftime("%Hh %Mmn") %>
+            </p>
+          </div>
+
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

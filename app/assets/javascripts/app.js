@@ -5,7 +5,6 @@
       Modernizr = window.Modernizr;
 
   $(document).ready(function() {
-    //alert("hey!");
     $.fn.foundationAlerts           ? $doc.foundationAlerts() : null;
     $.fn.foundationButtons          ? $doc.foundationButtons() : null;
     $.fn.foundationAccordion        ? $doc.foundationAccordion() : null;
