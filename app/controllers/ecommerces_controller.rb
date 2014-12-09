@@ -217,7 +217,7 @@ class EcommercesController < ApplicationController
     request = Typhoeus::Request.new("#{parameters.back_office_url}/wallet/#{url}/#{ecommerce_token}/#{authentication_token}", method: :post, followlocation: true)
     request.run
 
-    @transactions = (JSON.parse(%Q/#{request.response.body}/))
+    @transactions = (JSON.parse(%Q/#{request.response.body}/) rescue nil)
   end
 
   def enable_disable_wallet(available_wallet_id, status, message)
