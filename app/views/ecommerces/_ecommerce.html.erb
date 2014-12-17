@@ -5,13 +5,13 @@
   Votre demande de qualification est en cours de validation.<br />Une notification par email vous sera envoyée lorsqu'elle sera validée.
 </p>
 <% end %>
-<% unqualifier = User.find_by_id(@ecommerce_template.unqualified_by) %>
-<% if @ecommerce_template.published == false && unqualifier.admin? %>
+<% unqualifier = User.find_by_id(@ecommerce_template.unqualified_by rescue nil) %>
+<% if @ecommerce_template.published == false && (unqualifier.admin? rescue nil) %>
 <p style = "text-align: center; font-weight: bold; color: red;">
   Votre Ecommerce a été suspendu.<br />Veuillez contacter l'Administrateur.
 </p>
 <% end %>
-<% if @ecommerce_template.published == false && unqualifier.merchant? %>
+<% if @ecommerce_template.published == false && (unqualifier.merchant? rescue nil) %>
 <p style = "text-align: center; font-weight: bold; color: red;">
   Vous avez suspendu votre ecommerce.
 </p>
