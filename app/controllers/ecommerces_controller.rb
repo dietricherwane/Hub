@@ -29,12 +29,13 @@ class EcommercesController < ApplicationController
 
   def edit
     @ecommerce = current_user.ecommerces.first
-    @ecommerce_template = current_user.ecommerces.first # Initialize the template on the right side
+    @ecommerce_template = @ecommerce # Initialize the template on the right side
     initialize_form
   end
 
   def update
     @ecommerce = current_user.ecommerces.first rescue nil
+    @ecommerce_template = @ecommerce
 
     if @ecommerce.nil?
       render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
