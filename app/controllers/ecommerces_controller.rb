@@ -29,7 +29,7 @@ class EcommercesController < ApplicationController
 
   def edit
     @ecommerce = current_user.ecommerces.first
-    @ecommerce_template = @ecommerce # Initialize the template on the right side
+    @ecommerce_template = current_user.ecommerces.first # Initialize the template on the right side
     initialize_form
   end
 
