@@ -1,6 +1,6 @@
 <h2 class = "sb_header">Fiche de qualification</h2>
 
-<% if @ecommerce_template.qualified.nil? %>
+<% if (@ecommerce_template.qualified.nil? rescue nil) %>
 <p style = "text-align: center; font-weight: bold; color: red;">
   Votre demande de qualification est en cours de validation.<br />Une notification par email vous sera envoyée lorsqu'elle sera validée.
 </p>
