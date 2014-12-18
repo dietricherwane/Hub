@@ -22,7 +22,7 @@
 //= require dataTables.foundation
 //
 //= require jquery_ujs
-//= require turbolinks
+// require turbolinks
 //
 //  JQUERY KENBURN SLIDER
 //= require jquery.themepunch.plugins.min
