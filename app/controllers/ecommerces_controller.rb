@@ -36,6 +36,7 @@ class EcommercesController < ApplicationController
   def update
     @ecommerce = current_user.ecommerces.first rescue nil
     @ecommerce_template = @ecommerce
+    parameters = Parameter.first
 
     if @ecommerce.nil?
       render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
@@ -43,7 +44,10 @@ class EcommercesController < ApplicationController
       @id = @ecommerce.id
       initialize_form
 
-      if @ecommerce.update(params[:ecommerce].except(fields_to_except))
+      request = Typhoeus::Request.new("#{parameters.back_office_url}/service/update", params: {service_token: @ecommerce.token,url_on_success: params[:ecommerce][:pdt_url], url_on_error: params[:ecommerce][:pdt_url], url_to_ipn: params[:ecommerce][:ipn_url], url_on_basket_already_paid: params[:ecommerce][:order_already_paid_url], authentication_token: "7a57b200d5be13837de15874300b16ee"}, method: :get, followlocation: true)
+      request.run
+
+      if @ecommerce.update(params[:ecommerce].except(fields_to_except)) && request.response = "f26e0312bd863867f4f1e6b83483644b"
         initialize_template
         flash.now[:success] = "Les informations relatives au Ecommerce ont été mises à jour."
       else

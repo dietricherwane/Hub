@@ -47,6 +47,6 @@ class Ecommerce < ActiveRecord::Base
   validates :name, length: {minimum: 3, maximum: 100}
   validates :rib, length: {is: 24}
   validates :url, :pdt_url, :ipn_url, :order_already_paid_url, length: {maximum: 150, allow_blank: true}
-  validates :url, :pdt_url, :ipn_url, :order_already_paid_url, format: {with: /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/, multiline: true, allow_blank: true}
+  #validates :url, :pdt_url, :ipn_url, :order_already_paid_url, format: {with: /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/, multiline: true, allow_blank: true}
   validates :url, uniqueness: true
 end
