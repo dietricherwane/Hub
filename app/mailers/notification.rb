@@ -6,7 +6,7 @@ class Notification < ActionMailer::Base
     @bank = bank
     @ecommerce = ecommerce
 
-    mail(to: "dietricherwane@yahoo.fr", subject: "Demande de qualification de Site Web")
+    mail(to: "karim.ouattara@ngser.com", subject: "Demande de qualification de Site Web")
   end
 
   def ecommerce_qualified(user, bank, ecommerce)
@@ -14,6 +14,6 @@ class Notification < ActionMailer::Base
     @bank = bank
     @ecommerce = ecommerce
 
-    mail(to: "dietricherwane@yahoo.fr", subject: "Validation de votre demande de qualification de Site Web")
+    mail(to: user.email, subject: "Validation de votre demande de qualification de Site Web")
   end
 end
