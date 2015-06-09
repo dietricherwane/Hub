@@ -110,7 +110,7 @@ class EcommercesController < ApplicationController
   # Sends a notification email to the business unit in charge of validations
   def qualification_submission_email(user, bank, ecommerce)
     Thread.new do
-      #Notification.qualification_submission(user, bank, ecommerce).deliver
+      Notification.qualification_submission(user, bank, ecommerce).deliver
       ecommerce.update_attribute(:qualification_email_sent, true)
       close_active_record_connection
     end
