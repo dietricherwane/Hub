@@ -9,21 +9,33 @@ class User < ActiveRecord::Base
   belongs_to :profile
   has_many :ecommerces
   belongs_to :country
+  belongs_to :pos_account_type
+
 
   # Accessible fields
-  attr_accessible :firstname, :lastname, :country_id, :email, :address, :phone_number, :mobile_number, :profile_id, :published, :password
+  attr_accessible :firstname, :lastname, :country_id, :email, :address, :phone_number, :mobile_number, :profile_id, :published, :password, :password_confirmation, :pos_account_type_id, :company, :rib, :activities_description, :certified_agent_id, :created_on_paymoney_wallet, :identification_token, :bank_code, :wicket_code, :account_number, :paymoney_password, :paymoney_token, :sub_certified_agent_id, :paymoney_account_number
 
   # Renaming attributes into more friendly text
   HUMANIZED_ATTRIBUTES = {
+    id: "",
     firstname: "Nom",
     lastname: "Prénom",
     country_id: "Pays",
+    company: "Entreprise",
     email: "Email",
     address: "Adresse",
+    pos_account_type_id: "Type de compte POS",
     phone_number: "Numéro de téléphone fixe",
     mobile_number: "Numéro de téléphone mobile",
     password_confirmation: "Confirmation de mot de passe",
-    created_at: "Compte créé le"
+    rib: "RIB",
+    bank_code: "Code banque",
+    wicket_code: "Code guichet",
+    account_number: "Numéro de compte bancaire",
+    paymoney_account_number: "Numéro de compte paymoney",
+    activities_description: "Description des activités",
+    created_at: "Compte créé le",
+    certified_agent_id: "Id agent agréé"
   }
 
   def self.human_attribute_name(attr, option = {})
@@ -31,10 +43,15 @@ class User < ActiveRecord::Base
   end
 
   # Validations
-  validates :firstname, :lastname, :country_id, :address, :mobile_number, presence: true
+  validates :firstname, :lastname, :country_id, :address, :mobile_number, :company, presence: true
   validates :firstname, :lastname, length: {maximum: 100}
   validates :phone_number, :mobile_number, length: {minimum: 8, maximum: 16, allow_blank: true}
+  validates :rib, length: {is: 2}
+  validates :bank_code, :wicket_code, length: {is: 5}
+  validates :account_number, length: {is: 12}
+  validates :company, length: {minimum: 3, allow_blank: true}
   validates :phone_number, :mobile_number, numericality: {allow_blank: true}
+  #validate :rib_mandatory_for_merchants, :bank_code_mandatory_for_merchants, :wicket_code_mandatory_for_merchants, :account_number_mandatory_for_merchants
 
   # Custom functions
   def admin?
@@ -55,6 +72,30 @@ class User < ActiveRecord::Base
 
   def has_ecommerce
     return !ecommerces.empty?
+  end
+
+  def rib_mandatory_for_merchants
+    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && rib.blank?
+      errors.add(:rib, "ne peut pas être vide")
+    end
+  end
+
+  def bank_code_mandatory_for_merchants
+    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && bank_code.blank?
+      errors.add(:bank_code, "ne peut pas être vide")
+    end
+  end
+
+  def wicket_code_mandatory_for_merchants
+    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && wicket_code.blank?
+      errors.add(:wicket_code, "ne peut pas être vide")
+    end
+  end
+
+  def account_number_mandatory_for_merchants
+    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && account_number.blank?
+      errors.add(:account_number, "ne peut pas être vide")
+    end
   end
 
   # Callbacks

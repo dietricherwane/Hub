@@ -4,6 +4,15 @@ Hub::Application.routes.draw do
     root :to => "home#home"
     get "users/sign_in/select_profile" => "users#select_sign_in_profile", as: :select_sign_in_profile
     get "users/sign_up/select_profile" => "users#select_sign_up_profile", as: :select_sign_up_profile
+    get "users/pos_account" => "users/registrations#new_pos_account", as: :new_pos_account
+    post "users/pos_account/create" => "users/registrations#create_pos_account", as: :create_pos_account
+    patch "users/pos_account/create" => "users/registrations#create_pos_account"
+    get "users/pos_account/create" => "users/registrations#new_pos_account"
+    get "/merchant_pos_account_list" => "users/registrations#list_merchant_pos_account", as: :list_merchant_pos_account
+    get "/private_pos_account/:certified_agent_id" => "users/registrations#new_private_pos_account", as: :new_private_pos_account
+    post "/private_pos_account/create" => "users/registrations#create_private_pos_account", as: :create_private_pos_account
+    patch "/private_pos_account/create" => "users/registrations#create_private_pos_account"
+    get "/private_pos_account/list/:certified_agent_id" => "users/registrations#list_private_pos_account", as: :list_private_pos_account
   end
 
   get 'contacts' => 'home#contact', as: :contact

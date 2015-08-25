@@ -89,8 +89,21 @@
             </li>
           </ul>
         </li>
-        <li>
-          <a class="<%= @help_active %>" href="#">Aide & support</a>
+        <li class = "has-dropdown">
+          <%= link_to "POS", "#", class: @pos_active %>
+          <ul class = "dropdown">
+            <li class = "title back js-generated">
+              <h5>
+                <%= link_to "POS", "#" %>
+              </h5>
+            </li>
+            <li>
+              <a class="<%= @pos_active %>" href="<%= new_pos_account_path %>">Création de POS marchand</a>
+            </li>
+            <li>
+              <a class="<%= @pos_list_active %>" href="<%= list_merchant_pos_account_path %>">Liste des POS marchands</a>
+            </li>
+          </ul>
         </li>
         <li>
           <%= link_to "Contacts", contact_path, class: @contact_active %>
