@@ -1,0 +1,68 @@
+<%= link_to content_tag(:span, "<b>#{@private_pos_account.firstname} #{@private_pos_account.lastname}</b> [#{@private_pos_account.company}] -- #{@private_pos_account.created_at.strftime("%d-%m-%Y")} à #{@private_pos_account.created_at.strftime("%Hh %Mmn")}".html_safe), "#", class: "tgg-trigger" %>
+
+<div class = "toggle_container" style = "display: none; overflow: hidden;">
+  <div class="sidebar six columns">
+    <h2 class = "sb_header">Informations liées au POS particulier</h2>
+    <p>
+      <b>Nom:</b><br /> <%= @private_pos_account.firstname %>
+    </p>
+    <p>
+      <b>Prénom:</b><br /> <%= @private_pos_account.lastname %>
+    </p>
+    <p>
+      <b>Entreprise:</b><br /> <%= @private_pos_account.company %>
+    </p>
+    <p>
+      <b>Numéro fixe:</b><br /> <%= @private_pos_account.phone_number %>
+    </p>
+    <p>
+      <b>Numéro mobile:</b><br /> <%= @private_pos_account.mobile_number %>
+    </p>
+    <p>
+      <b>Adresse:</b><br /> <%= @private_pos_account.address %>
+    </p>
+    <p>
+      <b>Email:</b><br /> <%= @private_pos_account.email %>
+    </p>
+    <p>
+      <b>Description des activités:</b>
+      <div class = "quoteBox2">
+        <div class = "quote-text2">
+          <%= simple_format(@private_pos_account.activities_description) %>
+        </div>
+      </div>
+    </p>
+    <p>
+      <b>Pays:</b><br /> <%= @private_pos_account.country.name %>
+    </p>
+    <div class = "divider3"></div>
+    <p>
+      <b>Numéro de compte:</b><br /> <%= @merchant_pos_account.account_number %>
+    </p>
+    <p>
+      <b>Code bancaire:</b><br /> <%= @private_pos_account.bank_code %>
+    </p>
+    <p>
+      <b>Code guichet:</b><br /> <%= @private_pos_account.wicket_code %>
+    </p>
+    <p>
+      <b>RIB:</b><br /> <%= @private_pos_account.rib %>
+    </p>
+    <div class = "divider3"></div>
+    <p>
+      <b>Date de création:</b><br /> <%= @private_pos_account.created_at.strftime("%d-%m-%Y") %> à <%= @private_pos_account.created_at.strftime("%Hh %Mmn") %>
+    </p>
+  </div>
+  <div class="sidebar six columns">
+    <h2 class = "sb_header">Informations liées à Paymoney</h2>
+    <p>
+      <b>Numéro de compte:</b><br /> <%= @merchant_pos_account.paymoney_account_number %>
+    </p>
+    <p>
+      <b>Mot de passe:</b><br /> <%= @private_pos_account.paymoney_password %>
+    </p>
+    <p>
+      <b>Token:</b><br /> <%= @private_pos_account.paymoney_token %>
+    </p>
+  </div>
+</div>
