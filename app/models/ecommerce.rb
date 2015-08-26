@@ -1,7 +1,6 @@
 class Ecommerce < ActiveRecord::Base
   # Accessible fields
   attr_accessible :name, :url, :description, :bank_id, :rib, :pdt_url, :ipn_url, :order_already_paid_url, :qualified, :qualified_by, :qualified_at, :unqualified_by, :unqualified_at, :user_id, :logo, :qualification_email_sent, :created_in_back_office, :service_token, :operation_token, :token, :requalified_by, :requalified_at, :published
-
   # Scope
   default_scope {order("created_at ASC")}
 
@@ -15,10 +14,13 @@ class Ecommerce < ActiveRecord::Base
   has_many :available_wallets
   has_many :wallets, through: :available_wallets
 
+
   # Renaming attributes into more friendly text
   HUMANIZED_ATTRIBUTES = {
     logo: "Le logo",
     logo_content_type: "Le type de fichier",
+    firstname: "Le nom",
+    lastname: "Le prénom",
     name: "La raison sociale",
     url: "Le lien du site web",
     description: "Description",

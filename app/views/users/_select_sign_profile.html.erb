@@ -2,7 +2,11 @@
 <div class="container page-header ph-bg2">
   <div class="row">
     <div class="twelve columns">
-      <p class="page-title"><%= @sign_action %> vous</p>
+      <% if (current_user.admin? rescue false) %>
+        <p class="page-title">Créer un compte POS</p>
+      <% else %>
+        <p class="page-title"><%= @sign_action %> vous</p>
+      <% end %>
       <ul class="breadcrumbs">
         <li><a href="<%= root_path %>">Accueil</a></li>
       </ul>
@@ -23,7 +27,9 @@
               <div class="ch-info-front ch-customer"></div>
               <div class="ch-info-back">
                 <a href = 'http://195.14.0.128:8080/PAYMONEY_WALLET' target = "_blank">
-                  <h3>Particuliers</h3>
+                  <h3>Marchands</h3>
+
+
                   <p>Faites tous vos achats avec votre seul compte 24/7 dans vos boutiques préférées<a href="#">Plus +</a></p>
                 </a>
               </div>
@@ -38,7 +44,7 @@
               <div class="ch-info-front ch-merchant"></div>
               <div class="ch-info-back">
                 <a href = "<%= @sign_url %>">
-                  <h3>Marchands</h3>
+                  <h3>Particulier</h3>
                   <p>Une seule intégration pour bénéficier de tous les moyens de paiements connectés à PayMoney.<br />Plus +</p>
                 </a>
               </div>

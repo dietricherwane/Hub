@@ -12,6 +12,10 @@ module ApplicationHelper
     flash_class(level, "session_")
   end
 
+  def generic_flash_class(level)
+    flash_class(level, "")
+  end
+
   def field_class(my_object, my_field)
     if my_object.errors.blank?
       "form-control"

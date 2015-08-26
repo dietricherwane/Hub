@@ -15,6 +15,196 @@ class Users::RegistrationsController < Devise::RegistrationsController
     respond_with self.resource
   end
 
+  def new_pos_account
+    build_resource({})
+
+    @pos_account_type = PosAccountType.where("token = 'a3fde11549ed'")
+
+    init_form
+  end
+
+  # Create merchant pos account
+  def create_pos_account
+    @pos_account_type = PosAccountType.where("token = 'a3fde11549ed'")
+
+    init_form
+
+    pos_account_type = PosAccountType.find_by_id(params[:user][:pos_account_type_id])
+
+    build_resource(params[:user].merge({profile_id: Profile.find_by_name(pos_account_type.name).id, pos_account_type_id: pos_account_type.id, company: params[:user][:company], rib: params[:user][:rib], bank_code: params[:user][:bank_code], wicket_code: params[:user][:wicket_code], account_number: params[:user][:account_number], activities_description: params[:user][:activities_description], certified_agent_id: SecureRandom.hex(8), identification_token: DateTime.now.to_i}))
+
+    if resource.save
+      # Création de lid agent agréé sur paymoney
+      if (pos_account_type.name rescue nil) == "POS marchand"
+        account_type = "OTpPcVxO"
+      else
+        account_type = "jVUdVQBK"
+      end
+
+      request = Typhoeus::Request.new(URI.escape("#{Parameter.first.paymoney_url}/PAYMONEY_WALLET/rest/create_compte/#{account_type}/#{resource.firstname}/#{resource.lastname}/#{Date.today}/#{resource.email}/#{resource.identification_token}/#{resource.mobile_number}/#{resource.bank_code}/#{resource.wicket_code}/#{resource.account_number}/#{resource.rib}/#{resource.country.name}"), followlocation: true, method: :get)
+
+      clown = resource.clone
+
+      request.on_complete do |response|
+        if response.success?
+          response = JSON.parse(response.body) rescue nil
+          if response.blank?
+            resource.errors.add(:id, "Une erreur s'est produite, veuillez contacter l'administrateur.")
+          else
+            case (response["status"]["idStatus"].to_s rescue "")
+              when "1"
+                resource.update_attributes(created_on_paymoney_wallet: true, paymoney_account_number: response["compteNumero"], paymoney_password: response["comptePassword"], paymoney_token: response["compteLibelle"])
+              when "4"
+                resource.errors.add(:id, "Ce compte existe déjà.")
+
+                clown.delete
+              else
+                resource.errors.add(:id, "Une erreur inconnue s'est produite, veuillez contacter l'administrateur. Statut: #{response["status"]["idStatus"].to_s rescue ""} Message: #{response["status"]["idStatus"].to_s rescue ""}")
+                clown.delete
+            end
+          end
+        else
+          clown.delete
+          resource.errors.add(:id, "La ressource n'est pas disponible, veuillez contacter l'administrateur.")
+        end
+      end
+
+      request.run
+
+      # Création de lid agent agréé sur paymoney wallet pour les marchands
+      if ((pos_account_type.name rescue nil) == "POS marchand" ) && (resource.created_on_paymoney_wallet rescue nil) == true
+        request = Typhoeus::Request.new("#{Parameter.first.paymoney_wallet_url}/api/86d138798bc43ed59e5207c68e864564/#{resource.certified_agent_id}//#{resource.paymoney_account_number}/#{resource.paymoney_token}", followlocation: true, method: :get)
+
+        request.on_complete do |response|
+          if response.success?
+            if (request.response.body rescue nil) == "1"
+              resource.update_attribute(:created_on_paymoney_wallet, true)
+              flash.now[:success] = "Le compte a été correctment créé. Un email de notification a été envoyé à l'utilisateur. Il devra l'utiliser pour activer son compte."
+              build_resource({})
+            else
+            end
+          end
+        end
+
+        request.run
+      end
+    else
+      clean_up_passwords resource
+    end
+
+
+    #render text: "#{Parameter.first.paymoney_url}/PAYMONEY_WALLET/rest/create_compte/#{account_type}/#{resource.firstname}/#{resource.lastname}/null/#{resource.email}/#{resource.identification_token}/#{resource.mobile_number}/#{resource.bank_code}/#{resource.wicket_code}/#{resource.account_number}/#{resource.rib}/#{resource.country.name}"
+    render :new_pos_account
+  end
+
+  def new_private_pos_account
+    build_resource({})
+
+    @pos_account = User.find_by_certified_agent_id(params[:certified_agent_id])
+
+    if @pos_account.blank?
+      render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
+    else
+      @pos_account_type = PosAccountType.where("token = '57d3c9d284c0'")
+      init_form
+    end
+  end
+
+  # Create merchant pos account
+  def create_private_pos_account
+    @pos_account_type = PosAccountType.where("token = '57d3c9d284c0'")
+    @pos_account = User.find_by_certified_agent_id(params[:certified_agent_id])
+
+    init_form
+
+    pos_account_type = PosAccountType.find_by_id(params[:user][:pos_account_type_id])
+
+    build_resource(params[:user].merge({profile_id: Profile.find_by_name(pos_account_type.name).id, pos_account_type_id: pos_account_type.id, company: params[:user][:company], rib: params[:user][:rib], bank_code: params[:user][:bank_code], wicket_code: params[:user][:wicket_code], account_number: params[:user][:account_number], activities_description: params[:user][:activities_description], certified_agent_id: params[:certified_agent_id], sub_certified_agent_id: SecureRandom.hex(9), identification_token: DateTime.now.to_i}))
+
+    if resource.save
+      # Création de lid agent agréé sur paymoney
+      if (pos_account_type.name rescue nil) == "POS marchand"
+        account_type = "OTpPcVxO"
+      else
+        account_type = "jVUdVQBK"
+      end
+
+      request = Typhoeus::Request.new(URI.escape("#{Parameter.first.paymoney_url}/PAYMONEY_WALLET/rest/create_compte_pariculier/#{account_type}/#{resource.firstname}/#{resource.lastname}/#{Date.today}/#{resource.email}/#{resource.identification_token}/#{resource.mobile_number}/#{resource.bank_code}/#{resource.wicket_code}/#{resource.account_number}/#{resource.rib}/#{@pos_account.paymoney_token}/#{resource.country.name}"), followlocation: true, method: :get)
+
+      clown = resource.clone
+
+      request.on_complete do |response|
+        if response.success?
+          response = JSON.parse(response.body) #rescue nil
+          if response.blank?
+            resource.errors.add(:id, "Une erreur s'est produite, veuillez contacter l'administrateur.")
+          else
+            case (response["status"]["idStatus"].to_s rescue "")
+              when "1"
+                resource.update_attributes(created_on_paymoney_wallet: true, paymoney_account_number: response["compteNumero"], paymoney_password: response["comptePassword"], paymoney_token: response["compteLibelle"])
+              when "4"
+                resource.errors.add(:id, "Ce compte existe déjà.")
+
+                clown.delete
+              else
+                resource.errors.add(:id, "Une erreur inconnue s'est produite, veuillez contacter l'administrateur. Statut: #{response["status"]["idStatus"].to_s rescue ""} Message: #{response["status"]["idStatus"].to_s rescue ""}")
+                clown.delete
+            end
+          end
+        else
+          clown.delete
+          resource.errors.add(:id, "La ressource n'est pas disponible, veuillez contacter l'administrateur.")
+        end
+      end
+
+      request.run
+
+      # Création de lid agent agréé sur paymoney wallet pour les marchands
+      if ((pos_account_type.name rescue nil) == "POS particulier" ) && (resource.created_on_paymoney_wallet rescue nil) == true
+        request = Typhoeus::Request.new("#{Parameter.first.paymoney_wallet_url}/api/86d138798bc43ed59e5207c68e864564/#{resource.certified_agent_id}/#{resource.sub_certified_agent_id}/#{resource.paymoney_account_number}/#{resource.paymoney_token}", followlocation: true, method: :get)
+
+        request.on_complete do |response|
+          if response.success?
+            if (request.response.body rescue nil) == "1"
+              resource.update_attribute(:created_on_paymoney_wallet, true)
+              flash.now[:success] = "Le compte a été correctment créé. Un email de notification a été envoyé à l'utilisateur. Il devra l'utiliser pour activer son compte."
+              build_resource({})
+            else
+            end
+          end
+        end
+
+        request.run
+      end
+    else
+      clean_up_passwords resource
+    end
+
+
+    #render text: "#{Parameter.first.paymoney_url}/PAYMONEY_WALLET/rest/create_compte/#{account_type}/#{resource.firstname}/#{resource.lastname}/null/#{resource.email}/#{resource.identification_token}/#{resource.mobile_number}/#{resource.bank_code}/#{resource.wicket_code}/#{resource.account_number}/#{resource.rib}/#{resource.country.name}"
+    render :new_private_pos_account
+  end
+
+  def list_merchant_pos_account
+    @pos_list = "active"
+    @merchant_pos_accounts = PosAccountType.find_by_token("a3fde11549ed").users.order("created_at DESC").page(params[:page])
+  end
+
+  def list_private_pos_account
+    @pos_list = "active"
+    @merchant_pos_account = User.find_by_certified_agent_id(params[:certified_agent_id])
+
+    if @merchant_pos_account.blank?
+      render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
+    else
+      @private_pos_accounts = User.where("certified_agent_id = '#{params[:certified_agent_id]}' AND  sub_certified_agent_id IS NOT NULL AND sub_certified_agent_id <> ''").order("created_at DESC").page(params[:page])
+    end
+  end
+
+  def store_error_code(error_code, error_message)
+    #resource.update_attributes()
+  end
+
   # POST /resource
   def create
     init_form
@@ -93,6 +283,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def init_form
     @countries = Country.all
+    @pos_active = "active"
   end
 
   protected
