@@ -37,7 +37,7 @@
     </p>
     <div class = "divider3"></div>
     <p>
-      <b>Numéro de compte:</b><br /> <%= @merchant_pos_account.account_number %>
+      <b>Numéro de compte:</b><br /> <%= @private_pos_account.account_number %>
     </p>
     <p>
       <b>Code bancaire:</b><br /> <%= @private_pos_account.bank_code %>
@@ -50,13 +50,16 @@
     </p>
     <div class = "divider3"></div>
     <p>
+      <b>Id sous-agent agréé:</b><br /> <%= @private_pos_account.sub_certified_agent_id %>
+    </p>
+    <p>
       <b>Date de création:</b><br /> <%= @private_pos_account.created_at.strftime("%d-%m-%Y") %> à <%= @private_pos_account.created_at.strftime("%Hh %Mmn") %>
     </p>
   </div>
   <div class="sidebar six columns">
     <h2 class = "sb_header">Informations liées à Paymoney</h2>
     <p>
-      <b>Numéro de compte:</b><br /> <%= @merchant_pos_account.paymoney_account_number %>
+      <b>Numéro de compte:</b><br /> <%= @private_pos_account.paymoney_account_number %>
     </p>
     <p>
       <b>Mot de passe:</b><br /> <%= @private_pos_account.paymoney_password %>
