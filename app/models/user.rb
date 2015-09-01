@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   has_many :ecommerces
   belongs_to :country
   belongs_to :pos_account_type
+  has_many :paymoney_wallet_logs
 
 
   # Accessible fields
@@ -43,15 +44,15 @@ class User < ActiveRecord::Base
   end
 
   # Validations
-  validates :firstname, :lastname, :country_id, :address, :mobile_number, :company, presence: true
+  validates :firstname, :lastname, :country_id, :address, :mobile_number, presence: true
   validates :firstname, :lastname, length: {maximum: 100}
   validates :phone_number, :mobile_number, length: {minimum: 8, maximum: 16, allow_blank: true}
-  validates :rib, length: {is: 2}
-  validates :bank_code, :wicket_code, length: {is: 5}
-  validates :account_number, length: {is: 12}
+  #validates :rib, length: {is: 2}
+  #validates :bank_code, :wicket_code, length: {is: 5}
+  #validates :account_number, length: {is: 12}
   validates :company, length: {minimum: 3, allow_blank: true}
   validates :phone_number, :mobile_number, numericality: {allow_blank: true}
-  #validate :rib_mandatory_for_merchants, :bank_code_mandatory_for_merchants, :wicket_code_mandatory_for_merchants, :account_number_mandatory_for_merchants
+  validate :rib_mandatory_for_merchants, :bank_code_mandatory_for_merchants, :wicket_code_mandatory_for_merchants, :account_number_mandatory_for_merchants
 
   # Custom functions
   def admin?
@@ -60,6 +61,10 @@ class User < ActiveRecord::Base
 
   def merchant?
     return profile.shortcut == "MER"
+  end
+
+  def posm?
+    return profile.shortcut == "POSM"
   end
 
   def profile_shortcut
@@ -75,26 +80,32 @@ class User < ActiveRecord::Base
   end
 
   def rib_mandatory_for_merchants
-    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && rib.blank?
-      errors.add(:rib, "ne peut pas être vide")
+    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && rib.blank? && (rib.length != 2)
+      errors.add(:rib, "ne peut pas être vide et doit être sur 2 caractères")
     end
   end
 
   def bank_code_mandatory_for_merchants
-    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && bank_code.blank?
-      errors.add(:bank_code, "ne peut pas être vide")
+    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && bank_code.blank? && (bank_code.length != 5)
+      errors.add(:bank_code, "ne peut pas être vide et doit être sur 5 caractères")
     end
   end
 
   def wicket_code_mandatory_for_merchants
-    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && wicket_code.blank?
-      errors.add(:wicket_code, "ne peut pas être vide")
+    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && wicket_code.blank? && (wicket_code.length != 5)
+      errors.add(:wicket_code, "ne peut pas être vide et doit être sur 5 caractères")
     end
   end
 
   def account_number_mandatory_for_merchants
-    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && account_number.blank?
-      errors.add(:account_number, "ne peut pas être vide")
+    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && account_number.blank? && (account_number.length != 12)
+      errors.add(:account_number, "ne peut pas être vide et doit être sur 12 caractères")
+    end
+  end
+
+  def company_mandatory_for_merchants
+    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && company.blank?
+      errors.add(:company, "ne peut pas être vide")
     end
   end
 

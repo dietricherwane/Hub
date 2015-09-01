@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150824172101) do
+ActiveRecord::Schema.define(version: 20150831080546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -84,6 +84,27 @@ ActiveRecord::Schema.define(version: 20150824172101) do
     t.datetime "updated_at"
     t.string   "paymoney_wallet_url"
     t.string   "paymoney_url"
+  end
+
+  create_table "paymoney_wallet_logs", force: true do |t|
+    t.string   "transaction_type"
+    t.string   "credit_amount"
+    t.string   "checkout_amount"
+    t.string   "otp"
+    t.string   "pin"
+    t.boolean  "status"
+    t.text     "error_log"
+    t.text     "response_log"
+    t.string   "account_number"
+    t.string   "remote_ip_address"
+    t.string   "agent"
+    t.string   "sub_agent"
+    t.string   "transaction_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "thumb"
+    t.float    "fee"
   end
 
   create_table "pos_account_types", force: true do |t|

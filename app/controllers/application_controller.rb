@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
 	      "administrator"
 	    when "MER"
 	      "merchant"
+	    when "POSM"
+	      "posm"
 	    else
 	      "session"
       end
@@ -25,6 +27,10 @@ class ApplicationController < ActionController::Base
 		else
 		  if current_user.admin?
 		    ecommerces_waiting_qualification_path
+		  else
+		    if current_user.posm?
+		      posm_index_path
+		    end
 		  end
 		end
 	end

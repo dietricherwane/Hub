@@ -1,0 +1,60 @@
+<script>
+  $(document).ready(function() {
+    $('#example').DataTable();
+  } );
+</script>
+
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title">Profil du POS <%= current_user.company %> </p>
+      <ul class="breadcrumbs">
+        <li><a><%= render "shared/display_user_name" %></a></li>
+        <li><a href="<%= root_path %>">Accueil</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="container main_content">
+  <div class="row">
+    <div class="sidebar twelve columns">
+      <table id="example" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+              <th>Type de transaction</th>
+              <th>Id</th>
+              <th>Date</th>
+              <th>Statut</th>
+              <th>Crédit</th>
+              <th>Débit</th>
+              <th>Numéro de compte</th>
+              <th>Sous agent</th>
+              <th>Timbre</th>
+              <th>Frais</th>
+            </tr>
+        </thead>
+        <tbody>
+          <% unless @transactions.blank? %>
+            <% @transactions.each do |transaction| %>
+              <tr>
+                  <th><%= transaction.transaction_type %></th>
+                  <th><%= transaction.transaction_id %></th>
+                  <th><%= transaction.created_at.strftime("%d-%m-%Y") %> à <%= transaction.created_at.strftime("%Hh %Mmn") %></th>
+                  <th><%= transaction.status ? "Succès" : "Echec" %></th>
+                  <th><%= transaction.credit_amount.to_i %></th>
+                  <th><%= transaction.checkout_amount.to_i %></th>
+                  <th><%= transaction.account_number %></th>
+                  <th><%= transaction.sub_agent %></th>
+                  <th><%= transaction.thumb.to_i %></th>
+                  <th><%= transaction.fee.to_i %></th>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+    </table>
+    </div>
+  </div>
+</div>
