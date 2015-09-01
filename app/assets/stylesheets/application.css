@@ -13,6 +13,7 @@
  *
  *  CSS
  *= require foundation.min
+ *= require dataTables.foundation.min
  *= require styles
  *= require titan/css/jquery.titanlighbox
  *

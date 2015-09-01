@@ -115,6 +115,51 @@
     </section>
   </nav>
 <% end %>
+
+<% if (current_user.posm? rescue false) %>
+  <nav class="top-bar">
+    <ul>
+      <!-- RESPONSIVE NAVIGATION -->
+      <li class="name">
+        <h1><a href="#"> Veuillez choisir une page </a></h1>
+      </li>
+      <li class="toggle-topbar"><a href="#"></a></li>
+      <!-- END RESPONSIVE NAVIGATION -->
+    </ul>
+    <section>
+      <ul class="right">
+        <li>
+          <a class="<%= @buy_active %>" href="<%= ((params[:controller] == 'home' && params[:action] == 'home') ? '' : root_path) %>#buyers">Achetez</a>
+        </li>
+        <li>
+          <a class="<%= @sell_active %>" href="<%= ((params[:controller] == 'home' && params[:action] == 'home') ? '' : root_path) %>#merchants">Vendez</a>
+        </li>
+        <li class = "has-dropdown">
+          <%= link_to "Profil du POS", "#", class: @pos_profile_active %>
+          <ul class = "dropdown">
+            <li class = "title back js-generated">
+              <h5>
+                <%= link_to "Profil du POS", "#" %>
+              </h5>
+            </li>
+            <li>
+              <a class="<%= @posm_active %>" href="<%= posm_index_path %>">Informations</a>
+            </li>
+            <li>
+              <a class="<%= @posm_transactions_active %>" href="<%= posm_transactions_path %>">Liste des transactions</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <%= link_to "Contacts", contact_path, class: @contact_active %>
+        </li>
+        <li>
+          <%= link_to "Déconnexion", destroy_user_session_path, :method => :delete %>
+        </li>
+      </ul>
+    </section>
+  </nav>
+<% end %>
 <!-- End admins nav bar -->
 <!-- Unregistered nav bar -->
 <% if current_user.blank? %>

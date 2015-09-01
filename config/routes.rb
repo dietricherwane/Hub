@@ -19,6 +19,9 @@ Hub::Application.routes.draw do
 
   devise_for :users, :controllers => {:registrations => "users/registrations", :sessions => "users/sessions", :passwords => "users/passwords", :confirmations => "users/confirmations"}
 
+  get "pos" => "posm#index", as: :posm_index
+  get "pos/transactions" => "posm#transactions_log", as: :posm_transactions
+
   get "merchant/ecommerce" => "ecommerces#index", as: :merchant_ecommerce
   post "merchant/ecommerce/create" => "ecommerces#create", as: :merchant_create_ecommerce
   get "merchant/ecommerce/edit" => "ecommerces#edit", as: :merchant_edit_ecommerce
@@ -45,6 +48,8 @@ Hub::Application.routes.draw do
   get "admin/ecommerce/failed_transactions_per_wallet/:authentication_token/:ecommerce_token" => "ecommerces#admin_failed_transactions_per_wallet", as: :admin_failed_transactions_per_wallet
 
   get "ecommerce/get_logo/:token" => "ecommerces#get_logo"
+
+  get "/api/367419f5968800cd/paymoney_wallet/store_log" => "paymoney_wallet_logs#store_transaction_log"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
