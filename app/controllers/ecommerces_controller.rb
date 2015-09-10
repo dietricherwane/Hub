@@ -44,7 +44,7 @@ class EcommercesController < ApplicationController
       @id = @ecommerce.id
       initialize_form
 
-      request = Typhoeus::Request.new("#{parameters.back_office_url}/service/update", params: {service_token: @ecommerce.token,url_on_success: params[:ecommerce][:pdt_url], url_on_error: params[:ecommerce][:pdt_url], url_to_ipn: params[:ecommerce][:ipn_url], url_on_basket_already_paid: params[:ecommerce][:order_already_paid_url], authentication_token: "7a57b200d5be13837de15874300b16ee"}, method: :get, followlocation: true)
+      request = Typhoeus::Request.new("#{parameters.back_office_url}/service/update", params: {service_token: @ecommerce.token,url_on_success: params[:ecommerce][:pdt_url], url_on_error: params[:ecommerce][:pdt_url], url_to_ipn: params[:ecommerce][:ipn_url], url_on_basket_already_paid: params[:ecommerce][:order_already_paid_url], authentication_token: "7a57b200d5be13837de15874300b16ee"}, method: :get, followlocation: true, ssl_verifypeer: false, ssl_verifyhost: 0)
       request.run
 
       if @ecommerce.update(params[:ecommerce].except(fields_to_except)) && request.response = "f26e0312bd863867f4f1e6b83483644b"
@@ -63,7 +63,7 @@ class EcommercesController < ApplicationController
     ecommerce_token = current_user.ecommerces.first.token rescue ""
     parameters = Parameter.first
 
-    request = Typhoeus::Request.new("#{parameters.back_office_url}/wallets/used_per_country/#{ecommerce_token}", method: :post, followlocation: true)
+    request = Typhoeus::Request.new("#{parameters.back_office_url}/wallets/used_per_country/#{ecommerce_token}", method: :post, followlocation: true, ssl_verifypeer: false, ssl_verifyhost: 0)
     request.run
 
     @wallets_per_countries = (JSON.parse(request.response.body) rescue nil)
@@ -82,7 +82,7 @@ class EcommercesController < ApplicationController
     ecommerce_token = current_user.ecommerces.first.token rescue ""
     @wallet = Wallet.find_by_authentication_token(authentication_token)
 
-    request = Typhoeus::Request.new("#{parameters.back_office_url}/wallet/#{url}/#{ecommerce_token}/#{authentication_token}", method: :post, followlocation: true)
+    request = Typhoeus::Request.new("#{parameters.back_office_url}/wallet/#{url}/#{ecommerce_token}/#{authentication_token}", method: :post, followlocation: true, ssl_verifypeer: false, ssl_verifyhost: 0)
     request.run
 
     @transactions = (JSON.parse(%Q/#{request.response.body}/))
@@ -173,7 +173,7 @@ class EcommercesController < ApplicationController
     ecommerce = Ecommerce.find_by_id(params[:ecommerce_id])
 
     if ecommerce
-      request = Typhoeus::Request.new("#{parameters.back_office_url}/service/qualify", params: {name: ecommerce.name, token: ecommerce.token, pdt_url: ecommerce.pdt_url, ipn_url: ecommerce.ipn_url, order_already_paid: ecommerce.order_already_paid_url, wallets: "#{ecommerce.available_wallets.map {|m| [m.wallet.authentication_token, m.published]}}"}, method: :post, followlocation: true)
+      request = Typhoeus::Request.new("#{parameters.back_office_url}/service/qualify", params: {name: ecommerce.name, token: ecommerce.token, pdt_url: ecommerce.pdt_url, ipn_url: ecommerce.ipn_url, order_already_paid: ecommerce.order_already_paid_url, wallets: "#{ecommerce.available_wallets.map {|m| [m.wallet.authentication_token, m.published]}}"}, method: :post, followlocation: true, ssl_verifypeer: false, ssl_verifyhost: 0)
       request.run
       response = (JSON.parse(request.response.body) rescue nil)
 
@@ -201,7 +201,7 @@ class EcommercesController < ApplicationController
     @ecommerce = Ecommerce.find_by_token(params[:ecommerce_token])
     parameters = Parameter.first
 
-    request = Typhoeus::Request.new("#{parameters.back_office_url}/wallets/used_per_country/#{@ecommerce.token}", method: :post, followlocation: true)
+    request = Typhoeus::Request.new("#{parameters.back_office_url}/wallets/used_per_country/#{@ecommerce.token}", method: :post, followlocation: true, ssl_verifypeer: false, ssl_verifyhost: 0)
     request.run
 
     @wallets_per_countries = (JSON.parse(request.response.body) rescue nil)
@@ -219,7 +219,7 @@ class EcommercesController < ApplicationController
     parameters = Parameter.first
     @wallet = Wallet.find_by_authentication_token(authentication_token)
 
-    request = Typhoeus::Request.new("#{parameters.back_office_url}/wallet/#{url}/#{ecommerce_token}/#{authentication_token}", method: :post, followlocation: true)
+    request = Typhoeus::Request.new("#{parameters.back_office_url}/wallet/#{url}/#{ecommerce_token}/#{authentication_token}", method: :post, followlocation: true, ssl_verifypeer: false, ssl_verifyhost: 0)
     request.run
 
     @transactions = (JSON.parse(%Q/#{request.response.body}/) rescue nil)
@@ -251,7 +251,7 @@ class EcommercesController < ApplicationController
     if @ecommerce.qualified_at.blank?
       flash.now[:notice] = "Le wallet a été #{message}"
     else
-      request = Typhoeus::Request.new("#{parameters.back_office_url}/available_wallet/enable_disable", params: {service_token: (available_wallet.ecommerce.token rescue ""), wallet_token: (available_wallet.wallet.authentication_token rescue ""), status: status}, method: :post, followlocation: true)
+      request = Typhoeus::Request.new("#{parameters.back_office_url}/available_wallet/enable_disable", params: {service_token: (available_wallet.ecommerce.token rescue ""), wallet_token: (available_wallet.wallet.authentication_token rescue ""), status: status}, method: :post, followlocation: true, ssl_verifypeer: false, ssl_verifyhost: 0)
       request.run
       response = (JSON.parse(request.response.body) rescue nil)
 
@@ -304,7 +304,7 @@ class EcommercesController < ApplicationController
 
   def enable_disable_on_back_office(message, status)
     parameters = Parameter.first
-    request = Typhoeus::Request.new("#{parameters.back_office_url}/service/enable_disable", params: {service_token: (@ecommerce.token rescue ""), status: status}, method: :post, followlocation: true)
+    request = Typhoeus::Request.new("#{parameters.back_office_url}/service/enable_disable", params: {service_token: (@ecommerce.token rescue ""), status: status}, method: :post, followlocation: true, ssl_verifypeer: false, ssl_verifyhost: 0)
     request.run
     response = (JSON.parse(request.response.body) rescue nil)
 
@@ -317,7 +317,7 @@ class EcommercesController < ApplicationController
 
   def get_wallets_per_country
     parameters = Parameter.first
-    request = Typhoeus::Request.new("#{parameters.back_office_url}/wallets/available", method: :post, followlocation: true)
+    request = Typhoeus::Request.new("#{parameters.back_office_url}/wallets/available", method: :post, followlocation: true, ssl_verifypeer: false, ssl_verifyhost: 0)
     request.run
     response = (request.response.body rescue nil)
 
