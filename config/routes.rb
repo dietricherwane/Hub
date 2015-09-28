@@ -13,6 +13,7 @@ Hub::Application.routes.draw do
     post "/private_pos_account/create" => "users/registrations#create_private_pos_account", as: :create_private_pos_account
     patch "/private_pos_account/create" => "users/registrations#create_private_pos_account"
     get "/private_pos_account/list/:certified_agent_id" => "users/registrations#list_private_pos_account", as: :list_private_pos_account
+    get "/api/wari/create_private_pos" => "users/registrations#api_create_wari_private_pos"
   end
 
   get 'contacts' => 'home#contact', as: :contact

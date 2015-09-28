@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
 
 
   # Accessible fields
-  attr_accessible :firstname, :lastname, :country_id, :email, :address, :phone_number, :mobile_number, :profile_id, :published, :password, :password_confirmation, :pos_account_type_id, :company, :rib, :activities_description, :certified_agent_id, :created_on_paymoney_wallet, :identification_token, :bank_code, :wicket_code, :account_number, :paymoney_password, :paymoney_token, :sub_certified_agent_id, :paymoney_account_number
+  attr_accessible :firstname, :lastname, :country_id, :email, :address, :phone_number, :mobile_number, :profile_id, :published, :password, :password_confirmation, :pos_account_type_id, :company, :rib, :activities_description, :certified_agent_id, :created_on_paymoney_wallet, :identification_token, :bank_code, :wicket_code, :account_number, :paymoney_password, :paymoney_token, :sub_certified_agent_id, :paymoney_account_number, :wari_sub_certified_agent_id
 
   # Renaming attributes into more friendly text
   HUMANIZED_ATTRIBUTES = {
