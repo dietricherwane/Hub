@@ -31,7 +31,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     pos_account_type = PosAccountType.find_by_id(params[:user][:pos_account_type_id])
 
-    build_resource(params[:user].merge({profile_id: Profile.find_by_name(pos_account_type.name).id, pos_account_type_id: pos_account_type.id, company: params[:user][:company], rib: params[:user][:rib], bank_code: params[:user][:bank_code], wicket_code: params[:user][:wicket_code], account_number: params[:user][:account_number], activities_description: params[:user][:activities_description], certified_agent_id: SecureRandom.hex(8), identification_token: DateTime.now.to_i}))
+    build_resource(params[:user].merge({profile_id: Profile.find_by_name(pos_account_type.name).id, pos_account_type_id: pos_account_type.id, company: params[:user][:company], rib: params[:user][:rib], bank_code: params[:user][:bank_code], wicket_code: params[:user][:wicket_code], account_number: params[:user][:account_number], activities_description: params[:user][:activities_description], certified_agent_id: SecureRandom.hex(8), identification_token: Digest::SHA1.hexdigest([DateTime.now.iso8601(6), rand].join)}))
 
     if resource.save
       # Création de lid agent agréé sur paymoney
@@ -73,7 +73,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
       # Création de lid agent agréé sur paymoney wallet pour les marchands
       if ((pos_account_type.name rescue nil) == "POS marchand" ) && (resource.created_on_paymoney_wallet rescue nil) == true
-        request = Typhoeus::Request.new("#{Parameter.first.paymoney_wallet_url}/api/86d138798bc43ed59e5207c68e864564/#{resource.certified_agent_id}//#{resource.paymoney_account_number}/#{resource.paymoney_token}", followlocation: true, method: :get)
+        request = Typhoeus::Request.new("#{Parameter.first.paymoney_wallet_url}/api/86d138798bc43ed59e5207c68e864564/#{resource.certified_agent_id}/#{resource.paymoney_account_number}/#{resource.paymoney_token}", followlocation: true, method: :get)
 
         request.on_complete do |response|
           if response.success?
@@ -119,9 +119,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     pos_account_type = PosAccountType.find_by_id(params[:user][:pos_account_type_id])
 
-    build_resource(params[:user].merge({profile_id: Profile.find_by_name(pos_account_type.name).id, pos_account_type_id: pos_account_type.id, company: params[:user][:company], rib: params[:user][:rib], bank_code: params[:user][:bank_code], wicket_code: params[:user][:wicket_code], account_number: params[:user][:account_number], activities_description: params[:user][:activities_description], certified_agent_id: params[:certified_agent_id], sub_certified_agent_id: SecureRandom.hex(9), identification_token: DateTime.now.to_i}))
+    build_resource(params[:user].merge({profile_id: Profile.find_by_name(pos_account_type.name).id, pos_account_type_id: pos_account_type.id, company: params[:user][:company], rib: params[:user][:rib], bank_code: params[:user][:bank_code], wicket_code: params[:user][:wicket_code], account_number: params[:user][:account_number], activities_description: params[:user][:activities_description], certified_agent_id: params[:certified_agent_id], sub_certified_agent_id: SecureRandom.hex(9), identification_token: Digest::SHA1.hexdigest([DateTime.now.iso8601(6), rand].join)}))
 
     if resource.save
+=begin
       # Création de lid agent agréé sur paymoney
       if (pos_account_type.name rescue nil) == "POS marchand"
         account_type = "OTpPcVxO"
@@ -158,6 +159,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       end
 
       request.run
+=end
 
       # Création de lid agent agréé sur paymoney wallet pour les marchands
       if ((pos_account_type.name rescue nil) == "POS particulier" ) && (resource.created_on_paymoney_wallet rescue nil) == true
@@ -183,6 +185,62 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     #render text: "#{Parameter.first.paymoney_url}/PAYMONEY_WALLET/rest/create_compte/#{account_type}/#{resource.firstname}/#{resource.lastname}/null/#{resource.email}/#{resource.identification_token}/#{resource.mobile_number}/#{resource.bank_code}/#{resource.wicket_code}/#{resource.account_number}/#{resource.rib}/#{resource.country.name}"
     render :new_private_pos_account
+  end
+
+  def api_create_wari_private_pos
+    mobile_number = params[:phone_number]
+    wari_sub_certified_agent_id = params[:wari_sub_certified_agent_id]
+    email = "#{Digest::SHA1.hexdigest([DateTime.now.iso8601(6), rand].join)[0..10]}@wari.com"
+    status = '0'
+    pos_account = User.find_by_certified_agent_id('e24624454e6f0cd5')
+
+    wari_private_pos = User.new(firstname: 'Wari', lastname: 'Wari', profile_id: Profile.find_by_shortcut('POSP').id, pos_account_type_id: PosAccountType.find_by_token('57d3c9d284c0').id, country_id: Country.find_by_code('CIV').id, mobile_number: mobile_number, company: 'Wari', rib: 'nu', bank_code: 'nulll', wicket_code: 'nulll', account_number: 'nullllllllll', certified_agent_id: '92305fc3bb2d66f2', sub_certified_agent_id: SecureRandom.hex(9), identification_token: Digest::SHA1.hexdigest([DateTime.now.iso8601(6), rand].join), email: email, password: 'wariprivatepos', password_confirmation: 'wariprivatepos', address: 'None', wari_sub_certified_agent_id: wari_sub_certified_agent_id)
+
+    if wari_private_pos.save
+      request = Typhoeus::Request.new(URI.escape("#{Parameter.first.paymoney_url}/PAYMONEY_WALLET/rest/create_compte_pariculier/jVUdVQBK/#{wari_private_pos.firstname}/#{wari_private_pos.lastname}/#{Date.today}/#{wari_private_pos.email}/#{wari_private_pos.identification_token}/#{wari_private_pos.mobile_number}/nulll/nulll/nullllllllll/nu/#{pos_account.paymoney_token}/#{wari_private_pos.country.name}"), followlocation: true, method: :get)
+
+      request.on_complete do |response|
+        if response.success?
+          response = JSON.parse(response.body) rescue nil
+          if !response.blank?
+            if (response["status"]["idStatus"].to_s rescue "") == "1"
+              wari_private_pos.update_attributes(created_on_paymoney_wallet: true, paymoney_account_number: response["compteNumero"], paymoney_password: response["comptePassword"], paymoney_token: response["compteLibelle"])
+
+              status = '1'
+
+            else
+              wari_private_pos.delete
+            end
+          end
+        else
+          wari_private_pos.delete
+        end
+      end
+
+      request.run
+    end
+
+    # Create the private pos on paymoney wallet
+    #if !(status == '1' )
+    if !(status == '1' && create_sub_certified_agent_id_on_paymoney_wallet(wari_private_pos))
+      status = '0'
+      wari_private_pos.delete
+    end
+
+    render text: status
+  end
+
+  # Create sub certified agent id on Paymoney Wallet
+  def create_sub_certified_agent_id_on_paymoney_wallet(wari_private_pos)
+    response = (RestClient.get "#{Parameter.first.paymoney_wallet_url}/api/86d138798bc43ed59e5207c68e864564/#{wari_private_pos.certified_agent_id}/#{wari_private_pos.sub_certified_agent_id}/#{wari_private_pos.wari_sub_certified_agent_id}/#{wari_private_pos.paymoney_account_number}/#{wari_private_pos.paymoney_token}" rescue nil)
+    response_status = false
+
+    if (response.body rescue nil) == '1'
+      wari_private_pos.update_attribute(:created_on_paymoney_wallet, true)
+      response_status = true
+    end
+
+    return response_status
   end
 
   def list_merchant_pos_account
