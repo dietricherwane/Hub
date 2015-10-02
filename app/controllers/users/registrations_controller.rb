@@ -26,6 +26,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # Create merchant pos account
   def create_pos_account
     @pos_account_type = PosAccountType.where("token = 'a3fde11549ed'")
+    saved = false
 
     init_form
 
@@ -79,22 +80,30 @@ class Users::RegistrationsController < Devise::RegistrationsController
           if response.success?
             if (request.response.body rescue nil) == "1"
               resource.update_attribute(:created_on_paymoney_wallet, true)
-              flash.now[:success] = "Le compte a été correctment créé. "
-              build_resource({})
+              flash.now[:success] = "Le compte a été correctement créé. "
             else
+
             end
           end
         end
 
         request.run
       end
+
+      saved = true
     else
       clean_up_passwords resource
     end
 
 
     #render text: "#{Parameter.first.paymoney_url}/PAYMONEY_WALLET/rest/create_compte/#{account_type}/#{resource.firstname}/#{resource.lastname}/null/#{resource.email}/#{resource.identification_token}/#{resource.mobile_number}/#{resource.bank_code}/#{resource.wicket_code}/#{resource.account_number}/#{resource.rib}/#{resource.country.name}"
-    render :new_pos_account
+    if current_user.blank? && saved == true
+      sign_in(resource_name, resource)
+      redirect_to posm_index_path(certified_agent_id: resource.certified_agent_id)
+    else
+      build_resource({})
+      render :new_pos_account
+    end
   end
 
   def new_private_pos_account
@@ -169,7 +178,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
           if response.success?
             if (request.response.body rescue nil) == "1"
               resource.update_attribute(:created_on_paymoney_wallet, true)
-              flash.now[:success] = "Le compte a été correctment créé. "
+              flash.now[:success] = "Le compte a été correctement créé. "
               build_resource({})
             else
             end
