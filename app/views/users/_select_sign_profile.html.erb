@@ -51,12 +51,13 @@
         </div>
       </li>
       <li>
-        <div class="ch-item ch-merchant">
+        <div class="ch-item ch-pos">
           <div class="ch-info-wrap">
             <div class="ch-info">
-              <div class="ch-info-front ch-merchant"></div>
+              <div class="ch-info-front ch-pos"></div>
               <div class="ch-info-back">
-                <a href = "/users/pos_account">
+                <a href = "<%= (@sign_action == 'Connectez') ? @sign_url : '/users/pos_account' %>">
+                <!--<a href = "/users/pos_account">-->
                   <h3>POS</h3>
                   <p>Créer un POS marchand et y agréger des POS particuliers<br />Plus +</p>
                 </a>
