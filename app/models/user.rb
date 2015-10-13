@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
     phone_number: "Numéro de téléphone fixe",
     mobile_number: "Numéro de téléphone mobile",
     password_confirmation: "Confirmation de mot de passe",
-    rib: "Clé RIB",
+    rib: "Clé rib",
     bank_code: "Code banque",
     wicket_code: "Code guichet",
     account_number: "Compte client",
