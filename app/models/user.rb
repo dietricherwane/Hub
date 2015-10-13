@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
     rib: "Clé rib",
     bank_code: "Code banque",
     wicket_code: "Code guichet",
-    account_number: "Compte client",
+    account_number: "Numéro de compte",
     paymoney_account_number: "Numéro de compte paymoney",
     activities_description: "Description des activités",
     created_at: "Compte créé le",
