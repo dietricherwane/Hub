@@ -20,8 +20,7 @@
       <%= devise_error_messages! %>
       <%= form_for(resource, as: resource_name, url: create_pos_account_path(resource_name)) do |f| %>
         <div class="form-group">
-          <%= f.label :pos_account_type_id %><br />
-          <%= f.collection_select :pos_account_type_id, @pos_account_type, :id, :name, options ={}, html_options = {class: "form-control"} %>
+          <%= f.collection_select :pos_account_type_id, @pos_account_type, :id, :name, options ={}, html_options = {class: "form-control", style: "display:none;"} %>
         </div>
         <div class="form-group">
           <%= f.label :firstname %>
@@ -44,6 +43,10 @@
           <%= f.collection_select :country_id, @countries, :id, :name, options ={prompt: "Veuillez choisir votre pays"}, html_options = {class: "form-control"} %>
         </div>
         <div class="form-group">
+          <%= f.label :compensation_mode_id %><br />
+          <%= f.collection_select :compensation_mode_id, @compensation_modes, :id, :description, options ={prompt: "Mode de compensation"}, html_options = {class: "form-control"} %>
+        </div>
+        <div class="form-group">
           <%= f.label :bank_code %>
           <%= f.text_field :bank_code, class: "form-control", placeholder: "Veuillez entrer le code banque" %>
         </div>
@@ -57,7 +60,7 @@
         </div>
         <div class="form-group">
           <%= f.label :rib %>
-          <%= f.text_field :rib, class: "form-control", placeholder: "Veuillez entrer le RIB" %>
+          <%= f.text_field :rib, class: "form-control", placeholder: "Veuillez entrer la clé RIB" %>
         </div>
         <div class="form-group">
           <%= f.label :phone_number %>

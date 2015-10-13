@@ -4,10 +4,10 @@
   <div class="sidebar six columns">
     <h2 class = "sb_header">Informations liées au POS marchand</h2>
     <p>
-      <b><%= link_to "Créer un pos particulier", new_private_pos_account_path(@merchant_pos_account.certified_agent_id) %></b>
+      <b><%= link_to "Créer un pos particulier", new_private_pos_account_path(@merchant_pos_account.certified_agent_id), style: "color: blue; font-weight: bold;" %></b>
     </p>
     <p>
-      <b><%= link_to "Liste des pos particuliers", list_private_pos_account_path(@merchant_pos_account.certified_agent_id) %></b>
+      <b><%= link_to "Liste des pos particuliers", list_private_pos_account_path(@merchant_pos_account.certified_agent_id), style: "color: blue; font-weight: bold;" %></b>
     </p>
     <p>
       <b>Nom:</b><br /> <%= @merchant_pos_account.firstname %>
@@ -42,6 +42,9 @@
       <b>Pays:</b><br /> <%= @merchant_pos_account.country.name %>
     </p>
     <div class = "divider3"></div>
+    <p>
+      <b>Mode de compensation:</b><br /> <%= @merchant_pos_account.compensation_mode.description rescue "" %>
+    </p>
     <p>
       <b>Numéro de compte:</b><br /> <%= @merchant_pos_account.account_number %>
     </p>

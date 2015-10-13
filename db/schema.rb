@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150916174606) do
+ActiveRecord::Schema.define(version: 20151013081824) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,14 @@ ActiveRecord::Schema.define(version: 20150916174606) do
 
   create_table "banks", force: true do |t|
     t.string   "name",       limit: 100
+    t.boolean  "published"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "compensation_modes", force: true do |t|
+    t.string   "description"
+    t.string   "shortcut"
     t.boolean  "published"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -172,6 +180,7 @@ ActiveRecord::Schema.define(version: 20150916174606) do
     t.string   "sub_certified_agent_id"
     t.string   "paymoney_account_number"
     t.string   "wari_sub_certified_agent_id"
+    t.integer  "compensation_mode_id"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

@@ -101,7 +101,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       sign_in(resource_name, resource)
       redirect_to posm_index_path(certified_agent_id: resource.certified_agent_id)
     else
-      build_resource({})
+      #build_resource({})
       render :new_pos_account
     end
   end
@@ -128,7 +128,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     pos_account_type = PosAccountType.find_by_id(params[:user][:pos_account_type_id])
 
-    build_resource(params[:user].merge({profile_id: Profile.find_by_name(pos_account_type.name).id, pos_account_type_id: pos_account_type.id, company: params[:user][:company], rib: params[:user][:rib], bank_code: params[:user][:bank_code], wicket_code: params[:user][:wicket_code], account_number: params[:user][:account_number], activities_description: params[:user][:activities_description], certified_agent_id: params[:certified_agent_id], sub_certified_agent_id: SecureRandom.hex(9), identification_token: Digest::SHA1.hexdigest([DateTime.now.iso8601(6), rand].join)}))
+    build_resource(params[:user].merge({profile_id: Profile.find_by_name(pos_account_type.name).id, pos_account_type_id: pos_account_type.id, company: params[:user][:company], rib: params[:user][:rib], bank_code: params[:user][:bank_code], wicket_code: params[:user][:wicket_code], account_number: params[:user][:account_number], activities_description: params[:user][:activities_description], certified_agent_id: params[:certified_agent_id], sub_certified_agent_id: SecureRandom.hex(9), identification_token: Digest::SHA1.hexdigest([DateTime.now.iso8601(6), rand].join), password: "password", password_confirmation: "password"}))
 
     if resource.save
 =begin
@@ -350,6 +350,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   def init_form
     @countries = Country.all
+    @compensation_modes = CompensationMode.all
     @pos_active = "active"
   end
 

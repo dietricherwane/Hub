@@ -11,10 +11,11 @@ class User < ActiveRecord::Base
   belongs_to :country
   belongs_to :pos_account_type
   has_many :paymoney_wallet_logs
+  belongs_to :compensation_mode
 
 
   # Accessible fields
-  attr_accessible :firstname, :lastname, :country_id, :email, :address, :phone_number, :mobile_number, :profile_id, :published, :password, :password_confirmation, :pos_account_type_id, :company, :rib, :activities_description, :certified_agent_id, :created_on_paymoney_wallet, :identification_token, :bank_code, :wicket_code, :account_number, :paymoney_password, :paymoney_token, :sub_certified_agent_id, :paymoney_account_number, :wari_sub_certified_agent_id
+  attr_accessible :firstname, :lastname, :country_id, :email, :address, :phone_number, :mobile_number, :profile_id, :published, :password, :password_confirmation, :pos_account_type_id, :company, :rib, :activities_description, :certified_agent_id, :created_on_paymoney_wallet, :identification_token, :bank_code, :wicket_code, :account_number, :paymoney_password, :paymoney_token, :sub_certified_agent_id, :paymoney_account_number, :wari_sub_certified_agent_id, :compensation_mode_id
 
   # Renaming attributes into more friendly text
   HUMANIZED_ATTRIBUTES = {
@@ -22,21 +23,22 @@ class User < ActiveRecord::Base
     firstname: "Nom",
     lastname: "Prénom",
     country_id: "Pays",
-    company: "Entreprise",
+    company: "Raison sociale",
     email: "Email",
     address: "Adresse",
     pos_account_type_id: "Type de compte POS",
     phone_number: "Numéro de téléphone fixe",
     mobile_number: "Numéro de téléphone mobile",
     password_confirmation: "Confirmation de mot de passe",
-    rib: "RIB",
+    rib: "Clé RIB",
     bank_code: "Code banque",
     wicket_code: "Code guichet",
-    account_number: "Numéro de compte bancaire",
+    account_number: "Compte client",
     paymoney_account_number: "Numéro de compte paymoney",
     activities_description: "Description des activités",
     created_at: "Compte créé le",
-    certified_agent_id: "Id agent agréé"
+    certified_agent_id: "Id agent agréé",
+    compensation_mode_id: "Mode de compensation"
   }
 
   def self.human_attribute_name(attr, option = {})
@@ -44,7 +46,7 @@ class User < ActiveRecord::Base
   end
 
   # Validations
-  validates :firstname, :lastname, :country_id, :address, :mobile_number, presence: true
+  validates :firstname, :lastname, :country_id, :address, :mobile_number, :compensation_mode_id, presence: true
   validates :firstname, :lastname, length: {maximum: 100}
   validates :phone_number, :mobile_number, length: {minimum: 8, maximum: 16, allow_blank: true}
   #validates :rib, length: {is: 2}

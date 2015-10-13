@@ -28,7 +28,7 @@ class Ecommerce < ActiveRecord::Base
     pdt_url: "URL de transfert des données de paiement (PDT)",
     ipn_url: "URL de notification instantanée de paiement (IPN)",
     order_already_paid_url: "URL de transfert des articles déjà payés",
-    rib: "RIB",
+    rib: "Clé RIB",
     qualified: "Qualifié",
     qualified_by: "Qualifié par",
     qualified_at: "Qualifié le",

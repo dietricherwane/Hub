@@ -21,8 +21,7 @@
       <%= form_for(resource, as: resource_name, url: create_private_pos_account_path(resource_name)) do |f| %>
         <%= hidden_field_tag :certified_agent_id, @pos_account.certified_agent_id %>
         <div class="form-group">
-          <%= f.label :pos_account_type_id %><br />
-          <%= f.collection_select :pos_account_type_id, @pos_account_type, :id, :name, options ={}, html_options = {class: "form-control"} %>
+          <%= f.collection_select :pos_account_type_id, @pos_account_type, :id, :name, options ={}, html_options = {class: "form-control", style: "display:none;"} %>
         </div>
         <div class="form-group">
           <%= f.label :firstname %>
@@ -45,10 +44,6 @@
           <%= f.collection_select :country_id, @countries, :id, :name, options ={prompt: "Veuillez choisir votre pays"}, html_options = {class: "form-control"} %>
         </div>
         <div class="form-group">
-          <%= f.label :phone_number %>
-          <%= f.text_field :phone_number, class: "form-control", placeholder: "Veuillez entrer votre numéro de téléphone" %>
-        </div>
-        <div class="form-group">
           <%= f.label :mobile_number %>
           <%= f.text_field :mobile_number, class: "form-control", placeholder: "Veuillez entrer votre numéro de mobile" %>
         </div>
@@ -59,14 +54,6 @@
         <div class="form-group">
           <%= f.label :email %>
           <%= f.text_field :email, class: "form-control", placeholder: "Veuillez entrer votre email" %>
-        </div>
-        <div class="form-group">
-          <%= f.label :password %>
-          <%= f.password_field :password, class: "form-control", placeholder: "Veuillez entrer votre mot de passe" %>
-        </div>
-        <div class="form-group">
-          <%= f.label :password_confirmation %>
-          <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Veuillez confirmer votre mot de passe" %>
         </div>
 
         <div  class="form-group">
