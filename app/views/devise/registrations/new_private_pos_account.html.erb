@@ -16,7 +16,7 @@
     <div class="six columns">
 
       <h1>Enregistrez le compte</h1>
-      <%= render "shared/generic_flash" %>
+      <%#= render "shared/generic_flash" %>
       <%= devise_error_messages! %>
       <%= form_for(resource, as: resource_name, url: create_private_pos_account_path(resource_name)) do |f| %>
         <%= hidden_field_tag :certified_agent_id, @pos_account.certified_agent_id %>
