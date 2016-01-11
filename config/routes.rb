@@ -51,6 +51,8 @@ Hub::Application.routes.draw do
   get "ecommerce/get_logo/:token" => "ecommerces#get_logo"
 
   get "/api/367419f5968800cd/paymoney_wallet/store_log" => "paymoney_wallet_logs#store_transaction_log"
+
+  get "pos/has_rib/:certified_agent_id" => "users#has_rib"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
