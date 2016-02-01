@@ -2,7 +2,7 @@
 <div class="container page-header ph-bg2">
   <div class="row">
     <div class="twelve columns">
-      <p class="page-title">Profil du POS <%= current_user.company %> </p>
+      <p class="page-title">Profil du POS <%= current_user.company rescue "" %> </p>
       <ul class="breadcrumbs">
         <li><a><%= render "shared/display_user_name" %></a></li>
         <li><a href="<%= root_path %>">Accueil</a></li>
