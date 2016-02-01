@@ -9,7 +9,7 @@ class PosmController < ApplicationController
 
   def transactions_log
     @posm_transactions_active = "active"
-    @transactions = PaymoneyWalletLog.where("agent = '#{current_user.certified_agent_id}'")
+    @transactions = PaymoneyWalletLog.where("agent = '#{current_user.certified_agent_id}'").order("created_at DESC")
   end
 
   def init_form

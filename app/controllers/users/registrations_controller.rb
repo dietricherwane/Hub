@@ -42,6 +42,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
         account_type = "jVUdVQBK"
       end
 
+      puts URI.escape("#{Parameter.first.paymoney_url}/PAYMONEY_WALLET/rest/create_compte/#{account_type}/#{resource.firstname}/#{resource.lastname}/#{Date.today}/#{resource.email}/#{resource.identification_token}/#{resource.mobile_number}/#{resource.bank_code.blank? ? "null" : resource.bank_code}/#{resource.wicket_code.blank? ? "null" : resource.wicket_code}/#{resource.account_number.blank? ? "null" : resource.account_number}/#{resource.rib.blank? ? "null" : resource.rib}/#{resource.country.name}")
+
       request = Typhoeus::Request.new(URI.escape("#{Parameter.first.paymoney_url}/PAYMONEY_WALLET/rest/create_compte/#{account_type}/#{resource.firstname}/#{resource.lastname}/#{Date.today}/#{resource.email}/#{resource.identification_token}/#{resource.mobile_number}/#{resource.bank_code.blank? ? "null" : resource.bank_code}/#{resource.wicket_code.blank? ? "null" : resource.wicket_code}/#{resource.account_number.blank? ? "null" : resource.account_number}/#{resource.rib.blank? ? "null" : resource.rib}/#{resource.country.name}"), followlocation: true, method: :get)
 
       clown = resource.clone

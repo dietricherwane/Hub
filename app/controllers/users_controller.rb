@@ -16,4 +16,6 @@ class UsersController < ApplicationController
 
     render text: status
   end
+
+
 end
