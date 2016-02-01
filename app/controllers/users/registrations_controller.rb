@@ -42,7 +42,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         account_type = "jVUdVQBK"
       end
 
-      request = Typhoeus::Request.new(URI.escape("#{Parameter.first.paymoney_url}/PAYMONEY_WALLET/rest/create_compte/#{account_type}/#{resource.firstname}/#{resource.lastname}/#{Date.today}/#{resource.email}/#{resource.identification_token}/#{resource.mobile_number}/#{resource.bank_code}/#{resource.wicket_code}/#{resource.account_number}/#{resource.rib}/#{resource.country.name}"), followlocation: true, method: :get)
+      request = Typhoeus::Request.new(URI.escape("#{Parameter.first.paymoney_url}/PAYMONEY_WALLET/rest/create_compte/#{account_type}/#{resource.firstname}/#{resource.lastname}/#{Date.today}/#{resource.email}/#{resource.identification_token}/#{resource.mobile_number}/#{resource.bank_code.blank? ? "null" : resource.bank_code}/#{resource.wicket_code.blank? ? "null" : resource.wicket_code}/#{resource.account_number.blank? ? "null" : resource.account_number}/#{resource.rib.blank? ? "null" : resource.rib}/#{resource.country.name}"), followlocation: true, method: :get)
 
       clown = resource.clone
 
@@ -80,7 +80,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
           if response.success?
             if (request.response.body rescue nil) == "1"
               resource.update_attribute(:created_on_paymoney_wallet, true)
-              flash.now[:success] = "Le compte a été correctement créé. "
+              flash.now[:success] = "Le compte a été correctement cr. "
+              saved = true
             else
 
             end
@@ -90,9 +91,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
         request.run
       end
 
-      saved = true
+      #saved = true
     else
-      clean_up_passwords resource
+      #clean_up_passwords resource
     end
 
 
