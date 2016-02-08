@@ -61,6 +61,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
                 resource.errors.add(:id, "Ce compte existe déjà.")
 
                 clown.delete
+              when "2"
+                resource.errors.add(:id, "Votre compte paymoney a été crée. Rendez vous dans votre boite mail pour l'activer.")
+
+                clown.delete
               else
                 resource.errors.add(:id, "Une erreur inconnue s'est produite, veuillez contacter l'administrateur. Statut: #{response["status"]["idStatus"].to_s rescue ""} Message: #{response["status"]["idStatus"].to_s rescue ""} URL: #{creation_url}")
                 clown.delete
