@@ -57,14 +57,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
             case (response["status"]["idStatus"].to_s rescue "")
               when "1"
                 resource.update_attributes(created_on_paymoney_wallet: true, paymoney_account_number: response["compteNumero"], paymoney_password: response["comptePassword"], paymoney_token: response["compteLibelle"])
+                flash[:success] = "Votre compte paymoney a été crée."
               when "4"
                 resource.errors.add(:id, "Ce compte existe déjà.")
 
                 clown.delete
               when "2"
-                resource.errors.add(:id, "Votre compte paymoney a été crée. Rendez vous dans votre boite mail pour l'activer.")
-
-                clown.delete
+                resource.update_attributes(created_on_paymoney_wallet: true, paymoney_account_number: response["compteNumero"], paymoney_password: response["comptePassword"], paymoney_token: response["compteLibelle"])
+                flash[:success] = "Votre compte paymoney a été crée. Rendez vous dans votre boite mail pour l'activer."
               else
                 resource.errors.add(:id, "Une erreur inconnue s'est produite, veuillez contacter l'administrateur. Statut: #{response["status"]["idStatus"].to_s rescue ""} Message: #{response["status"]["idStatus"].to_s rescue ""} URL: #{creation_url}")
                 clown.delete
