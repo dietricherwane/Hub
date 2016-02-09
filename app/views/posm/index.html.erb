@@ -15,6 +15,7 @@
 <div class="container main_content">
   <div class="row">
     <div class="sidebar six columns">
+    <%= render "shared/generic_flash" %>
     <h2 class = "sb_header">Informations liées au POS marchand</h2>
     <p>
       <b><%= link_to "Créer un pos particulier", new_private_pos_account_path(current_user.certified_agent_id), style: "color: blue; font-weight: bold;" %></b>
