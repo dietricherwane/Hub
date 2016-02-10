@@ -20,6 +20,7 @@ class PosmController < ApplicationController
     @posm_cashout_active = "active"
 
     @pos_cashout = PosCashout.new
+    @pos_cashouts = cashouts_list
   end
 
   def proceed_cashout
@@ -50,16 +51,13 @@ class PosmController < ApplicationController
       end
 
       request.run
-      #@pos_cashout = PosCashout.new(params[:pos_cashout].merge({user_id: current_user.id, transaction_id: Digest::SHA1.hexdigest([DateTime.now.iso8601(6), rand].join).hex.to_s[0..17]}))
-
-      #if @pos_cashout.save
-        #flash.now[:success] = "Votre transaction a été"
-      #else
-        #flash.now[:error] = @pos_cashout.errors.full_messages.map { |msg| "<p>#{msg}</p>" }.join
-      #end
     end
 
     render :cashout
+  end
+
+  def cashouts_list
+
   end
 
 end
