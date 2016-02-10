@@ -1,0 +1,37 @@
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title">Effectuez un cashout vers votre RIB</p>
+      <ul class="breadcrumbs">
+        <li><a href="<%= root_path %>">Accueil</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="container main_content">
+  <div class="row">
+    <div class="six columns">
+
+      <h1>Formulaire de transfert</h1>
+      <%= render "shared/generic_flash" %>
+      <%= form_for(@pos_cashout, url: posm_proceed_cashout_path, method: :post) do |f| %>
+        <div class="form-group">
+          <%= f.label :amount %>
+          <%= f.text_field :amount, autofocus: true, class: "form-control", placeholder: "Veuillez entrer le montant" %>
+        </div>
+
+        <div  class="form-group">
+          <%= f.submit "Valider", class: "button" %>
+        </div>
+      <% end %>
+
+    </div>
+
+    <div class="six columns">
+
+    </div>
+  </div>
+</div>
