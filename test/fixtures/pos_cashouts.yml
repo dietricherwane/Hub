@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  amount: MyString
+  fee: MyString
+  thumb: MyString
+  transaction_id: MyString
+  request_body: MyText
+  request_response: MyText
+
+two:
+  user_id: 1
+  amount: MyString
+  fee: MyString
+  thumb: MyString
+  transaction_id: MyString
+  request_body: MyText
+  request_response: MyText

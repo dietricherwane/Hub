@@ -12,10 +12,11 @@ class User < ActiveRecord::Base
   belongs_to :pos_account_type
   has_many :paymoney_wallet_logs
   belongs_to :compensation_mode
+  has_many :pos_cashouts
 
 
   # Accessible fields
-  attr_accessible :firstname, :lastname, :country_id, :email, :address, :phone_number, :mobile_number, :profile_id, :published, :password, :password_confirmation, :pos_account_type_id, :company, :rib, :activities_description, :certified_agent_id, :created_on_paymoney_wallet, :identification_token, :bank_code, :wicket_code, :account_number, :paymoney_password, :paymoney_token, :sub_certified_agent_id, :paymoney_account_number, :wari_sub_certified_agent_id, :compensation_mode_id
+  attr_accessible :firstname, :lastname, :country_id, :email, :address, :phone_number, :mobile_number, :profile_id, :published, :password, :password_confirmation, :pos_account_type_id, :company, :rib, :activities_description, :certified_agent_id, :created_on_paymoney_wallet, :identification_token, :bank_code, :wicket_code, :account_number, :paymoney_password, :paymoney_token, :sub_certified_agent_id, :paymoney_account_number, :wari_sub_certified_agent_id, :compensation_mode_id, :can_cashout_to_rib
 
   # Renaming attributes into more friendly text
   HUMANIZED_ATTRIBUTES = {
