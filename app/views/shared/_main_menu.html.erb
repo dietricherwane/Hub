@@ -148,7 +148,8 @@
             <li>
               <a class="<%= @posm_transactions_active %>" href="<%= posm_transactions_path %>">Liste des transactions</a>
             </li>
-            <% if (current_user.can_cash_out_to_rib rescue false) %>
+            <% cashout_status = current_user.can_cashout_to_rib rescue false %>
+            <% if cashout_status %>
               <li>
                 <a class="<%= @posm_cashout_active %>" href="<%= cashout_path %>">Cash Out</a>
               </li>
