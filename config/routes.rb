@@ -24,6 +24,7 @@ Hub::Application.routes.draw do
   get "pos/transactions" => "posm#transactions_log", as: :posm_transactions
   get "pos/cashout" => "posm#cashout", as: :cashout
   post "pos/cashout/proceed" => "posm#proceed_cashout", as: :posm_proceed_cashout
+  get "pos/cashout/proceed" => "posm#cashout"
 
   get "merchant/ecommerce" => "ecommerces#index", as: :merchant_ecommerce
   post "merchant/ecommerce/create" => "ecommerces#create", as: :merchant_create_ecommerce
