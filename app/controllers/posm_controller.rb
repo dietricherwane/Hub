@@ -20,7 +20,7 @@ class PosmController < ApplicationController
     @posm_cashout_active = "active"
 
     @pos_cashout = PosCashout.new
-    @pos_cashouts = cashouts_list
+    cashouts_list
   end
 
   def proceed_cashout
@@ -29,6 +29,7 @@ class PosmController < ApplicationController
     token = current_user.paymoney_token
     transaction_id = Digest::SHA1.hexdigest([DateTime.now.iso8601(6), rand].join).hex.to_s[0..17]
     @pos_cashout = PosCashout.new
+    cashouts_list
 
     if not_a_number?(transaction_amount)
       flash.now[:error] = "Le montant doit être numérique."
@@ -57,7 +58,17 @@ class PosmController < ApplicationController
   end
 
   def cashouts_list
+    token = current_user.paymoney_token
+    request_body = "http://195.14.0.128:8080/LONACI_HUB_WS/rest/Consultationoperation_cash_out_rib/#{token}"
 
+    request = Typhoeus::Request.new(request_body, followlocation: true, method: :get)
+    request.on_complete do |response|
+      if response.success?
+        @pos_cashouts = JSON.parse(response.body) rescue ""
+      end
+    end
+
+    request.run
   end
 
 end
