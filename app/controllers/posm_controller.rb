@@ -29,7 +29,6 @@ class PosmController < ApplicationController
     token = current_user.paymoney_token
     transaction_id = Digest::SHA1.hexdigest([DateTime.now.iso8601(6), rand].join).hex.to_s[0..17]
     @pos_cashout = PosCashout.new
-    cashouts_list
 
     if not_a_number?(transaction_amount)
       flash.now[:error] = "Le montant doit être numérique."
@@ -53,6 +52,8 @@ class PosmController < ApplicationController
 
       request.run
     end
+
+    cashouts_list
 
     render :cashout
   end
