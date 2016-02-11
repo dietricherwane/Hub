@@ -151,7 +151,7 @@
             <% cashout_status = current_user.can_cashout_to_rib rescue false %>
             <% if cashout_status %>
               <li>
-                <a class="<%= @posm_cashout_active %>" href="<%= cashout_path %>">Cash Out</a>
+                <a class="<%= @posm_cashout_active %>" href="<%= cashout_path %>">Cash Out vers RIB</a>
               </li>
             <% end %>
           </ul>
