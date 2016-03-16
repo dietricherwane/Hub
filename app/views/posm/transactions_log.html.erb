@@ -49,8 +49,8 @@
                   <th><%= transaction.account_number %></th>
                   <% sub_agent = User.find_by_sub_certified_agent_id(transaction.sub_agent) %>
                   <th>
-                    <%= transaction.lastname %> <%= transaction.firstname %><br />
-                    <%= transaction.email %>
+                    <%= sub_agent.lastname %> <%= sub_agent.firstname %><br />
+                    <%= sub_agent.email %>
                   </th>
                   <th><%= transaction.thumb.to_i %></th>
                   <th><%= transaction.fee.to_i %></th>
