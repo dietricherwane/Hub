@@ -12,7 +12,7 @@
 //
 //  JAVASCRIPT FOUNDATION (COMPRESSED)
 //= require foundation.min
-//= require modernizr.foundation
+// require modernizr.foundation
 //= require app
 //= require jquery
 //= require jquery-migrate-1.2.1

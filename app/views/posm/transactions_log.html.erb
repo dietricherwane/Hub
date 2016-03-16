@@ -1,0 +1,60 @@
+<script>
+  $(document).ready(function() {
+    $('#example').DataTable();
+  } );
+</script>
+
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title">Profil du POS <%= current_user.company %> </p>
+      <ul class="breadcrumbs">
+        <li><a><%= render "shared/display_user_name" %></a></li>
+        <li><a href="<%= root_path %>">Accueil</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="container main_content">
+  <div class="row">
+    <div class="sidebar twelve columns">
+      <table id="example" class="display" cellspacing="0">
+        <thead>
+            <tr>
+              <th width = "10%">Type de transaction</th>
+              <th width = "10%">Id</th>
+              <th width = "10%">Date</th>
+              <th width = "10%">Statut</th>
+              <th width = "10%">Crédit</th>
+              <th width = "10%">Débit</th>
+              <th width = "10%">Compte client</th>
+              <th width = "10%">Sous agent</th>
+              <th width = "10%">Timbre</th>
+              <th width = "10%">Frais</th>
+            </tr>
+        </thead>
+        <tbody>
+          <% unless @transactions.blank? %>
+            <% @transactions.each do |transaction| %>
+              <tr>
+                  <th><%= transaction.transaction_type %></th>
+                  <th><%= transaction.transaction_id %></th>
+                  <th><%= transaction.created_at.strftime("%d-%m-%Y") %> à <%= transaction.created_at.strftime("%Hh %Mmn") %></th>
+                  <th><%= transaction.status ? "Succès" : "Echec" %></th>
+                  <th><%= transaction.credit_amount.to_i %></th>
+                  <th><%= transaction.checkout_amount.to_i %></th>
+                  <th><%= transaction.account_number %></th>
+                  <th><%= transaction.sub_agent %></th>
+                  <th><%= transaction.thumb.to_i %></th>
+                  <th><%= transaction.fee.to_i %></th>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+    </table>
+    </div>
+  </div>
+</div>

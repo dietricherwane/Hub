@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
 	      "administrator"
 	    when "MER"
 	      "merchant"
+	    when "POSM"
+	      "posm"
 	    else
 	      "session"
       end
@@ -20,17 +22,21 @@ class ApplicationController < ActionController::Base
 	end
 
 	def after_sign_in_path_for(resource_or_scope)
-	  if current_user.merchant?
+	  if (current_user.merchant? rescue false)
 		  merchant_ecommerce_path
 		else
-		  if current_user.admin?
+		  if (current_user.admin? rescue false)
 		    ecommerces_waiting_qualification_path
+		  else
+		    if (current_user.posm? rescue false)
+		      posm_index_path
+		    end
 		  end
 		end
 	end
 
 	def sign_out_disabled_users
-    if current_user.published == false
+    if (current_user.published rescue nil) == false
       sign_out(current_user)
       flash[:notice] = "Votre compte a été désactivé. Veuillez contacter l'administrateur."
       redirect_to new_user_session_path
@@ -48,5 +54,10 @@ class ApplicationController < ActionController::Base
     if (!current_user.admin? rescue true)
       render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
     end
+  end
+
+  # Check if the parameter is not a number
+  def not_a_number?(n)
+  	n.to_s.match(/\A[+-]?\d+?(\.\d+)?\Z/) == nil ? true : false
   end
 end

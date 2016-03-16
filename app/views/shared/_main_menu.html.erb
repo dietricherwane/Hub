@@ -89,8 +89,72 @@
             </li>
           </ul>
         </li>
+        <li class = "has-dropdown">
+          <%= link_to "POS", "#", class: @pos_active %>
+          <ul class = "dropdown">
+            <li class = "title back js-generated">
+              <h5>
+                <%= link_to "POS", "#" %>
+              </h5>
+            </li>
+            <li>
+              <a class="<%= @pos_active %>" href="<%= new_pos_account_path %>">Création de POS marchand</a>
+            </li>
+            <li>
+              <a class="<%= @pos_list_active %>" href="<%= list_merchant_pos_account_path %>">Liste des POS marchands</a>
+            </li>
+          </ul>
+        </li>
         <li>
-          <a class="<%= @help_active %>" href="#">Aide & support</a>
+          <%= link_to "Contacts", contact_path, class: @contact_active %>
+        </li>
+        <li>
+          <%= link_to "Déconnexion", destroy_user_session_path, :method => :delete %>
+        </li>
+      </ul>
+    </section>
+  </nav>
+<% end %>
+
+<% if (current_user.posm? rescue false) %>
+  <nav class="top-bar">
+    <ul>
+      <!-- RESPONSIVE NAVIGATION -->
+      <li class="name">
+        <h1><a href="#"> Veuillez choisir une page </a></h1>
+      </li>
+      <li class="toggle-topbar"><a href="#"></a></li>
+      <!-- END RESPONSIVE NAVIGATION -->
+    </ul>
+    <section>
+      <ul class="right">
+        <li>
+          <a class="<%= @buy_active %>" href="<%= ((params[:controller] == 'home' && params[:action] == 'home') ? '' : root_path) %>#buyers">Achetez</a>
+        </li>
+        <li>
+          <a class="<%= @sell_active %>" href="<%= ((params[:controller] == 'home' && params[:action] == 'home') ? '' : root_path) %>#merchants">Vendez</a>
+        </li>
+        <li class = "has-dropdown">
+          <%= link_to "Profil du POS", "#", class: @pos_profile_active %>
+          <ul class = "dropdown">
+            <li class = "title back js-generated">
+              <h5>
+                <%= link_to "Profil du POS", "#" %>
+              </h5>
+            </li>
+            <li>
+              <a class="<%= @posm_active %>" href="<%= posm_index_path %>">Informations</a>
+            </li>
+            <li>
+              <a class="<%= @posm_transactions_active %>" href="<%= posm_transactions_path %>">Liste des transactions</a>
+            </li>
+            <% cashout_status = current_user.can_cashout_to_rib rescue false %>
+            <% if cashout_status %>
+              <li>
+                <a class="<%= @posm_cashout_active %>" href="<%= cashout_path %>">Cash Out vers RIB</a>
+              </li>
+            <% end %>
+          </ul>
         </li>
         <li>
           <%= link_to "Contacts", contact_path, class: @contact_active %>

@@ -1,1 +1,1 @@
-<%= "#{current_user.full_name}  #{current_user.profile.name}" %>
+<%= "#{current_user.full_name rescue ""}  #{current_user.profile.name rescue ""}" %>

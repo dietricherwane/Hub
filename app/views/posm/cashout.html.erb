@@ -1,0 +1,75 @@
+<script>
+  $(document).ready(function() {
+    $('#example').DataTable();
+  } );
+</script>
+
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title">Effectuez un cashout vers votre RIB</p>
+      <ul class="breadcrumbs">
+        <li><a href="<%= root_path %>">Accueil</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="container main_content">
+  <div class="row">
+    <div class="six columns">
+
+      <h1>Formulaire de transfert</h1>
+      <%= render "shared/generic_flash" %>
+      <%= form_for(@pos_cashout, url: posm_proceed_cashout_path, method: :post) do |f| %>
+        <div class="form-group">
+          <%= f.label :amount %>
+          <%= f.text_field :amount, autofocus: true, class: "form-control", placeholder: "Veuillez entrer le montant" %>
+        </div>
+
+        <div  class="form-group">
+          <%= f.submit "Valider", class: "button" %>
+        </div>
+      <% end %>
+
+    </div>
+
+    <div class="six columns">
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="twelve columns">
+      <h1>Liste des transactions</h1>
+      <div class="sidebar twelve columns">
+        <table id="example" class="display" cellspacing="0">
+          <thead>
+            <tr>
+              <th width = "15%">Id</th>
+              <th width = "25%">Type de transaction</th>
+              <th width = "15%">Montant</th>
+              <th width = "20%">Date</th>
+              <th width = "25%">RIB</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% unless @pos_cashouts.blank? %>
+              <% @pos_cashouts.each do |cashout| %>
+                <tr>
+                  <th><%= cashout["transactionId"] rescue "" %></th>
+                  <th><%= cashout["compensesTypeOper"]["typOperNom"] rescue "" %></th>
+                  <th><%= cashout["compensesAmount"] rescue "" %></th>
+                  <th><%= Time.at(((cashout["compensesDate"].to_s)[0..-4]).to_i) rescue "" %></th>
+                  <th><%= cashout["compensesCollector"] rescue "" %></th>
+                </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

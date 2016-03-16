@@ -1,8 +1,13 @@
+
 <!-- PAGE HEADER -->
 <div class="container page-header ph-bg2">
   <div class="row">
     <div class="twelve columns">
-      <p class="page-title"><%= @sign_action %> vous</p>
+      <% if (current_user.admin? rescue false) %>
+        <p class="page-title">Créer un compte POS</p>
+      <% else %>
+        <p class="page-title"><%= @sign_action %> vous</p>
+      <% end %>
       <ul class="breadcrumbs">
         <li><a href="<%= root_path %>">Accueil</a></li>
       </ul>
@@ -22,8 +27,8 @@
             <div class="ch-info">
               <div class="ch-info-front ch-customer"></div>
               <div class="ch-info-back">
-                <a href = 'http://195.14.0.128/PayMoney/create_account.php' target = "_blank">
-                  <h3>Particuliers</h3>
+                <a href = 'http://94.247.178.141:8080/PAYMONEY_WALLET/' target = "_blank">
+                  <h3>Client</h3>
                   <p>Faites tous vos achats avec votre seul compte 24/7 dans vos boutiques préférées<a href="#">Plus +</a></p>
                 </a>
               </div>
@@ -38,7 +43,7 @@
               <div class="ch-info-front ch-merchant"></div>
               <div class="ch-info-back">
                 <a href = "<%= @sign_url %>">
-                  <h3>Marchands</h3>
+                  <h3>E-Commerce</h3>
                   <p>Une seule intégration pour bénéficier de tous les moyens de paiements connectés à PayMoney.<br />Plus +</p>
                 </a>
               </div>
@@ -46,7 +51,22 @@
           </div>
         </div>
       </li>
-
+      <li>
+        <div class="ch-item ch-pos">
+          <div class="ch-info-wrap">
+            <div class="ch-info">
+              <div class="ch-info-front ch-pos"></div>
+              <div class="ch-info-back">
+                <a href = "<%= (@sign_action == 'Connectez') ? @sign_url : '/users/pos_account' %>">
+                <!--<a href = "/users/pos_account">-->
+                  <h3>POS</h3>
+                  <p>Créer un POS marchand et y agréger des POS particuliers<br />Plus +</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
     </ul>
   </div>
 </div>

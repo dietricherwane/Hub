@@ -1,0 +1,37 @@
+<%#= javascript_include_tag "ecommerces"  if Hub::Application.assets.find_asset("ecommerces.js") %>
+
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title">POS marchands</p>
+      <ul class="breadcrumbs">
+        <li><a><%= render "shared/display_user_name" %></a></li>
+        <li><a href="<%= root_path %>">Accueil</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="container main_content">
+  <div class="row">
+    <div class="twelve columns">
+      <%= render "shared/flash" %>
+      <% if @merchant_pos_accounts.blank? %>
+        <h3>Aucune donnée à afficher</h3>
+      <% else %>
+        <div id = "toggle-style-2">
+          <% @merchant_pos_accounts.each do |merchant_pos_account| %>
+            <% @merchant_pos_account = merchant_pos_account %>
+            <div class = "tgg-item">
+              <%= render "list_merchant_pos_account", locals: {merchant_pos_account: @merchant_pos_account} %>
+            </div>
+          <% end %>
+        </div>
+
+        <%= paginate @merchant_pos_accounts, :params => {:controller => :registrations, :action => :list_merchant_pos_account} %>
+      <% end %>
+    </div>
+  </div>
+</div>
