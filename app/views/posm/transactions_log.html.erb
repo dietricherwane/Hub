@@ -47,7 +47,11 @@
                   <th><%= transaction.credit_amount.to_i %></th>
                   <th><%= transaction.checkout_amount.to_i %></th>
                   <th><%= transaction.account_number %></th>
-                  <th><%= transaction.sub_agent %></th>
+                  <% sub_agent = User.find_by_sub_certified_agent_id(transaction.sub_agent) %>
+                  <th>
+                    <%= transaction.lastname %> <%= transaction.firstname %><br />
+                    <%= transaction.email %>
+                  </th>
                   <th><%= transaction.thumb.to_i %></th>
                   <th><%= transaction.fee.to_i %></th>
               </tr>
