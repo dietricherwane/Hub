@@ -83,37 +83,37 @@ class User < ActiveRecord::Base
   end
 
   def rib_mandatory_for_merchants
-    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && rib.blank? && (rib.length != 2) && (compensation_mode.description rescue "") == 'Par virement automatique'
+    if (PosAccountType.find_by_id(pos_account_type_id).name rescue "") == "POS marchand" && rib.blank? && (rib.length != 2) && (compensation_mode.description rescue "") == 'Par virement automatique'
       errors.add(:rib, "ne peut pas être vide et doit être sur 2 caractères")
     end
   end
 
   def compensation_mode_mandatory_for_merchants
-    if pos_account_type.name == "POS marchand" && compensation_mode_id.blank?
+    if (pos_account_type.name rescue "") == "POS marchand" && compensation_mode_id.blank?
       errors.add(:compensation_mode_id, "ne peut pas être vide")
     end
   end
 
   def bank_code_mandatory_for_merchants
-    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && bank_code.blank? && (bank_code.length != 5) && (compensation_mode.description rescue "") == 'Par virement automatique'
+    if (PosAccountType.find_by_id(pos_account_type_id).name rescue "") == "POS marchand" && bank_code.blank? && (bank_code.length != 5) && (compensation_mode.description rescue "") == 'Par virement automatique'
       errors.add(:bank_code, "ne peut pas être vide et doit être sur 5 caractères")
     end
   end
 
   def wicket_code_mandatory_for_merchants
-    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && wicket_code.blank? && (wicket_code.length != 5) && (compensation_mode.description rescue "") == 'Par virement automatique'
+    if (PosAccountType.find_by_id(pos_account_type_id).name rescue "") == "POS marchand" && wicket_code.blank? && (wicket_code.length != 5) && (compensation_mode.description rescue "") == 'Par virement automatique'
       errors.add(:wicket_code, "ne peut pas être vide et doit être sur 5 caractères")
     end
   end
 
   def account_number_mandatory_for_merchants
-    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && account_number.blank? && (account_number.length != 12) && (compensation_mode.description rescue "") == 'Par virement automatique'
+    if (PosAccountType.find_by_id(pos_account_type_id).name rescue "") == "POS marchand" && account_number.blank? && (account_number.length != 12) && (compensation_mode.description rescue "") == 'Par virement automatique'
       errors.add(:account_number, "ne peut pas être vide et doit être sur 12 caractères")
     end
   end
 
   def company_mandatory_for_merchants
-    if PosAccountType.find_by_id(pos_account_type_id).name == "POS marchand" && company.blank?
+    if (PosAccountType.find_by_id(pos_account_type_id).name rescue "") == "POS marchand" && company.blank?
       errors.add(:company, "ne peut pas être vide")
     end
   end

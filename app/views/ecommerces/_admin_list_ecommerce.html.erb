@@ -70,28 +70,28 @@
     <h2 class = "sb_header">Informations personnelles</h2>
     <% @user = @ecommerce.user %>
     <p>
-      <b><%= User.human_attribute_name("firstname") %>:</b><br /> <%= @user.firstname %>
+      <b><%= User.human_attribute_name("firstname") %>:</b><br /> <%= @user.firstname rescue "" %>
     </p>
     <p>
-      <b><%= User.human_attribute_name("lastname") %>:</b><br /> <%= @user.lastname %>
+      <b><%= User.human_attribute_name("lastname") %>:</b><br /> <%= @user.lastname rescue "" %>
     </p>
     <p>
       <b><%= User.human_attribute_name("country_id") %>:</b><br /> <%= @user.country.name rescue "" %>
     </p>
     <p>
-      <b><%= User.human_attribute_name("phone_number") %>:</b><br /> <%= @user.phone_number %>
+      <b><%= User.human_attribute_name("phone_number") %>:</b><br /> <%= @user.phone_number rescue "" %>
     </p>
     <p>
-      <b><%= User.human_attribute_name("mobile_number") %>:</b><br /> <%= @user.mobile_number %>
+      <b><%= User.human_attribute_name("mobile_number") %>:</b><br /> <%= @user.mobile_number rescue "" %>
     </p>
     <p>
-      <b><%= User.human_attribute_name("address") %>:</b><br /> <%= @user.address %>
+      <b><%= User.human_attribute_name("address") %>:</b><br /> <%= @user.address rescue "" %>
     </p>
     <p>
-      <b><%= User.human_attribute_name("email") %>:</b><br /> <%= @user.email %>
+      <b><%= User.human_attribute_name("email") %>:</b><br /> <%= @user.email rescue "" %>
     </p>
     <p>
-      <b><%= User.human_attribute_name("created_at") %>:</b><br /> <%= @user.created_at.strftime("%d-%m-%Y") %> à <%= @user.created_at.strftime("%Hh %Mmn") %>
+      <b><%= User.human_attribute_name("created_at") %>:</b><br /> <%= @user.created_at.strftime("%d-%m-%Y") rescue "" %> à <%= @user.created_at.strftime("%Hh %Mmn") rescue "" %>
     </p>
   </div>
 </div>
