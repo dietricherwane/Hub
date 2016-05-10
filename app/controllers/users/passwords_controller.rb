@@ -30,6 +30,7 @@ class Users::PasswordsController < Devise::PasswordsController
   # PUT /resource/password
   def update
     self.resource = resource_class.reset_password_by_token(resource_params)
+    yield resource if block_given?
 
     if resource.errors.empty?
       resource.unlock_access! if unlockable?(resource)
@@ -37,6 +38,7 @@ class Users::PasswordsController < Devise::PasswordsController
       set_flash_message(:notice, flash_message) if is_navigational_format?
       sign_in(resource_name, resource)
       respond_with resource, :location => after_resetting_password_path_for(resource)
+      #redirect_to root_path
     else
       respond_with resource
     end
