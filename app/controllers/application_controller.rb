@@ -35,6 +35,20 @@ class ApplicationController < ActionController::Base
 		end
 	end
 
+	def after_resetting_password_path_for(resource_or_scope)
+	  if (current_user.merchant? rescue false)
+		  merchant_ecommerce_path
+		else
+		  if (current_user.admin? rescue false)
+		    ecommerces_waiting_qualification_path
+		  else
+		    if (current_user.posm? rescue false)
+		      posm_index_path
+		    end
+		  end
+		end
+	end
+
 	def sign_out_disabled_users
     if (current_user.published rescue nil) == false
       sign_out(current_user)
