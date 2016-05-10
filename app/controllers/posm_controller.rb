@@ -22,6 +22,25 @@ class PosmController < ApplicationController
     @transactions = PaymoneyWalletLog.where("agent = '#{current_user.certified_agent_id}'").order("created_at DESC")
   end
 
+  def transaction_logs_search
+    @begin_date = params[:begin_date]
+    @end_date = params[:end_date]
+    @transaction_type = params[:transaction_type]
+
+    params[:begin_date] = @begin_date
+    params[:end_date] = @end_date
+    params[:transaction_type] = @transaction_type
+
+    set_transaction_search_params
+
+    @transactions = PaymoneyWalletLog.where("#{@sql_begin_date} #{@sql_begin_date.blank? ? '' : 'AND'} #{@sql_end_date} #{@sql_end_date.blank? ? '' : 'AND'} #{@sql_type}").order("created_at DESC")
+    flash[:success] = "#{@transactions.count} Résultat(s) trouvé(s)."
+
+    if params[:commit] == "Exporter"
+      send_data @transactions.to_csv, filename: "Transaction-pos-#{Date.today}.csv"
+    end
+  end
+
   def init_form
 
   end
@@ -80,6 +99,22 @@ class PosmController < ApplicationController
     end
 
     request.run
+  end
+
+  def set_transaction_search_params
+    @sql_begin_date = ""
+    @sql_end_date = ""
+    @sql_type = ""
+
+    unless @begin_date.blank?
+      @sql_begin_date = "created_at::date >= '#{@begin_date}'"
+    end
+    unless @end_date.blank?
+      @sql_end_date = "created_at::date <= '#{@end_date}'"
+    end
+    unless @transaction_type.blank?
+      @sql_type = "transaction_type = '#{@transaction_type}'"
+    end
   end
 
 end

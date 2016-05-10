@@ -1,6 +1,6 @@
 <script>
   $(document).ready(function() {
-    $('#example').DataTable();
+    $('#transaction_logs').DataTable();
   } );
 </script>
 
@@ -19,9 +19,11 @@
 <!-- END PAGE HEADER -->
 
 <div class="container main_content">
+  <%= render "transaction_search" %>
+
   <div class="row">
     <div class="sidebar twelve columns">
-      <table id="example" class="display" cellspacing="0">
+      <table id="transaction_logs" class="display" cellspacing="0">
         <thead>
             <tr>
               <th width = "10%">Type de transaction</th>
@@ -49,7 +51,7 @@
                   <th><%= transaction.account_number %></th>
                   <% sub_agent = User.find_by_sub_certified_agent_id(transaction.sub_agent) %>
                   <th>
-                    <%= sub_agent.lastname %> <%= sub_agent.firstname %>
+                    <%= sub_agent.lastname rescue '' %> <%= sub_agent.firstname rescue '' %>
                   </th>
                   <th><%= transaction.thumb.to_i %></th>
                   <th><%= transaction.fee.to_i %></th>
@@ -57,7 +59,7 @@
             <% end %>
           <% end %>
         </tbody>
-    </table>
+      </table>
     </div>
   </div>
 </div>

@@ -37,11 +37,7 @@ class ApplicationController < ActionController::Base
 		end
 	end
 
-<<<<<<< HEAD
-	def after_resetting_password_path_for(resource_or_scope)
-=======
-def after_resetting_password_path_for(resource_or_scope)
->>>>>>> f3860e7fbcd6fa594d60aa4d29789abd08ae6719
+  def after_resetting_password_path_for(resource_or_scope)
 	  if (current_user.merchant? rescue false)
 		  merchant_ecommerce_path
 		else
@@ -50,13 +46,9 @@ def after_resetting_password_path_for(resource_or_scope)
 		  else
 		    if (current_user.posm? rescue false)
 		      posm_index_path
-<<<<<<< HEAD
-		    end
-=======
-                    else
-                      root_path
-                    end
->>>>>>> f3860e7fbcd6fa594d60aa4d29789abd08ae6719
+        else
+          root_path
+        end
 		  end
 		end
 	end

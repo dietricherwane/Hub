@@ -85,7 +85,7 @@
       <b>Mot de passe:</b><br /> <%= current_user.paymoney_password %>
     </p>
     <p>
-      <b>Solde:</b><br /> <%= @sold["solde"] %>
+      <b>Solde:</b><br /> <%= @sold["solde"] rescue "" %>
     </p>
     <p>
       <b>Token:</b><br /> <%= current_user.paymoney_token %>
