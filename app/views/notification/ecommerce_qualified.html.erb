@@ -16,6 +16,7 @@
       <b>Token du Ecommerce:</b> <%= @ecommerce.service_token %><br />
       <b>Token d'opérations:</b> <%= @ecommerce.operation_token %><br />
       <b>Description:</b> <%= simple_format(@ecommerce.description) %><br />
+      <b>Type de ecommerce:</b> <%= @ecommerce.ecommerce_profile.description %><br />
     </p>
 
     <h3>Informations bancaires</h3>
