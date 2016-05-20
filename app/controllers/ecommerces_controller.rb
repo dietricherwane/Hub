@@ -9,11 +9,13 @@ class EcommercesController < ApplicationController
 
   def index
     @ecommerce = Ecommerce.new
+    @ecommerce_profiles = EcommerceProfile.where(published: true)
     initialize_form
   end
 
   def create
     @ecommerce = Ecommerce.new(params[:ecommerce].merge(user_id: current_user.id, token: generate_token))
+    @ecommerce_profiles = EcommerceProfile.where(published: true)
     initialize_form
 
     if @ecommerce.save
@@ -29,12 +31,14 @@ class EcommercesController < ApplicationController
 
   def edit
     @ecommerce = current_user.ecommerces.first
+    @ecommerce_profiles = EcommerceProfile.where(published: true)
     @ecommerce_template = @ecommerce # Initialize the template on the right side
     initialize_form
   end
 
   def update
     @ecommerce = current_user.ecommerces.first rescue nil
+    @ecommerce_profiles = EcommerceProfile.where(published: true)
     @ecommerce_template = @ecommerce
     parameters = Parameter.first
 
@@ -173,7 +177,7 @@ class EcommercesController < ApplicationController
     ecommerce = Ecommerce.find_by_id(params[:ecommerce_id])
 
     if ecommerce
-      request = Typhoeus::Request.new("#{parameters.back_office_url}/service/qualify", params: {name: ecommerce.name, token: ecommerce.token, pdt_url: ecommerce.pdt_url, ipn_url: ecommerce.ipn_url, order_already_paid: ecommerce.order_already_paid_url, wallets: "#{ecommerce.available_wallets.map {|m| [m.wallet.authentication_token, m.published]}}"}, method: :post, followlocation: true, ssl_verifypeer: false, ssl_verifyhost: 0)
+      request = Typhoeus::Request.new("#{parameters.back_office_url}/service/qualify", params: {name: ecommerce.name, ecommerce_profile_token: ecommerce.ecommerce_profile.token, token: ecommerce.token, pdt_url: ecommerce.pdt_url, ipn_url: ecommerce.ipn_url, order_already_paid: ecommerce.order_already_paid_url, wallets: "#{ecommerce.available_wallets.map {|m| [m.wallet.authentication_token, m.published]}}"}, method: :post, followlocation: true, ssl_verifypeer: false, ssl_verifyhost: 0)
       request.run
       response = (JSON.parse(request.response.body) rescue nil)
 

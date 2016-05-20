@@ -13,6 +13,7 @@ class Ecommerce < ActiveRecord::Base
   belongs_to :user
   has_many :available_wallets
   has_many :wallets, through: :available_wallets
+  belongs_to :ecommerce_profile
 
 
   # Renaming attributes into more friendly text
@@ -37,7 +38,8 @@ class Ecommerce < ActiveRecord::Base
     user_id: "Le propriétaire",
     created_at: "Soumise le",
     service_token: "Token du service",
-    operation_token: "Token de l'opération"
+    operation_token: "Token de l'opération",
+    ecommerce_profile_id: 'Type de ecommerce'
   }
 
   def self.human_attribute_name(attr, option = {})

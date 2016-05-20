@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160210181001) do
+ActiveRecord::Schema.define(version: 20160519090409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,14 @@ ActiveRecord::Schema.define(version: 20160210181001) do
     t.string   "name",       limit: 45
   end
 
+  create_table "ecommerce_profiles", force: true do |t|
+    t.string   "description"
+    t.boolean  "published"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "token"
+  end
+
   create_table "ecommerces", force: true do |t|
     t.string   "name",                     limit: 100
     t.string   "url",                      limit: 150
@@ -84,6 +92,7 @@ ActiveRecord::Schema.define(version: 20160210181001) do
     t.integer  "pos_account_type_id"
     t.string   "firstname"
     t.string   "lastname"
+    t.integer  "ecommerce_profile_id"
   end
 
   create_table "parameters", force: true do |t|

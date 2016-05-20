@@ -37,6 +37,10 @@
           <%= f.label :description %>
           <%= f.text_area :description, class: "form-control", placeholder: "Description des activités du Ecommerce" %>
         </div>
+        <div class = "form-group">
+          <%= f.label :ecommerce_profile_id %>
+          <%= f.collection_select :ecommerce_profile_id, @ecommerce_profiles, :id, :description, options ={}, html_options = {class: "form-control"} %>
+        </div>
         <div class="form-group">
           <%= f.label :pdt_url %>
           <%= f.text_field :pdt_url, class: "form-control", placeholder: "L'url de transfert des données de paiement", value: "www.monsite.paymoney/notification/pdt" %>
