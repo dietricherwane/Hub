@@ -32,7 +32,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
     pos_account_type = PosAccountType.find_by_id(params[:user][:pos_account_type_id])
 
-    build_resource(params[:user].merge({profile_id: Profile.find_by_name(pos_account_type.name).id, pos_account_type_id: pos_account_type.id, company: params[:user][:company], rib: params[:user][:rib], bank_code: params[:user][:bank_code], wicket_code: params[:user][:wicket_code], account_number: params[:user][:account_number], activities_description: params[:user][:activities_description], certified_agent_id: SecureRandom.hex(8), identification_token: Digest::SHA1.hexdigest([DateTime.now.iso8601(6), rand].join)}))
+    build_resource(params[:user].merge({profile_id: (Profile.find_by_name(pos_account_type.name).id rescue nil), pos_account_type_id: (pos_account_type.id rescue nil), company: params[:user][:company], rib: params[:user][:rib], bank_code: params[:user][:bank_code], wicket_code: params[:user][:wicket_code], account_number: params[:user][:account_number], activities_description: params[:user][:activities_description], certified_agent_id: SecureRandom.hex(8), identification_token: Digest::SHA1.hexdigest([DateTime.now.iso8601(6), rand].join)}))
 
     if resource.save
       # Création de lid agent agréé sur paymoney
