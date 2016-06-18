@@ -11,8 +11,10 @@ Description: <%= simple_format(@ecommerce.description) %>
 
 Informations bancaires
 
-Banque: <%= @bank.name %>
-RIB: <%= @ecommerce.rib %>
+Code de la banque: <%= @ecommerce.bank_code %>
+Code guichet: <%= @ecommerce.wicket_code %>
+Numéro de compte: <%= @ecommerce.account_number %>
+Clé RIB: <%= @ecommerce.rib %>
 
 Veuillez vous connecter à votre interface client pour débuter vos intégrations
 
