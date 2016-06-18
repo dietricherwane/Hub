@@ -24,6 +24,9 @@
   <b><%= Ecommerce.human_attribute_name("name") %>:</b><br /> <%= @ecommerce_template.name %>
 </p>
 <p>
+  <b><%= Ecommerce.human_attribute_name("ecommerce_profile_id") %>:</b><br /> <%= @ecommerce_template.ecommerce_profile.name rescue nil %>
+</p>
+<p>
   <b><%= Ecommerce.human_attribute_name("url") %>:</b><br /> <%= @ecommerce_template.url %>
 </p>
 <p>
@@ -56,10 +59,25 @@
 <% end %>
 <div class = "divider3"></div>
 <p>
-  <b><%= Ecommerce.human_attribute_name("bank_id") %>:</b><br /> <%= @ecommerce_template.bank.name rescue "" %>
+  <b><%= Ecommerce.human_attribute_name("bank_code") %>:</b><br /> <%= @ecommerce_template.bank_code rescue "" %>
+</p>
+<p>
+  <b><%= Ecommerce.human_attribute_name("wicket_code") %>:</b><br /> <%= @ecommerce_template.wicket_code %>
+</p>
+<p>
+  <b><%= Ecommerce.human_attribute_name("account_number") %>:</b><br /> <%= @ecommerce_template.account_number %>
 </p>
 <p>
   <b><%= Ecommerce.human_attribute_name("rib") %>:</b><br /> <%= @ecommerce_template.rib %>
+</p>
+<p>
+  <b><%= Ecommerce.human_attribute_name("paymoney_account_number") %>:</b><br /> <%= @ecommerce_template.paymoney_account_number %>
+</p>
+<p>
+  <b><%= Ecommerce.human_attribute_name("paymoney_password") %>:</b><br /> <%= @ecommerce_template.paymoney_password %>
+</p>
+<p>
+  <b><%= Ecommerce.human_attribute_name("paymoney_token") %>:</b><br /> <%= @ecommerce_template.paymoney_token %>
 </p>
 <div class = "divider3"></div>
 <p>
