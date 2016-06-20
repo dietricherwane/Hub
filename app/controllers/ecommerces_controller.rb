@@ -56,8 +56,6 @@ class EcommercesController < ApplicationController
       render :index
     end
 
-    render :index
-
 =begin
     if @ecommerce.save
       link_to_wallets
