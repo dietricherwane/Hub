@@ -217,7 +217,7 @@ class EcommercesController < ApplicationController
     ecommerce = Ecommerce.find_by_id(params[:ecommerce_id])
 
     if ecommerce
-      request = Typhoeus::Request.new("#{parameters.back_office_url}/service/qualify", params: {name: ecommerce.name, ecommerce_profile_token: ecommerce.ecommerce_profile.token, token: ecommerce.token, pdt_url: ecommerce.pdt_url, ipn_url: ecommerce.ipn_url, order_already_paid: ecommerce.order_already_paid_url, wallets: "#{ecommerce.available_wallets.map {|m| [m.wallet.authentication_token, m.published]}}", ecommerce_profile_id: ecommerce.ecommerce_profile_id}, method: :post, followlocation: true, ssl_verifypeer: false, ssl_verifyhost: 0)
+      request = Typhoeus::Request.new("#{parameters.back_office_url}/service/qualify", params: {name: ecommerce.name, ecommerce_profile_token: ecommerce.ecommerce_profile.token, token: ecommerce.token, pdt_url: ecommerce.pdt_url, ipn_url: ecommerce.ipn_url, order_already_paid: ecommerce.order_already_paid_url, wallets: "#{ecommerce.available_wallets.map {|m| [m.wallet.authentication_token, m.published]}}", ecommerce_profile_token: (ecommerce.ecommerce_profile.token rescue '')}, method: :post, followlocation: true, ssl_verifypeer: false, ssl_verifyhost: 0)
       request.run
       response = (JSON.parse(request.response.body) rescue nil)
 
