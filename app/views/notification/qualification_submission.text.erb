@@ -7,7 +7,7 @@ Informations personnelles
 --------------------------------------------------
 Nom: <%= @user.firstname %>
 Prénoms: <%= @user.lastname %>
-Pays: <%= @user.country.name rescue nil %><br />
+Pays: <%= @user.country.name rescue nil %>
 Adresse: <%= @user.address %>
 Téléphone fixe: <%= @user.phone_number %>
 Téléphone mobile: <%= @user.mobile_number %>
@@ -15,12 +15,15 @@ Email: <%= @user.email %>
 
 Informations bancaires
 --------------------------------------------------
-Banque: <%= @bank.name %>
-RIB: <%= @ecommerce.rib %>
+Code de la banque: <%= @ecommerce.bank_code %>
+Code guichet: <%= @ecommerce.wicket_code %>
+Numéro de compte: <%= @ecommerce.account_number %>
+Clé RIB: <%= @ecommerce.rib %>
 
 Informations liées au site web
 --------------------------------------------------
 URL: <%= @ecommerce.url %>
+Type de ecommerce: <%= @ecommerce.ecommerce_profile.description %>
 Description: <%= simple_format(@ecommerce.description) %>
 
 Cordialement.

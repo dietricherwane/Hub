@@ -37,6 +37,10 @@
           <%= f.label :description %>
           <%= f.text_area :description, class: "form-control", placeholder: "Description des activités du Ecommerce" %>
         </div>
+        <div class = "form-group">
+          <%= f.label :ecommerce_profile_id %>
+          <%= f.collection_select :ecommerce_profile_id, @ecommerce_profiles, :id, :description, options ={}, html_options = {class: "form-control"} %>
+        </div>
         <div class="form-group">
           <%= f.label :pdt_url %>
           <%= f.text_field :pdt_url, class: "form-control", placeholder: "L'url de transfert des données de paiement", value: "www.monsite.paymoney/notification/pdt" %>
@@ -58,16 +62,22 @@
             Informations
           </span>
         </div>
-        <div class = "form-group">
-          <%= f.label :bank_id %>
-          <%= f.collection_select :bank_id, @banks, :id, :name, options ={prompt: "Veuillez choisir votre banque"}, html_options = {class: "form-control"} %>
+        <div class="form-group">
+          <%= f.label :bank_code %>
+          <%= f.text_field :bank_code, class: "form-control", placeholder: "Veuillez entrer le code banque" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :wicket_code %>
+          <%= f.text_field :wicket_code, class: "form-control", placeholder: "Veuillez entrer le code guichet" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :account_number %>
+          <%= f.text_field :account_number, class: "form-control", placeholder: "Veuillez entrer le numéro de compte" %>
         </div>
         <div class="form-group">
           <%= f.label :rib %>
-          <%= f.text_field :rib, class: "form-control", placeholder: "Veuillez entrer le RIB" %>
+          <%= f.text_field :rib, class: "form-control", placeholder: "Veuillez entrer la clé RIB" %>
         </div>
-
-
 
         <div  class="form-group">
           <%= f.submit "Valider", class: "button" %>

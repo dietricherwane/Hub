@@ -9,13 +9,54 @@ class EcommercesController < ApplicationController
 
   def index
     @ecommerce = Ecommerce.new
+    @ecommerce_profiles = EcommerceProfile.where(published: true)
     initialize_form
   end
 
   def create
     @ecommerce = Ecommerce.new(params[:ecommerce].merge(user_id: current_user.id, token: generate_token))
+    @ecommerce_profiles = EcommerceProfile.where(published: true)
     initialize_form
 
+    if @ecommerce.valid?
+      paymoney_creation_request = "#{Parameter.first.paymoney_url}/PAYMONEY_WALLET/rest/create_compte/uXAXMDuW/#{CGI.escape(@ecommerce.name)}/#{CGI.escape(@ecommerce.name)}/#{ Date.today.strftime("%d-%m-%Y")}/#{current_user.email}/#{@ecommerce.token}/#{current_user.mobile_number}/#{params[:ecommerce][:bank_code]}/#{params[:ecommerce][:wicket_code]}/#{params[:ecommerce][:account_number]}/#{params[:ecommerce][:rib]}/NONE"
+
+      paymoney_creation_response = RestClient.get(paymoney_creation_request) rescue ""
+
+      Log.create(object_inspector: @ecommerce.inspect, request_log: paymoney_creation_request, response_log: paymoney_creation_response)
+
+      response = JSON.parse(paymoney_creation_response) rescue nil
+
+      if response.blank?
+        @ecommerce.errors.add(:id, "Une erreur s'est produite, veuillez contacter l'administrateur.")
+      else
+        case (response["status"]["idStatus"].to_s rescue "")
+          when "1"
+            @ecommerce.save
+            link_to_wallets
+            qualification_submission_email(current_user, @ecommerce.bank, @ecommerce)
+            @ecommerce.update_attributes(created_on_paymoney_wallet: true, paymoney_account_number: response["compteNumero"], paymoney_password: response["comptePassword"], paymoney_token: response["compteLibelle"])
+            flash[:success] = "Votre demande de qualification a été soumise. Elle sera étudiée et l'état de sa validation vous sera notifié."
+            redirect_to merchant_edit_ecommerce_path
+          when "4"
+            @ecommerce.errors.add(:id, "Ce compte existe déjà.")
+          when "2"
+            @ecommerce.save
+            link_to_wallets
+            qualification_submission_email(current_user, @ecommerce.bank, @ecommerce)
+            @ecommerce.update_attributes(created_on_paymoney_wallet: true, paymoney_account_number: response["compteNumero"], paymoney_password: response["comptePassword"], paymoney_token: response["compteLibelle"])
+            flash[:success] = "Votre demande de qualification a été soumise. Elle sera étudiée et l'état de sa validation vous sera notifié. Votre compte paymoney a été crée. Rendez vous dans votre boite mail pour l'activer."
+            redirect_to merchant_edit_ecommerce_path
+          else
+            @ecommerce.errors.add(:id, "Une erreur inconnue s'est produite, veuillez contacter l'administrateur. Statut: #{response["status"]["idStatus"].to_s rescue ""} Message: #{response["status"]["idStatus"].to_s rescue ""}")
+        end
+      end
+    else
+      flash.now[:error] = @ecommerce.errors.full_messages.map { |msg| "<p>#{msg}</p>" }.join
+      render :index
+    end
+
+=begin
     if @ecommerce.save
       link_to_wallets
       qualification_submission_email(current_user, @ecommerce.bank, @ecommerce)
@@ -25,16 +66,19 @@ class EcommercesController < ApplicationController
       flash.now[:error] = @ecommerce.errors.full_messages.map { |msg| "<p>#{msg}</p>" }.join
       render :index
     end
+=end
   end
 
   def edit
     @ecommerce = current_user.ecommerces.first
+    @ecommerce_profiles = EcommerceProfile.where(published: true)
     @ecommerce_template = @ecommerce # Initialize the template on the right side
     initialize_form
   end
 
   def update
     @ecommerce = current_user.ecommerces.first rescue nil
+    @ecommerce_profiles = EcommerceProfile.where(published: true)
     @ecommerce_template = @ecommerce
     parameters = Parameter.first
 
@@ -173,7 +217,7 @@ class EcommercesController < ApplicationController
     ecommerce = Ecommerce.find_by_id(params[:ecommerce_id])
 
     if ecommerce
-      request = Typhoeus::Request.new("#{parameters.back_office_url}/service/qualify", params: {name: ecommerce.name, token: ecommerce.token, pdt_url: ecommerce.pdt_url, ipn_url: ecommerce.ipn_url, order_already_paid: ecommerce.order_already_paid_url, wallets: "#{ecommerce.available_wallets.map {|m| [m.wallet.authentication_token, m.published]}}"}, method: :post, followlocation: true, ssl_verifypeer: false, ssl_verifyhost: 0)
+      request = Typhoeus::Request.new("#{parameters.back_office_url}/service/qualify", params: {name: ecommerce.name, ecommerce_profile_token: ecommerce.ecommerce_profile.token, token: ecommerce.token, pdt_url: ecommerce.pdt_url, ipn_url: ecommerce.ipn_url, order_already_paid: ecommerce.order_already_paid_url, wallets: "#{ecommerce.available_wallets.map {|m| [m.wallet.authentication_token, m.published]}}", ecommerce_profile_token: (ecommerce.ecommerce_profile.token rescue '')}, method: :post, followlocation: true, ssl_verifypeer: false, ssl_verifyhost: 0)
       request.run
       response = (JSON.parse(request.response.body) rescue nil)
 

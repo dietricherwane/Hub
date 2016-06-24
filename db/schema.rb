@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160210181001) do
+ActiveRecord::Schema.define(version: 20160618170343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,13 +51,21 @@ ActiveRecord::Schema.define(version: 20160210181001) do
     t.string   "name",       limit: 45
   end
 
+  create_table "ecommerce_profiles", force: true do |t|
+    t.string   "description"
+    t.boolean  "published"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "token"
+  end
+
   create_table "ecommerces", force: true do |t|
-    t.string   "name",                     limit: 100
-    t.string   "url",                      limit: 150
+    t.string   "name",                       limit: 100
+    t.string   "url",                        limit: 150
     t.text     "description"
     t.integer  "bank_id"
-    t.string   "pdt_url",                  limit: 150
-    t.string   "order_already_paid_url",   limit: 150
+    t.string   "pdt_url",                    limit: 150
+    t.string   "order_already_paid_url",     limit: 150
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "qualified"
@@ -66,17 +74,17 @@ ActiveRecord::Schema.define(version: 20160210181001) do
     t.integer  "unqualified_by"
     t.datetime "unqualified_at"
     t.integer  "user_id"
-    t.string   "rib",                      limit: 100
+    t.string   "rib",                        limit: 100
     t.string   "logo_file_name"
     t.string   "logo_content_type"
     t.integer  "logo_file_size"
     t.datetime "logo_updated_at"
-    t.string   "ipn_url",                  limit: 150
+    t.string   "ipn_url",                    limit: 150
     t.boolean  "qualification_email_sent"
     t.boolean  "created_in_back_office"
-    t.string   "operation_token",          limit: 100
-    t.string   "service_token",            limit: 100
-    t.string   "token",                    limit: 100
+    t.string   "operation_token",            limit: 100
+    t.string   "service_token",              limit: 100
+    t.string   "token",                      limit: 100
     t.datetime "requalified_at"
     t.integer  "requalified_by"
     t.boolean  "published"
@@ -84,6 +92,24 @@ ActiveRecord::Schema.define(version: 20160210181001) do
     t.integer  "pos_account_type_id"
     t.string   "firstname"
     t.string   "lastname"
+    t.integer  "ecommerce_profile_id"
+    t.string   "bank_code"
+    t.string   "wicket_code"
+    t.string   "account_number"
+    t.boolean  "created_on_paymoney_wallet"
+    t.string   "paymoney_account_number"
+    t.string   "paymoney_password"
+    t.string   "paymoney_token"
+    t.text     "paymoney_creation_request"
+    t.text     "paymoney_creation_response"
+  end
+
+  create_table "logs", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "object_inspector"
+    t.text     "request_log"
+    t.text     "response_log"
   end
 
   create_table "parameters", force: true do |t|
