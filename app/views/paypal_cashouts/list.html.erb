@@ -28,9 +28,10 @@
       <table id="cashout_logs" class="display" cellspacing="0">
         <thead>
             <tr>
-              <th width = "20%">ID de cashout</th>
-              <th width = "15%">Id de commande</th>
-              <th width = "15%">Date</th>
+              <th width = "15%">ID de cashout</th>
+              <th width = "10%">Id de commande</th>
+              <th width = "15%">Compte</th>
+              <th width = "10%">Date</th>
               <th width = "10%">Devise</th>
               <th width = "10%">Montant</th>
               <th width = "10%">Frais</th>
@@ -44,6 +45,7 @@
               <tr>
                 <th><%= cashout.transaction_id %></th>
                 <th><%= cashout.order_id %></th>
+                <th><%= cashout.cashout_account_number %></th>
                 <th><%= cashout.created_at.strftime("%d-%m-%Y") %> à <%= cashout.created_at.strftime("%Hh %Mmn") %></th>
                 <th><%= cashout.currency %></th>
                 <th><%= cashout.transaction_amount %></th>
