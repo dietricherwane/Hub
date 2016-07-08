@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160708172347) do
+ActiveRecord::Schema.define(version: 20160708073157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -160,7 +160,6 @@ ActiveRecord::Schema.define(version: 20160708172347) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "cashout_account_number"
   end
 
   add_index "paypal_cashouts", ["order_id"], name: "index_paypal_cashouts_on_order_id", using: :btree
