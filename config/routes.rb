@@ -61,6 +61,14 @@ Hub::Application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
+  # Cashout logs
+  get "/api/856332ed59e5207c68e864564/cashout/log/paypal" => "paypal_cashouts#save_log"
+
+  get "/admin/cashouts/wallets" => "users#wallets_for_cashouts", as: :list_wallets_for_cashouts
+  get "/admin/cashouts/paypal" => "paypal_cashouts#list", as: :list_paypal_cashouts
+  get "/admin/cashout/paypal/validate/:transaction_id" => "paypal_cashouts#validate_cashout", as: :validate_cashout
+  get "/admin/cashout/paypal/cancel/:transaction_id" => "paypal_cashouts#cancel_cashout", as: :cancel_cashout
+
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 

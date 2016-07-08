@@ -1,0 +1,2 @@
+module PaypalCashoutsHelper
+end
