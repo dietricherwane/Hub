@@ -51,7 +51,7 @@
                 <th><%= cashout.transaction_amount %></th>
                 <th><%= cashout.fee %></th>
                 <th>
-                  <% if cashout.status_id == '0' && cashout.order_completed.blank? %>
+                  <% if cashout.status_id == '0' && cashout.order_completed == nil %>
                     Echouée
                   <% end %>
                   <% if cashout.status_id == '5' %>
