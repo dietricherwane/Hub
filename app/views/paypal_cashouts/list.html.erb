@@ -45,7 +45,7 @@
               <tr>
                 <th><%= cashout.transaction_id %></th>
                 <th><%= cashout.order_id %></th>
-                <th><%= cashout.cashout_account_number %></th>
+                <th><%= cashout.cashout_account_number rescue nil %></th>
                 <th><%= cashout.created_at.strftime("%d-%m-%Y") %> à <%= cashout.created_at.strftime("%Hh %Mmn") %></th>
                 <th><%= cashout.currency %></th>
                 <th><%= cashout.transaction_amount %></th>
