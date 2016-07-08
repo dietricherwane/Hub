@@ -23,7 +23,7 @@ class PaypalCashoutsController < ApplicationController
       flash[:error] = "La transaction n'a pas été trouvée"
     else
       cashout.update_attributes(status_id: '1', user_id: current_user.id, order_completed: true)
-      flash[:error] = "La transaction a été validée"
+      flash[:success] = "La transaction a été validée"
     end
 
     redirect_to :back
@@ -35,8 +35,8 @@ class PaypalCashoutsController < ApplicationController
     if cashout.blank?
       flash[:error] = "La transaction n'a pas été trouvée"
     else
-      cashout.update_attributes(status_id: '1', user_id: current_user.id, order_completed: true)
-      flash[:error] = "La transaction a été rejetée"
+      cashout.update_attributes(status_id: '1', user_id: current_user.id, order_completed: false)
+      flash[:success] = "La transaction a été rejetée"
     end
 
     redirect_to :back
