@@ -7,5 +7,4 @@ class PaypalCashout < ActiveRecord::Base
 
   # Validations
   validates :transaction_id, :order_id, :status_id, :transaction_amount, :currency, :paid_transaction_amount, :paid_currency, :change_rate, :fee, presence: true
-  validates :transaction_amount, :currency, :paid_transaction_amount, :fee, numericality: true
 end
