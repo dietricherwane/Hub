@@ -2,7 +2,7 @@ class PaypalCashoutsController < ApplicationController
   layout :layout_used
 
   def save_log
-    cashout_log = PaypalCashout.new(params)
+    cashout_log = PaypalCashout.new(params.except(:controller, :action))
     status = "0"
 
     if cashout_log.save
