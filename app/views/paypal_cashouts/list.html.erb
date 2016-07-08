@@ -47,7 +47,6 @@
                 <th><%= cashout.currency %></th>
                 <th><%= cashout.transaction_amount %></th>
                 <th><%= cashout.fee %></th>
-                <th><%= cashout.account_number %></th>
                 <th>
                   <% if cashout.status_id == '0' && cashout.order_completed.blank? %>
                     Echouée
