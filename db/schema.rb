@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160618170343) do
+ActiveRecord::Schema.define(version: 20160708073157) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,6 +145,26 @@ ActiveRecord::Schema.define(version: 20160618170343) do
     t.string   "a_account_transfer"
     t.string   "b_account_transfer"
   end
+
+  create_table "paypal_cashouts", force: true do |t|
+    t.string   "transaction_id"
+    t.string   "order_id"
+    t.string   "status_id",               limit: 5
+    t.string   "transaction_amount"
+    t.string   "currency",                limit: 5
+    t.string   "paid_transaction_amount"
+    t.string   "paid_currency"
+    t.string   "change_rate"
+    t.string   "fee"
+    t.boolean  "order_completed"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "paypal_cashouts", ["order_id"], name: "index_paypal_cashouts_on_order_id", using: :btree
+  add_index "paypal_cashouts", ["status_id"], name: "index_paypal_cashouts_on_status_id", using: :btree
+  add_index "paypal_cashouts", ["transaction_id"], name: "index_paypal_cashouts_on_transaction_id", using: :btree
 
   create_table "pos_account_types", force: true do |t|
     t.string   "name"

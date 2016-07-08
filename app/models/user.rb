@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :paymoney_wallet_logs
   belongs_to :compensation_mode
   has_many :pos_cashouts
+  has_many :paypal_cashouts
 
 
   # Accessible fields

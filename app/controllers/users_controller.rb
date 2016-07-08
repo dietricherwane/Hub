@@ -17,5 +17,8 @@ class UsersController < ApplicationController
     render text: status
   end
 
+  def wallets_for_cashouts
+
+  end
 
 end
