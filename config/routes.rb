@@ -54,6 +54,7 @@ Hub::Application.routes.draw do
   get "ecommerce/get_logo/:token" => "ecommerces#get_logo"
 
   get "/api/367419f5968800cd/paymoney_wallet/store_log" => "paymoney_wallet_logs#store_transaction_log"
+  get "/api/377777f5968800cd/paymoney_wallet/store_unlogged_transactions" => "paymoney_wallet_logs#store_unlogged_transactions"
 
   get "pos/has_rib/:certified_agent_id" => "users#has_rib"
   post "pos/transaction_logs/search" => "posm#transaction_logs_search", as: :pos_search
