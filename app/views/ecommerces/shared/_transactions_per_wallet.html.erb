@@ -1,46 +1,40 @@
+<script>
+  $(document).ready(function() {
+    $('#transactions').DataTable();
+  } );
+</script>
+
 <% if @transactions.blank? %>
   <h3>Aucune donnée à afficher</h3>
 <% else %>
-  <div id = "toggle-style-2">
-    <% @transactions.each do |transaction| %>
-      <div class = "tgg-item">
-        <%= link_to content_tag(:span, "<b>[ N°: #{transaction['transaction_id']} -- Identifiant: #{transaction['number']}]</b> <i>du #{DateTime.parse(transaction['created_at']).strftime("%d-%m-%Y")} à #{DateTime.parse(transaction['created_at']).strftime("%Hh %Mmn")}</i>".html_safe), "#", class: "tgg-trigger" %>
 
-        <div class = "toggle_container" style = "display: none; overflow: hidden;">
-          <div class="sidebar six columns">
-            <h2 class = "sb_header">Détails de la transaction</h2>
-            <p>
-              <b>Numéro de transaction</b><br />
-              <%= transaction['transaction_id'] %>
-            </p>
-            <p>
-              <b>Identifiant de transaction</b><br />
-              <%= transaction['number'] %>
-            </p>
-            <p>
-              <b>Montant de la transaction</b><br />
-              <%= transaction['full_transaction_amount'] %>
-            </p>
-            <p>
-              <b>Montant payé</b><br />
-              <%= transaction['full_paid_transaction_amount'] %>
-            </p>
-            <p>
-              <b>Montant des frais</b><br />
-              <%= transaction['full_fee'] %>
-            </p>
-            <p>
-              <b>Taux de change</b><br />
-              <%= transaction['rate'] %>
-            </p>
-            <div class = "divider3"></div>
-            <p>
-              Date du <%= DateTime.parse(transaction['created_at']).strftime("%d-%m-%Y") %> à <%= DateTime.parse(transaction['created_at']).strftime("%Hh %Mmn") %>
-            </p>
-          </div>
+  <table id="transactions" class="display" cellspacing="0">
+    <thead>
+        <tr>
+          <th width = "10%">Id de transaction</th>
+          <th width = "10%">Identifiant</th>
+          <th width = "10%">Date</th>
+          <th width = "10%">Montant de la transaction</th>
+          <th width = "10%">Montant payé</th>
+          <th width = "10%">Montant des frais</th>
+          <th width = "10%">Taux de change</th>
+        </tr>
+    </thead>
+    <tbody>
+      <% unless @transactions.blank? %>
+        <% @transactions.each do |transaction| %>
+          <tr>
+              <th><%= transaction['transaction_id'] %></th>
+              <th><%= transaction['number'] %></th>
+              <th><%= DateTime.parse(transaction['created_at']).strftime("%d-%m-%Y") %> à <%= DateTime.parse(transaction['created_at']).strftime("%Hh %Mmn") %></th>
+              <th><%= transaction['full_transaction_amount'] %></th>
+              <th><%= transaction['full_paid_transaction_amount'] %></th>
+              <th><%= transaction['full_fee'] %></th>
+              <th><%= transaction['rate'] %></th>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
 
-        </div>
-      </div>
-    <% end %>
-  </div>
 <% end %>

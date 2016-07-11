@@ -33,7 +33,7 @@ class PosmController < ApplicationController
 
     set_transaction_search_params
 
-    @transactions = PaymoneyWalletLog.where("#{@sql_begin_date} #{@sql_begin_date.blank? ? '' : 'AND'} #{@sql_end_date} #{@sql_end_date.blank? ? '' : 'AND'} #{@sql_type} AND status = TRUE AND agent = '#{current_user.certified_agent_id}'").order("created_at DESC")
+    @transactions = PaymoneyWalletLog.where("#{@sql_begin_date} #{@sql_begin_date.blank? ? '' : 'AND'} #{@sql_end_date} #{@sql_end_date.blank? ? '' : 'AND'} #{@sql_type} #{@sql_type.blank? ? '' : 'AND'} status = TRUE AND agent = '#{current_user.certified_agent_id}'").order("created_at DESC")
     flash[:success] = "#{@transactions.count} Résultat(s) trouvé(s)."
 
     if params[:commit] == "Exporter"
