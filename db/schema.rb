@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160708172347) do
+ActiveRecord::Schema.define(version: 20160711162525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,57 @@ ActiveRecord::Schema.define(version: 20160708172347) do
     t.text     "response_log"
   end
 
+  create_table "mtn_ci_cashouts", force: true do |t|
+    t.string   "transaction_id"
+    t.string   "order_id"
+    t.string   "status_id"
+    t.string   "transaction_amount"
+    t.string   "currency"
+    t.string   "paid_transaction_amount"
+    t.string   "paid_currency"
+    t.string   "change_rate"
+    t.string   "fee"
+    t.boolean  "order_completed"
+    t.string   "user_id"
+    t.string   "cashout_account_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "novapay_cashouts", force: true do |t|
+    t.string   "transaction_id"
+    t.string   "order_id"
+    t.string   "status_id"
+    t.string   "transaction_amount"
+    t.string   "currency"
+    t.string   "paid_transaction_amount"
+    t.string   "paid_currency"
+    t.string   "change_rate"
+    t.string   "fee"
+    t.boolean  "order_completed"
+    t.string   "user_id"
+    t.string   "cashout_account_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "orange_money_ci_cashouts", force: true do |t|
+    t.string   "transaction_id"
+    t.string   "order_id"
+    t.string   "status_id"
+    t.string   "transaction_amount"
+    t.string   "currency"
+    t.string   "paid_transaction_amount"
+    t.string   "paid_currency"
+    t.string   "change_rate"
+    t.string   "fee"
+    t.boolean  "order_completed"
+    t.string   "user_id"
+    t.string   "cashout_account_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "parameters", force: true do |t|
     t.string   "back_office_url",     limit: 100
     t.datetime "created_at"
@@ -190,6 +241,40 @@ ActiveRecord::Schema.define(version: 20160708172347) do
     t.string   "name",       limit: 100
     t.string   "shortcut",   limit: 5
     t.boolean  "published"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "qash_cashouts", force: true do |t|
+    t.string   "transaction_id"
+    t.string   "order_id"
+    t.string   "status_id"
+    t.string   "transaction_amount"
+    t.string   "currency"
+    t.string   "paid_transaction_amount"
+    t.string   "paid_currency"
+    t.string   "change_rate"
+    t.string   "fee"
+    t.boolean  "order_completed"
+    t.string   "user_id"
+    t.string   "cashout_account_number"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "uba_cashouts", force: true do |t|
+    t.string   "transaction_id"
+    t.string   "order_id"
+    t.string   "status_id"
+    t.string   "transaction_amount"
+    t.string   "currency"
+    t.string   "paid_transaction_amount"
+    t.string   "paid_currency"
+    t.string   "change_rate"
+    t.string   "fee"
+    t.boolean  "order_completed"
+    t.string   "user_id"
+    t.string   "cashout_account_number"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
