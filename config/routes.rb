@@ -64,6 +64,11 @@ Hub::Application.routes.draw do
 
   # Cashout logs
   get "/api/856332ed59e5207c68e864564/cashout/log/paypal" => "paypal_cashouts#save_log"
+  get "/api/856332ed59e5207c68e864564/cashout/log/novapay" => "novapay_cashouts#save_log"
+  get "/api/856332ed59e5207c68e864564/cashout/log/uba" => "uba_cashouts#save_log"
+  get "/api/856332ed59e5207c68e864564/cashout/log/qash" => "qash_cashouts#save_log"
+  get "/api/856332ed59e5207c68e864564/cashout/log/orange_money_ci" => "orange_money_ci_cashouts#save_log"
+  get "/api/856332ed59e5207c68e864564/cashout/log/mtn_ci" => "mtn_ci_cashouts#save_log"
 
   get "/admin/cashouts/wallets" => "users#wallets_for_cashouts", as: :list_wallets_for_cashouts
 
