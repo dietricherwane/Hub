@@ -66,9 +66,30 @@ Hub::Application.routes.draw do
   get "/api/856332ed59e5207c68e864564/cashout/log/paypal" => "paypal_cashouts#save_log"
 
   get "/admin/cashouts/wallets" => "users#wallets_for_cashouts", as: :list_wallets_for_cashouts
+
   get "/admin/cashouts/paypal" => "paypal_cashouts#list", as: :list_paypal_cashouts
   get "/admin/cashout/paypal/validate/:transaction_id" => "paypal_cashouts#validate_cashout", as: :validate_cashout
   get "/admin/cashout/paypal/cancel/:transaction_id" => "paypal_cashouts#cancel_cashout", as: :cancel_cashout
+
+  get "/admin/cashouts/novapay" => "novapay_cashouts#list", as: :list_novapay_cashouts
+  get "/admin/cashout/novapay/validate/:transaction_id" => "novapay_cashouts#validate_cashout", as: :validate_novapay_cashout
+  get "/admin/cashout/novapay/cancel/:transaction_id" => "novapay_cashouts#cancel_cashout", as: :cancel_novapay_cashout
+
+  get "/admin/cashouts/uba" => "uba_cashouts#list", as: :list_uba_cashouts
+  get "/admin/cashout/uba/validate/:transaction_id" => "uba_cashouts#validate_cashout", as: :validate_uba_cashout
+  get "/admin/cashout/uba/cancel/:transaction_id" => "uba_cashouts#cancel_cashout", as: :cancel_uba_cashout
+
+  get "/admin/cashouts/qash" => "qash_cashouts#list", as: :list_qash_cashouts
+  get "/admin/cashout/qash/validate/:transaction_id" => "qash_cashouts#validate_cashout", as: :validate_qash_cashout
+  get "/admin/cashout/qash/cancel/:transaction_id" => "qash_cashouts#cancel_cashout", as: :cancel_qash_cashout
+
+  get "/admin/cashouts/orange_money_ci" => "orange_money_ci_cashouts#list", as: :list_orange_money_ci_cashouts
+  get "/admin/cashout/orange_money_ci/validate/:transaction_id" => "orange_money_ci_cashouts#validate_cashout", as: :validate_orange_money_ci_cashout
+  get "/admin/cashout/orange_money_ci/cancel/:transaction_id" => "orange_money_ci_cashouts#cancel_cashout", as: :cancel_orange_money_ci_cashout
+
+  get "/admin/cashouts/mtn_ci" => "mtn_ci_cashouts#list", as: :list_mtn_ci_cashouts
+  get "/admin/cashout/mtn_ci/validate/:transaction_id" => "mtn_ci_cashouts#validate_cashout", as: :validate_mtn_ci_cashout
+  get "/admin/cashout/mtn_ci/cancel/:transaction_id" => "mtn_ci_cashouts#cancel_cashout", as: :cancel_mtn_ci_cashout
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

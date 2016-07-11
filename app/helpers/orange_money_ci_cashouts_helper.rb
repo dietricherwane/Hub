@@ -1,0 +1,2 @@
+module OrangeMoneyCiCashoutsHelper
+end
