@@ -26,8 +26,8 @@
           <tr>
               <th><%= transaction['transaction_id'] %></th>
               <th><%= transaction['number'] %></th>
-              <th><%= transaction['full_transaction_amount'] %></th>
               <th><%= DateTime.parse(transaction['created_at']).strftime("%d-%m-%Y") %> à <%= DateTime.parse(transaction['created_at']).strftime("%Hh %Mmn") %></th>
+              <th><%= transaction['full_transaction_amount'] %></th>
               <th><%= transaction['full_paid_transaction_amount'] %></th>
               <th><%= transaction['full_fee'] %></th>
               <th><%= transaction['rate'] %></th>
