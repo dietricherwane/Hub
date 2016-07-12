@@ -1,0 +1,80 @@
+<script>
+  $(document).ready(function() {
+    $('#cashout_logs').DataTable();
+  });
+</script>
+
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title">Liste des cashout de UBA </p>
+      <ul class="breadcrumbs">
+        <li><a><%= render "shared/display_user_name" %></a></li>
+        <li><a href="<%= root_path %>">Accueil</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="container main_content">
+
+
+
+  <div class="row">
+    <div class="sidebar twelve columns">
+      <%= render "shared/generic_flash" %>
+      <table id="cashout_logs" class="display" cellspacing="0">
+        <thead>
+            <tr>
+              <th width = "15%">ID de cashout</th>
+              <th width = "10%">Id de commande</th>
+              <th width = "15%">Compte</th>
+              <th width = "10%">Date</th>
+              <th width = "10%">Devise</th>
+              <th width = "10%">Montant</th>
+              <th width = "10%">Frais</th>
+              <th width = "10%">Statut</th>
+              <th width = "10%">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+          <% unless @cashouts.blank? %>
+            <% @cashouts.each do |cashout| %>
+              <tr>
+                <th><%= cashout.transaction_id %></th>
+                <th><%= cashout.order_id %></th>
+                <th><%= cashout.cashout_account_number rescue nil %></th>
+                <th><%= cashout.created_at.strftime("%d-%m-%Y") %> à <%= cashout.created_at.strftime("%Hh %Mmn") %></th>
+                <th><%= cashout.currency %></th>
+                <th><%= cashout.transaction_amount %></th>
+                <th><%= cashout.fee %></th>
+                <th>
+                  <% if cashout.status_id == '0' && cashout.order_completed == nil %>
+                    Echouée
+                  <% end %>
+                  <% if cashout.status_id == '5' %>
+                    En attente de validation
+                  <% end %>
+                  <% if cashout.status_id == '1' %>
+                    Validée
+                  <% end %>
+                  <% if cashout.status_id == '0' && cashout.order_completed == false %>
+                    Rejetée
+                  <% end %>
+                </th>
+                <th>
+                  <% if cashout.status_id == '5' %>
+                    <%= link_to 'Valider', validate_uba_cashout_path(cashout.transaction_id) %> <br />
+                    <%= link_to 'Rejeter', cancel_uba_cashout_path(cashout.transaction_id) %>
+                  <% end %>
+                </th>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
