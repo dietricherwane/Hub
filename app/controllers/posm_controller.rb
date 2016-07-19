@@ -33,18 +33,18 @@ class PosmController < ApplicationController
 
     set_transaction_search_params
 
-    @transactions = PaymoneyWalletLog.where("#{@sql_begin_date} #{@sql_begin_date.blank? ? '' : 'AND'} #{@sql_end_date} #{@sql_end_date.blank? ? '' : 'AND'} #{@sql_type} #{@sql_type.blank? ? '' : 'AND'} status = TRUE AND agent = '#{current_user.certified_agent_id}'").order("created_at DESC") rescue nil
+    @transactions = PaymoneyWalletLog.where("#{@sql_begin_date} #{@sql_begin_date.blank? ? '' : 'AND'} #{@sql_end_date} #{@sql_end_date.blank? ? '' : 'AND'} #{@sql_type} #{@sql_type.blank? ? '' : 'AND'} status = TRUE AND agent = '#{current_user.certified_agent_id}'").order("created_at DESC") #rescue nil
 
-    if @transactions.blank?
+    #if @transactions.blank?
       flash[:success] = "#{@transactions.count} Résultat(s) trouvé(s)."
 
       if params[:commit] == "Exporter"
         send_data @transactions.to_csv, filename: "Transaction-pos-#{Date.today}.csv"
       end
-    else
-      flash[:error] = "Veuillez utiliser le sélecteur de date"
-      redirect_to transaction_logs_path
-    end
+    #else
+      #flash[:error] = "Veuillez utiliser le sélecteur de date"
+      #redirect_to transaction_logs_path
+    #end
   end
 
   def init_form
