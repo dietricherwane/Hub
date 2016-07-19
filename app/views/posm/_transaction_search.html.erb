@@ -11,7 +11,7 @@
             <label>Date de début</label>
             <div class="formRight">
               <%#= date_field_tag :begin_date, params[:begin_date], start_year: (Date.today.year - 10), end_year: Date.today.year, class: "form-control" %>
-              <%= date_select("transactions", "begin_date", order: [:day, :month, :year], default: { day: 1, month: 1, year: 2015 }, class: "form-control") %>
+              <%= select_date("begin_date", Date.parse('01-01-2015'), order: [:day, :month, :year], class: "form-control") %>
             </div>
             <div class="clear"></div>
           </div>
@@ -20,7 +20,7 @@
             <label>Date de fin</label>
             <div class="formRight">
               <%#= date_field_tag :end_date, params[:end_date], start_year: (Date.today.year - 10), end_year: Date.today.year, class: "form-control" %>
-              <%= date_select("transactions", "end_date", order: [:day, :month, :year], default: { day: 1, month: 1, year: 2015 }, class: "form-control") %>
+              <%= select_date("end_date", Date.today, order: [:day, :month, :year], class: "form-control") %>
             </div>
             <div class="clear"></div>
           </div>
