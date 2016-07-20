@@ -28,7 +28,7 @@
           <div class="formRow">
             <label>Statut</label>
             <div class="formRight">
-              <%= select_tag "transaction_type", options_for_select([ "Credit de compte", "Transfert de credit", "Debit du compte", "Validation de debit", "Solde du compte" ], params[:transaction_type]), prompt: "Veuillez choisir un type", class: "form-control" %>
+              <%= select_tag "transaction_type", options_for_select([ "Credit de compte", "Transfert de credit", "Validation de credit", "Debit du compte", "Validation de debit", "Solde du compte" ], params[:transaction_type]), prompt: "Veuillez choisir un type", class: "form-control" %>
             </div>
             <div class="clear"></div>
           </div>
