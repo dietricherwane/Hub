@@ -24,7 +24,7 @@ class PosmController < ApplicationController
 
   def transaction_logs_search
     @begin_date = "#{params[:begin_date][:month]}/#{params[:begin_date][:day]}/#{params[:begin_date][:year]}"
-    @end_date = "#{params[:end_date][:month]}/#{params[:begin_date][:day]}/#{params[:begin_date][:year]}"
+    @end_date = "#{params[:end_date][:month]}/#{params[:end_date][:day]}/#{params[:end_date][:year]}"
     @transaction_type = params[:transaction_type]
 
     params[:begin_date] = @begin_date
