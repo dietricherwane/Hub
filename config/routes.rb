@@ -58,7 +58,7 @@ Hub::Application.routes.draw do
 
   get "pos/has_rib/:certified_agent_id" => "users#has_rib"
   post "pos/transaction_logs/search" => "posm#transaction_logs_search", as: :pos_search
-  get "pos/transaction_logs/search" => "posm#transactions_log"
+  get "pos/transaction_logs/search" => "posm#transactions_log", as: :transaction_logs
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

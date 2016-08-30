@@ -10,7 +10,8 @@
           <div class="formRow">
             <label>Date de début</label>
             <div class="formRight">
-              <%= date_field_tag :begin_date, params[:begin_date], start_year: (Date.today.year - 10), end_year: Date.today.year, class: "form-control" %>
+              <%#= date_field_tag :begin_date, params[:begin_date], start_year: (Date.today.year - 10), end_year: Date.today.year, class: "form-control" %>
+              <%= select_date(Date.parse('01-01-2015'), order: [:day, :month, :year], prefix: "begin_date", class: "form-control") %>
             </div>
             <div class="clear"></div>
           </div>
@@ -18,7 +19,8 @@
           <div class="formRow">
             <label>Date de fin</label>
             <div class="formRight">
-              <%= date_field_tag :end_date, params[:end_date], start_year: (Date.today.year - 10), end_year: Date.today.year, class: "form-control" %>
+              <%#= date_field_tag :end_date, params[:end_date], start_year: (Date.today.year - 10), end_year: Date.today.year, class: "form-control" %>
+              <%= select_date(Date.today, order: [:day, :month, :year], prefix: "end_date", class: "form-control") %>
             </div>
             <div class="clear"></div>
           </div>
@@ -26,7 +28,7 @@
           <div class="formRow">
             <label>Statut</label>
             <div class="formRight">
-              <%= select_tag "transaction_type", options_for_select([ "Credit de compte", "Transfert de credit", "Debit du compte", "Validation de debit", "Solde du compte" ], params[:transaction_type]), prompt: "Veuillez choisir un type", class: "form-control" %>
+              <%= select_tag "transaction_type", options_for_select([ "Credit de compte", "Transfert de credit", "Validation de credit", "Debit du compte", "Validation de debit", "Solde du compte", "Remontée de fonds" ], params[:transaction_type]), prompt: "Veuillez choisir un type", class: "form-control" %>
             </div>
             <div class="clear"></div>
           </div>
