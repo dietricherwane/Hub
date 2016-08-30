@@ -220,7 +220,6 @@ class EcommercesController < ApplicationController
       request = Typhoeus::Request.new("#{parameters.back_office_url}/service/qualify", params: {name: ecommerce.name, ecommerce_profile_token: ecommerce.ecommerce_profile.token, token: ecommerce.token, pdt_url: ecommerce.pdt_url, ipn_url: ecommerce.ipn_url, order_already_paid: ecommerce.order_already_paid_url, wallets: "#{ecommerce.available_wallets.map {|m| [m.wallet.authentication_token, m.published]}}", ecommerce_profile_token: (ecommerce.ecommerce_profile.token rescue '')}, method: :post, followlocation: true, ssl_verifypeer: false, ssl_verifyhost: 0)
       request.run
       response = (JSON.parse(request.response.body) rescue nil)
-
       if response && (response["status"] rescue nil) == "6"
         ecommerce.update_attributes(service_token: response["service_token"], operation_token: response["operation_token"], qualified: true, qualified_by: current_user.id, qualified_at: DateTime.now)
         ecommerce_qualified_email(ecommerce.user, ecommerce.bank, ecommerce)
