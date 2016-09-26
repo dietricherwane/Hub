@@ -29,6 +29,7 @@ class EcommercesController < ApplicationController
 
       if response.blank?
         @ecommerce.errors.add(:id, "Une erreur s'est produite, veuillez contacter l'administrateur.")
+        render :index
       else
         case (response["status"]["idStatus"].to_s rescue "")
           when "1"
@@ -40,6 +41,7 @@ class EcommercesController < ApplicationController
             redirect_to merchant_edit_ecommerce_path
           when "4"
             @ecommerce.errors.add(:id, "Ce compte existe déjà.")
+            redirect_to merchant_edit_ecommerce_path
           when "2"
             @ecommerce.save
             link_to_wallets
@@ -49,6 +51,7 @@ class EcommercesController < ApplicationController
             redirect_to merchant_edit_ecommerce_path
           else
             @ecommerce.errors.add(:id, "Une erreur inconnue s'est produite, veuillez contacter l'administrateur. Statut: #{response["status"]["idStatus"].to_s rescue ""} Message: #{response["status"]["idStatus"].to_s rescue ""}")
+            render :index
         end
       end
     else
