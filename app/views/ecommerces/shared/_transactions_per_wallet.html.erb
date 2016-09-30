@@ -26,7 +26,7 @@
           <tr>
               <th><%= transaction['transaction_id'] %></th>
               <th><%= transaction['number'] %></th>
-              <th><%= transaction['created_at'] %> </th>
+              <th><%= transaction['created_at'].gsub('T', ' ').gsub('Z', '') %> </th>
               <th><%= transaction['full_transaction_amount'] %></th>
               <th><%= transaction['full_paid_transaction_amount'] %></th>
               <th><%= transaction['full_fee'] %></th>
