@@ -97,6 +97,7 @@ Hub::Application.routes.draw do
   get "/admin/cashout/mtn_ci/cancel/:transaction_id" => "mtn_ci_cashouts#cancel_cashout", as: :cancel_mtn_ci_cashout
 
   get "/admin/agents/list" => "pos_administration#list_agents", as: :pos_administration_list_agents
+  get "/admin/agent/transactions/list/:agent_id" => "pos_administration#list_agent_transactions", as: :pos_administration_list_agent_transactions
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

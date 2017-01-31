@@ -44,7 +44,7 @@
                   <th><%= agent.email %></th>
                   <th><%= agent.pos_account_type_id %></th>
                   <th><%= agent.certified_agent_id %></th>
-                  <th><%=  %></th>
+                  <th><%= pos_administration_list_agent_transactions_path(agent.certified_agent_id) %></th>
               </tr>
             <% end %>
           <% end %>
