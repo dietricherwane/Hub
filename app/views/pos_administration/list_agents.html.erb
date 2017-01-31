@@ -1,0 +1,55 @@
+<script>
+  $(document).ready(function() {
+    $('#agents_log').DataTable();
+  } );
+</script>
+
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title">Liste des POS marchands</p>
+      <ul class="breadcrumbs">
+        <li><a href="<%= root_path %>">Accueil</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="container main_content">
+  <%#= render "transaction_search" %>
+
+  <div class="row">
+    <div class="sidebar twelve columns">
+      <table id="agents_log" class="display" cellspacing="0">
+        <thead>
+            <tr>
+              <th width = "14%">Nom</th>
+              <th width = "14%">Prénoms</th>
+              <th width = "14%">Raison sociale</th>
+              <th width = "14%">Email</th>
+              <th width = "14%">Type de compte POS</th>
+              <th width = "16%">Id agent agréé</th>
+              <th width = "14%">Liste des transactions</th>
+            </tr>
+        </thead>
+        <tbody>
+          <% unless @agents.blank? %>
+            <% @agents.each do |agent| %>
+              <tr>
+                  <th><%= agent.firstname %></th>
+                  <th><%= agent.lastname %></th>
+                  <th><%= agent.company %></th>
+                  <th><%= agent.email %></th>
+                  <th><%= agent.pos_account_type_id %></th>
+                  <th><%= agent.certified_agent_id %></th>
+                  <th><%=  %></th>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
