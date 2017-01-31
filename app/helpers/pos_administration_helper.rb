@@ -1,0 +1,2 @@
+module PosAdministrationHelper
+end
