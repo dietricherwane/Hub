@@ -12,7 +12,7 @@ class PosAdministrationController < ApplicationController
     if @agent.blank?
       redirect_to pos_administration_list_agents_path
     else
-      @transactions = PaymoneyWalletLog.where("agent = ? AND status = TRUE", @agent.certified_agent_id).order("created_at DESC")
+      @transactions = PaymoneyWalletLog.where("agent = ? AND status IS TRUE", @agent.certified_agent_id).order("created_at DESC")
     end
   end
 end
