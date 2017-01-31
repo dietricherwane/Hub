@@ -8,7 +8,7 @@ class PosAdministrationController < ApplicationController
   end
 
   def list_agent_transactions
-    @agent = User.where("certified_agent_id = ?", params[:agent_id]) rescue nil
+    @agent = User.where("certified_agent_id = ?", params[:agent_id]).first rescue nil
     if @agent.blank?
       redirect_to pos_administration_list_agents_path
     else
