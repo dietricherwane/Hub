@@ -29,7 +29,6 @@
               <th width = "14%">Prénoms</th>
               <th width = "14%">Raison sociale</th>
               <th width = "14%">Email</th>
-              <th width = "14%">Type de compte POS</th>
               <th width = "16%">Id agent agréé</th>
               <th width = "14%">Liste des transactions</th>
             </tr>
@@ -42,7 +41,6 @@
                   <th><%= agent.lastname %></th>
                   <th><%= agent.company %></th>
                   <th><%= agent.email %></th>
-                  <th><%= agent.pos_account_type_id %></th>
                   <th><%= agent.certified_agent_id %></th>
                   <th><%= link_to "transactions", pos_administration_list_agent_transactions_path(agent.certified_agent_id) %></th>
               </tr>
