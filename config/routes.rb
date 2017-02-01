@@ -98,6 +98,8 @@ Hub::Application.routes.draw do
 
   get "/admin/agents/list" => "pos_administration#list_agents", as: :pos_administration_list_agents
   get "/admin/agent/transactions/list/:agent_id" => "pos_administration#list_agent_transactions", as: :pos_administration_list_agent_transactions
+  post "/admin/agents/transactions/search" => "pos_administration#transaction_logs_search", as: :pos_administration_search
+  get "/admin/agents/transactions/search" => "pos_administration#list_agents"
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
