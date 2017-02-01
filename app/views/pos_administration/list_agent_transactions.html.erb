@@ -11,6 +11,7 @@
       <p class="page-title">Profil du POS <%= @agent.company %> </p>
       <ul class="breadcrumbs">
         <li><a href="<%= root_path %>">Accueil</a></li>
+        <li><a href="<%= pos_administration_list_agents_path %>">Transactions des POS marchands</a></li>
       </ul>
     </div>
   </div>
@@ -18,7 +19,7 @@
 <!-- END PAGE HEADER -->
 
 <div class="container main_content">
-  <%#= render "transaction_search" %>
+  <%= render "transaction_search" %>
 
   <div class="row">
     <div class="sidebar twelve columns">
