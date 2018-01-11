@@ -29,6 +29,8 @@ class EcommercesController < ApplicationController
 
       if response.blank?
         @ecommerce.errors.add(:id, "Une erreur s'est produite, veuillez contacter l'administrateur.")
+        flash.now[:error] = @ecommerce.errors.full_messages.map { |msg| "<p>#{msg}</p>" }.join
+        render :index
       else
         case (response["status"]["idStatus"].to_s rescue "")
           when "1"
@@ -40,6 +42,8 @@ class EcommercesController < ApplicationController
             redirect_to merchant_edit_ecommerce_path
           when "4"
             @ecommerce.errors.add(:id, "Ce compte existe déjà.")
+            flash.now[:error] = @ecommerce.errors.full_messages.map { |msg| "<p>#{msg}</p>" }.join
+            render :index
           when "2"
             @ecommerce.save
             link_to_wallets
@@ -49,7 +53,9 @@ class EcommercesController < ApplicationController
             redirect_to merchant_edit_ecommerce_path
           else
             @ecommerce.errors.add(:id, "Une erreur inconnue s'est produite, veuillez contacter l'administrateur. Statut: #{response["status"]["idStatus"].to_s rescue ""} Message: #{response["status"]["idStatus"].to_s rescue ""}")
-        end
+            flash.now[:error] = @ecommerce.errors.full_messages.map { |msg| "<p>#{msg}</p>" }.join
+            render :index
+          end
       end
     else
       flash.now[:error] = @ecommerce.errors.full_messages.map { |msg| "<p>#{msg}</p>" }.join
@@ -71,9 +77,13 @@ class EcommercesController < ApplicationController
 
   def edit
     @ecommerce = current_user.ecommerces.first
-    @ecommerce_profiles = EcommerceProfile.where(published: true)
-    @ecommerce_template = @ecommerce # Initialize the template on the right side
-    initialize_form
+    if @ecommerce.blank?
+      redirect_to merchant_ecommerce_path
+    else
+      @ecommerce_profiles = EcommerceProfile.where(published: true)
+      @ecommerce_template = @ecommerce # Initialize the template on the right side
+      initialize_form
+    end
   end
 
   def update
