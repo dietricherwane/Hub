@@ -1,0 +1,65 @@
+<script>
+  $(document).ready(function() {
+    $('#transaction_logs').DataTable();
+  } );
+</script>
+
+<!-- PAGE HEADER -->
+<div class="container page-header ph-bg2">
+  <div class="row">
+    <div class="twelve columns">
+      <p class="page-title">Profil du POS <%= @agent.company %> </p>
+      <ul class="breadcrumbs">
+        <li><a href="<%= root_path %>">Accueil</a></li>
+        <li><a href="<%= pos_administration_list_agents_path %>">Transactions des POS marchands</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- END PAGE HEADER -->
+
+<div class="container main_content">
+  <%= render "transaction_search" %>
+
+  <div class="row">
+    <div class="sidebar twelve columns">
+      <table id="transaction_logs" class="display" cellspacing="0">
+        <thead>
+            <tr>
+              <th width = "10%">Type de transaction</th>
+              <th width = "10%">Id</th>
+              <th width = "10%">Date</th>
+              <th width = "10%">Statut</th>
+              <th width = "10%">Crédit</th>
+              <th width = "10%">Débit</th>
+              <th width = "10%">Compte client</th>
+              <th width = "10%">Sous agent</th>
+              <th width = "10%">Timbre</th>
+              <th width = "10%">Frais</th>
+            </tr>
+        </thead>
+        <tbody>
+          <% unless @transactions.blank? %>
+            <% @transactions.each do |transaction| %>
+              <tr>
+                  <th><%= transaction.transaction_type %></th>
+                  <th><%= transaction.transaction_id %></th>
+                  <th><%= transaction.created_at.strftime("%d-%m-%Y") %> à <%= transaction.created_at.strftime("%Hh %Mmn") %></th>
+                  <th><%= transaction.status ? "Succès" : "Echec" %></th>
+                  <th><%= transaction.credit_amount.to_i %></th>
+                  <th><%= transaction.checkout_amount.to_i %></th>
+                  <th><%= transaction.account_number %></th>
+                  <% sub_agent = User.find_by_sub_certified_agent_id(transaction.sub_agent) rescue '' %>
+                  <th>
+                    <%= sub_agent.lastname rescue '' %> <%= sub_agent.firstname rescue '' %>
+                  </th>
+                  <th><%= transaction.thumb.to_i %></th>
+                  <th><%= transaction.fee.to_i %></th>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -6,7 +6,7 @@ class PosmController < ApplicationController
   def index
     @posm_active = "active"
 
-    request = Typhoeus::Request.new("http://94.247.178.141:8080/PAYMONEY_WALLET/rest/solte_compte/#{current_user.paymoney_account_number}/#{current_user.paymoney_password}", followlocation: true, method: :get)
+    request = Typhoeus::Request.new("http://94.247.178.141:8080/PAYMONEY_WALLET/rest/solte_compte/#{current_user.paymoney_account_number rescue ''}/#{current_user.paymoney_password rescue ''}", followlocation: true, method: :get)
 
     request.on_complete do |response|
       if response.success?

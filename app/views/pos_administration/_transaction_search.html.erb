@@ -1,0 +1,99 @@
+<div class="row">
+  <div class="sidebar six columns">
+    <%#= render "shared/generic_flash" %>
+    <h2 class = "sb_header">Formulaire de recherche</h2>
+    <%= form_tag(pos_administration_search_path, method: :post, :class => 'form') do %>
+      <%= hidden_field_tag :certified_agent_id, @agent.certified_agent_id %>
+      <fieldset>
+        <div class="widget">
+
+          <div class="formRow">
+            <label>Date de début</label>
+            <div class="formRight">
+              <%#= date_field_tag :begin_date, params[:begin_date], start_year: (Date.today.year - 10), end_year: Date.today.year, class: "form-control" %>
+              <%= select_date(Date.parse('01-01-2015'), order: [:day, :month, :year], prefix: "begin_date", class: "form-control") %>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="formRow">
+            <label>Date de fin</label>
+            <div class="formRight">
+              <%#= date_field_tag :end_date, params[:end_date], start_year: (Date.today.year - 10), end_year: Date.today.year, class: "form-control" %>
+              <%= select_date(Date.today, order: [:day, :month, :year], prefix: "end_date", class: "form-control") %>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="formRow">
+            <label>Statut</label>
+            <div class="formRight">
+              <%= select_tag "transaction_type", options_for_select([ "Credit de compte", "Transfert de credit", "Validation de credit", "Debit du compte", "Validation de debit", "Solde du compte", "Remontée de fonds" ], params[:transaction_type]), prompt: "Veuillez choisir un type", class: "form-control" %>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="formRow">
+            <%= submit_tag "Valider", class: 'medium button' %>
+
+            <%= submit_tag "Exporter", class: 'medium button' %>
+          </div>
+
+        </div>
+      </fieldset>
+    <% end %>
+  </div>
+
+  <div class="sidebar six columns">
+    <h2 class = "sb_header">Statistiques de recherche</h2>
+      <fieldset>
+        <div class="widget">
+
+          <div class="formRow">
+            <label>Nombre de transactions</label>
+            <div class="formRight">
+              <b><%= @transactions.count %></b>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="formRow">
+            <label>Somme des crédits</label>
+            <div class="formRight">
+              <% credit = @transactions.map{|transaction| (transaction.credit_amount.to_f rescue 0)}.sum rescue 0 %>
+              <b><%= number_with_delimiter(credit) %></b>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="formRow">
+            <label>Somme des débits</label>
+            <div class="formRight">
+              <% debit = @transactions.map{|transaction| (transaction.checkout_amount.to_f rescue 0)}.sum rescue 0 %>
+              <b><%= number_with_delimiter(debit) %></b>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="formRow">
+            <label>Somme des frais</label>
+            <div class="formRight">
+              <% fee = @transactions.map{|transaction| (transaction.fee.to_f rescue 0)}.sum rescue 0 %>
+              <b><%= number_with_delimiter(fee) %></b>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+          <div class="formRow">
+            <label>Somme des frais de timbre</label>
+            <div class="formRight">
+              <% thumb = @transactions.map{|transaction| (transaction.thumb.to_f rescue 0)}.sum rescue 0 %>
+              <b><%= number_with_delimiter(thumb) %></b>
+            </div>
+            <div class="clear"></div>
+          </div>
+
+        </div>
+      </fieldset>
+  </div>
+</div>
