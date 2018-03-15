@@ -38,7 +38,7 @@
   </div>
 </p>
 <p>
-  <b><%= Ecommerce.human_attribute_name("ecommerce_profile_id") %>:</b><br /> <%= @ecommerce_template.ecommerce_profile.description %>
+  <b><%= Ecommerce.human_attribute_name("ecommerce_profile_id") %>:</b><br /> <%= @ecommerce_template.ecommerce_profile.description  rescue nil%>
 </p>
 <p>
   <b><%= Ecommerce.human_attribute_name("pdt_url") %>:</b><br /> <%= @ecommerce_template.pdt_url %>
