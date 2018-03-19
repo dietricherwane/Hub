@@ -28,7 +28,7 @@
               <th><%= transaction['transaction_id'] %></th>
               <th><%= transaction['transaction_type'] == 1 ? "Paiement" : "Dépôt" %></th>
               <th><%= transaction['number'] %></th>
-              <th><%= transaction['created_at'].gsub('T', ' ').gsub('Z', '') %> </th>
+              <th><%= transaction['created_at'].gsub('T', ' ').gsub('Z', '')[0..-5] %> </th>
               <th><%= transaction['full_transaction_amount'] %></th>
               <th><%= transaction['full_paid_transaction_amount'] %></th>
               <th><%= transaction['full_fee'] %></th>
