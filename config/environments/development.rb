@@ -8,7 +8,6 @@ Hub::Application.configure do
 
   # Do not eager load code on boot.
   config.eager_load = false
-=begin
   config.action_mailer.default_url_options = { :host => 'pay-money.net' }
   ActionMailer::Base.smtp_settings = {
   	:openssl_verify_mode => 'none',
@@ -19,7 +18,7 @@ Hub::Application.configure do
 		:user_name => "created-account@pay-money.net",
 		:password => '@monetique123'
 	}
-=end
+=begin
 config.action_mailer.default_url_options = { host: 'pay-money.net' }
   ActionMailer::Base.smtp_settings = {
   	:openssl_verify_mode => 'none',
@@ -30,7 +29,7 @@ config.action_mailer.default_url_options = { host: 'pay-money.net' }
 		:user_name => "serviceclients@de2608.ispfr.net",
 		:password => 'clients#2015'
 	}
-
+=end
 	#config.action_mailer.default_url_options = { :host => '41.189.40.193:6565' }
   #ActionMailer::Base.smtp_settings = {
   	#:openssl_verify_mode => 'none',
