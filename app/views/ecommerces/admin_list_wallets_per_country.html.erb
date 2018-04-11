@@ -39,11 +39,11 @@
                       <b>Frais:</b> <%= "#{wallet["fee"]}%" %>
                     </p>
                     <p>
-                      <b><%= link_to "Liste des transactions réussies", admin_successful_transactions_per_wallet_path(wallet["authentication_token"], @ecommerce.token), style: "color: blue;" %> [<%= wallet["succeed_transactions"] %>]</b>
+                      <b><%= link_to "Liste des transactions réussies", admin_successful_transactions_per_wallet_path(wallet["authentication_token"], @ecommerce.token), style: "color: blue;" %> <%#= wallet["succeed_transactions"] %></b>
                     </p>
                     <% unless wallet["failed_transactions"] == 0 %>
                       <p>
-                        <b><%= link_to "Liste des transactions échouées", admin_failed_transactions_per_wallet_path(wallet["authentication_token"], @ecommerce.token), style: "color: red;" %> [<%= wallet["failed_transactions"] %>]</b>
+                        <b><%= link_to "Liste des transactions échouées", admin_failed_transactions_per_wallet_path(wallet["authentication_token"], @ecommerce.token), style: "color: red;" %> <%#= wallet["failed_transactions"] %></b>
                       </p>
                     <% end %>
                   </div>

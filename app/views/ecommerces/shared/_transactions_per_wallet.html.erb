@@ -13,6 +13,7 @@
         <tr>
           <th width = "10%">Id de transaction</th>
           <th width = "10%">Type de transaction</th>
+          <th width = "10%">Compte</th>
           <th width = "10%">Identifiant</th>
           <th width = "10%">Date</th>
           <th width = "10%">Montant de la transaction</th>
@@ -25,9 +26,10 @@
       <% unless @transactions.blank? %>
         <% @transactions.each do |transaction| %>
           <tr>
-              <th><%= transaction['transaction_id'] %></th>
+              <th><%= transaction['transaction_id'].blank? ? transaction['transaction_token'] : transaction['transaction_id'] %></th>
               <th><%= transaction['transaction_type'] == 1 ? "Paiement" : "Dépôt" %></th>
-              <th><%= transaction['number'] %></th>
+              <th><%= transaction['phone_number'] %></th>
+              <th><%= transaction['number'].blank? ? transaction['basket_number'] : transaction['number'] %></th>
               <th><%= transaction['created_at'].gsub('T', ' ').gsub('Z', '')[0..-5] %> </th>
               <th><%= transaction['full_transaction_amount'] %></th>
               <th><%= transaction['full_paid_transaction_amount'] %></th>

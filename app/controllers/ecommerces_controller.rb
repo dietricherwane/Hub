@@ -28,12 +28,8 @@ class EcommercesController < ApplicationController
       response = JSON.parse(paymoney_creation_response) rescue nil
 
       if response.blank?
-<<<<<<< HEAD
-        flash[:error] = "Une erreur s'est produite. Veuillez contacter l'administrateur"#@ecommerce.errors.add(:id, "Une erreur s'est produite, veuillez contacter l'administrateur.")
-=======
         @ecommerce.errors.add(:id, "Une erreur s'est produite, veuillez contacter l'administrateur.")
         flash.now[:error] = @ecommerce.errors.full_messages.map { |msg| "<p>#{msg}</p>" }.join
->>>>>>> 005388f2b93fe2736f8aca3875074150d926ac53
         render :index
       else
         case (response["status"]["idStatus"].to_s rescue "")
@@ -45,15 +41,9 @@ class EcommercesController < ApplicationController
             flash[:success] = "Votre demande de qualification a été soumise. Elle sera étudiée et l'état de sa validation vous sera notifié."
             redirect_to merchant_edit_ecommerce_path
           when "4"
-<<<<<<< HEAD
-            #@ecommerce.errors.add(:id, "Ce compte existe déjà.")
-            flash[:error] = "Ce compte existe déjà"
-            redirect_to merchant_edit_ecommerce_path
-=======
             @ecommerce.errors.add(:id, "Ce compte existe déjà.")
             flash.now[:error] = @ecommerce.errors.full_messages.map { |msg| "<p>#{msg}</p>" }.join
             render :index
->>>>>>> 005388f2b93fe2736f8aca3875074150d926ac53
           when "2"
             @ecommerce.save
             link_to_wallets
